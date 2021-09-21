@@ -10,6 +10,10 @@ It only shows text like `U 1% M 23% ↓ 456 K/s ↑ 789 K/s` on the right part o
 
 ![](screenshot/screenshot.png)
 
+# Installation
+
+- from AUR: [gnome-shell-extension-simple-system-monitor](https://aur.archlinux.org/packages/gnome-shell-extension-simple-system-monitor/)
+
 # License
 
 [GPL-2.0](https://github.com/LGiki/gnome-shell-extension-simple-system-monitor/blob/master/LICENSE)
