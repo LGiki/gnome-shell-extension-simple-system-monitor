@@ -1,4 +1,6 @@
 /* extension.js
+ * 
+ * This is a fork of <https://extensions.gnome.org/extension/4478/net-speed/>.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
