@@ -59,7 +59,7 @@ const getCurrentNetSpeed = (refreshInterval) => {
         let totalUpBytes = 0;
         let line = null;
         // See <https://gjs-docs.gnome.org/gio20~2.66p/gio.datainputstream#method-read_line>.
-        while ((line = dataInputStream.read_line(null)) != null) {
+        while (([line, length] = dataInputStream.read_line(null)) && line != null) {
             // See <https://github.com/GNOME/gjs/blob/master/doc/ByteArray.md#tostringauint8array-encodingstringstring>.
             // It seems Uint8Array is only returned at the first time.
             if (line instanceof Uint8Array) {
@@ -131,7 +131,7 @@ const getCurrentCPUUsage = () => {
         let currentCPUTotal = 0;
         let line = null;
 
-        while ((line = dataInputStream.read_line(null)) != null) {
+        while (([line, length] = dataInputStream.read_line(null)) && line != null) {
             if (line instanceof Uint8Array) {
                 line = ByteArray.toString(line).trim();
             } else {
@@ -182,9 +182,9 @@ const getCurrentMemoryUsage = () => {
 
         let memTotal = -1;
         let memAvailable = -1;
-
         let line = null;
-        while ((line = dataInputStream.read_line(null)) != null) {
+
+        while (([line, length] = dataInputStream.read_line(null)) && line != null) {
             if (line instanceof Uint8Array) {
                 line = ByteArray.toString(line).trim();
             } else {
