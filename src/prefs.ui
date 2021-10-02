@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0" />
+  <object class="GtkAdjustment" id="refresh_rate_adjustment">
+    <!-- 86400 seconds = 24 * 60 * 60 = 1 day -->
+    <property name="upper">86400</property>
+    <property name="lower">1</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">5</property>
+  </object>
+  <template class="SimpleSystemMonitorPreferences" parent="GtkBox">
+    <child>
+      <object class="GtkGrid">
+        <property name="can_focus">1</property>
+        <property name="row_spacing">10</property>
+        <property name="column_spacing">5</property>
+        <property name="column_homogeneous">1</property>
+        <property name="row_homogeneous">1</property>
+        <property name="margin_top">24</property>
+        <property name="margin_bottom">24</property>
+        <property name="margin_start">24</property>
+        <property name="margin_end">24</property>
+        <!-- CPU Usage Text -->
+        <child>
+          <object class="GtkLabel">
+            <property name="can_focus">0</property>
+            <property name="label" translatable="yes">CPU Usage Text</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">0</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkEntry" id="cpu_usage_text">
+            <property name="visible">1</property>
+            <property name="can_focus">1</property>
+            <property name="text">U</property>
+            <signal name="changed" handler="cpu_usage_text_changed" swapped="no" />
+            <layout>
+              <property name="column">1</property>
+              <property name="row">0</property>
+            </layout>
+          </object>
+        </child>
+        <!-- Memory Usage Text -->
+        <child>
+          <object class="GtkLabel">
+            <property name="can_focus">0</property>
+            <property name="label" translatable="yes">Memory Usage Text</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">1</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkEntry" id="memory_usage_text">
+            <property name="visible">1</property>
+            <property name="can_focus">1</property>
+            <property name="text">M</property>
+            <signal name="changed" handler="memory_usage_text_changed" swapped="no" />
+            <layout>
+              <property name="column">1</property>
+              <property name="row">1</property>
+            </layout>
+          </object>
+        </child>
+        <!-- Download Speed Text -->
+        <child>
+          <object class="GtkLabel">
+            <property name="can_focus">0</property>
+            <property name="label" translatable="yes">Download Speed Text</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">2</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkEntry" id="download_speed_text">
+            <property name="visible">1</property>
+            <property name="can_focus">1</property>
+            <property name="text">↓</property>
+            <signal name="changed" handler="download_usage_text_changed" swapped="no" />
+            <layout>
+              <property name="column">1</property>
+              <property name="row">2</property>
+            </layout>
+          </object>
+        </child>
+        <!-- Upload Speed Text -->
+        <child>
+          <object class="GtkLabel">
+            <property name="can_focus">0</property>
+            <property name="label" translatable="yes">Upload Speed Text</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">3</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkEntry" id="upload_speed_text">
+            <property name="visible">1</property>
+            <property name="can_focus">1</property>
+            <property name="text">↑</property>
+            <signal name="changed" handler="upload_usage_text_changed" swapped="no" />
+            <layout>
+              <property name="column">1</property>
+              <property name="row">3</property>
+            </layout>
+          </object>
+        </child>
+        <!-- Refresh Interval -->
+        <child>
+          <object class="GtkLabel">
+            <property name="can_focus">0</property>
+            <property name="label" translatable="yes">Refresh Interval (second)</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">4</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSpinButton" id="refresh_interval">
+            <property name="visible">1</property>
+            <property name="can_focus">1</property>
+            <property name="numeric">1</property>
+            <property name="value">1</property>
+            <property name="adjustment">refresh_rate_adjustment</property>
+            <signal name="value-changed" handler="refresh_interval_changed" swapped="no" />
+            <layout>
+              <property name="column">1</property>
+              <property name="row">4</property>
+            </layout>
+          </object>
+        </child>
+      </object>
+    </child>
+  </template>
+</interface>

@@ -26,9 +26,11 @@ const { GObject, St, Clutter, GLib, Gio } = imports.gi;
 const Main = imports.ui.main;
 const PanelMenu = imports.ui.panelMenu;
 const ByteArray = imports.byteArray;
-
-// Refresh interval in second
-const refreshInterval = 1;
+const PopupMenu = imports.ui.popupMenu;
+const ExtensionUtils = imports.misc.extensionUtils;
+const Me = ExtensionUtils.getCurrentExtension();
+const Settings = Me.imports.settings;
+const Util = imports.misc.util;
 
 const netSpeedUnits = [
     'B/s', 'K/s', 'M/s', 'G/s', 'T/s', 'P/s', 'E/s', 'Z/s', 'Y/s'
@@ -207,7 +209,7 @@ const getCurrentMemoryUsage = () => {
             if (itemName == 'MemAvailable') {
                 memAvailable = itemValue;
             }
-            
+
             if (memTotal !== -1 && memAvailable !== -1) {
                 break;
             }
@@ -249,14 +251,14 @@ const formatNetSpeedWithUnit = (amount) => {
     return `${amount.toFixed(digits)} ${netSpeedUnits[unitIndex]}`;
 };
 
-const toDisplayString = (cpuUsage, memoryUsage, netSpeed) => {
-    return `U ${Math.round(cpuUsage * 100)}% M ${Math.round(memoryUsage * 100)}% ↓ ${formatNetSpeedWithUnit(netSpeed['down'])} ↑ ${formatNetSpeedWithUnit(netSpeed['up'])}`;
+const toDisplayString = (texts, cpuUsage, memoryUsage, netSpeed) => {
+    return `${texts.cpuUsageText} ${Math.round(cpuUsage * 100)}% ${texts.memoryUsageText} ${Math.round(memoryUsage * 100)}% ${texts.downloadSpeedText} ${formatNetSpeedWithUnit(netSpeed['down'])} ${texts.uploadSpeedText} ${formatNetSpeedWithUnit(netSpeed['up'])}`;
 }
 
 const Indicator = GObject.registerClass(
     class Indicator extends PanelMenu.Button {
         _init() {
-            super._init(0.0, 'Simple System Monitor', true);
+            super._init(0.0, 'Simple System Monitor');
 
             this._label = new St.Label({
                 'y_align': Clutter.ActorAlign.CENTER,
@@ -265,10 +267,27 @@ const Indicator = GObject.registerClass(
             });
 
             this.add_child(this._label);
+
+            let settingMenuItem = new PopupMenu.PopupMenuItem('Setting');
+            settingMenuItem.connect('activate', () => {
+                this._openPrefs();
+            });
+            this.menu.addMenuItem(settingMenuItem);
         }
 
         setText(text) {
             return this._label.set_text(text);
+        }
+
+        _openPrefs() {
+            if (typeof ExtensionUtils.openPrefs === 'function') {
+                ExtensionUtils.openPrefs();
+            } else {
+                Util.spawn([
+                    "gnome-shell-extension-prefs",
+                    Me.metadata.uuid
+                ]);
+            }
         }
     });
 
@@ -286,19 +305,23 @@ class Extension {
         lastCPUUsed = 0;
         lastCPUTotal = 0;
 
+        this._prefs = new Settings.Prefs();
+
+        this._texts = {
+            cpuUsageText: this._prefs.CPU_USAGE_TEXT.get(),
+            memoryUsageText: this._prefs.MEMORY_USAGE_TEXT.get(),
+            downloadSpeedText: this._prefs.DOWNLOAD_SPEED_TEXT.get(),
+            uploadSpeedText: this._prefs.UPLOAD_SPEED_TEXT.get(),
+        };
+
+        this._refresh_interval = this._prefs.REFRESH_INTERVAL.get();
+
         this._indicator = new Indicator();
         Main.panel.addToStatusArea(this._uuid, this._indicator, 0, 'right');
 
-        this._timeout = GLib.timeout_add_seconds(
-            GLib.PRIORITY_DEFAULT, refreshInterval, () => {
-                const currentMemoryUsage = getCurrentMemoryUsage();
-                const currentNetSpeed = getCurrentNetSpeed(refreshInterval);
-                const currentCPUUsage = getCurrentCPUUsage(refreshInterval);
-                const displayText = toDisplayString(currentCPUUsage, currentMemoryUsage, currentNetSpeed);
-                this._indicator.setText(displayText);
-                return GLib.SOURCE_CONTINUE;
-            }
-        );
+        this._timeout = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, this._refresh_interval, this._refresh_monitor.bind(this));
+
+        this._listen_setting_change();
     }
 
     disable() {
@@ -310,6 +333,50 @@ class Extension {
             GLib.source_remove(this._timeout);
             this._timeout = null;
         }
+        this._destory_setting_change_listener();
+    }
+
+    _refresh_monitor() {
+        const currentMemoryUsage = getCurrentMemoryUsage();
+        const currentNetSpeed = getCurrentNetSpeed(this._refresh_interval);
+        const currentCPUUsage = getCurrentCPUUsage(this._refresh_interval);
+        const displayText = toDisplayString(this._texts, currentCPUUsage, currentMemoryUsage, currentNetSpeed);
+        this._indicator.setText(displayText);
+        return GLib.SOURCE_CONTINUE;
+    }
+
+    _listen_setting_change() {
+        this._prefs.CPU_USAGE_TEXT.changed(() => {
+            this._texts.cpuUsageText = this._prefs.CPU_USAGE_TEXT.get();
+        });
+
+        this._prefs.MEMORY_USAGE_TEXT.changed(() => {
+            this._texts.memoryUsageText = this._prefs.MEMORY_USAGE_TEXT.get();
+        });
+
+        this._prefs.DOWNLOAD_SPEED_TEXT.changed(() => {
+            this._texts.downloadSpeedText = this._prefs.DOWNLOAD_SPEED_TEXT.get();
+        });
+
+        this._prefs.UPLOAD_SPEED_TEXT.changed(() => {
+            this._texts.uploadSpeedText = this._prefs.UPLOAD_SPEED_TEXT.get();
+        });
+
+        this._prefs.REFRESH_INTERVAL.changed(() => {
+            this._refresh_interval = this._prefs.REFRESH_INTERVAL.get();
+            if (this._timeout != null) {
+                GLib.source_remove(this._timeout);
+            }
+            this._timeout = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, this._refresh_interval, this._refresh_monitor.bind(this));
+        });
+    }
+
+    _destory_setting_change_listener() {
+        this._prefs.CPU_USAGE_TEXT.disconnect();
+        this._prefs.MEMORY_USAGE_TEXT.disconnect();
+        this._prefs.DOWNLOAD_SPEED_TEXT.disconnect();
+        this._prefs.UPLOAD_SPEED_TEXT.disconnect();
+        this._prefs.REFRESH_INTERVAL.disconnect();
     }
 }
 
