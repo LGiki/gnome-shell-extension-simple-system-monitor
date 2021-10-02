@@ -319,7 +319,7 @@ class Extension {
         this._indicator = new Indicator();
         Main.panel.addToStatusArea(this._uuid, this._indicator, 0, 'right');
 
-        this._timeout = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, this._refresh_interval, this._refresh_monitor.bind(this));
+        this._timeout = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT_IDLE, this._refresh_interval, this._refresh_monitor.bind(this));
 
         this._listen_setting_change();
     }
@@ -367,7 +367,7 @@ class Extension {
             if (this._timeout != null) {
                 GLib.source_remove(this._timeout);
             }
-            this._timeout = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT, this._refresh_interval, this._refresh_monitor.bind(this));
+            this._timeout = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT_IDLE, this._refresh_interval, this._refresh_monitor.bind(this));
         });
     }
 
