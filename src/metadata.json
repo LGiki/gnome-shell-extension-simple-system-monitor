@@ -4,7 +4,8 @@
   "uuid": "ssm-gnome@lgiki.net",
   "version": 3,
   "shell-version": [
-    "40"
+    "40",
+    "41"
   ],
   "url": "https://github.com/LGiki/gnome-shell-extension-simple-system-monitor"
 }
