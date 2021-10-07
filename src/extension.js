@@ -325,6 +325,7 @@ class Extension {
     }
 
     disable() {
+        this._destory_setting_change_listener();
         if (this._indicator != null) {
             this._indicator.destroy();
             this._indicator = null;
@@ -333,7 +334,6 @@ class Extension {
             GLib.source_remove(this._timeout);
             this._timeout = null;
         }
-        this._destory_setting_change_listener();
     }
 
     _refresh_monitor() {
