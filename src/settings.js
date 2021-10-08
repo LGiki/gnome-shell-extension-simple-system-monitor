@@ -1,6 +1,4 @@
-const Gio = imports.gi.Gio;
 const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
 
 const SETTING_SCHEMA = 'org.gnome.shell.extensions.simple-system-monitor';
 
