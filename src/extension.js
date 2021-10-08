@@ -30,7 +30,6 @@ const PopupMenu = imports.ui.popupMenu;
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const Settings = Me.imports.settings;
-const Util = imports.misc.util;
 
 const netSpeedUnits = [
     'B/s', 'K/s', 'M/s', 'G/s', 'T/s', 'P/s', 'E/s', 'Z/s', 'Y/s'
@@ -270,24 +269,13 @@ const Indicator = GObject.registerClass(
 
             let settingMenuItem = new PopupMenu.PopupMenuItem('Setting');
             settingMenuItem.connect('activate', () => {
-                this._openPrefs();
+                ExtensionUtils.openPrefs();
             });
             this.menu.addMenuItem(settingMenuItem);
         }
 
         setText(text) {
             return this._label.set_text(text);
-        }
-
-        _openPrefs() {
-            if (typeof ExtensionUtils.openPrefs === 'function') {
-                ExtensionUtils.openPrefs();
-            } else {
-                Util.spawn([
-                    "gnome-shell-extension-prefs",
-                    Me.metadata.uuid
-                ]);
-            }
         }
     });
 
