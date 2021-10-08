@@ -4,31 +4,9 @@ const Me = ExtensionUtils.getCurrentExtension();
 
 const SETTING_SCHEMA = 'org.gnome.shell.extensions.simple-system-monitor';
 
-const getSettings = (schema) => {
-    const GioSSS = Gio.SettingsSchemaSource;
-    const schemaDir = Me.dir.get_child('schemas');
-    let schemaSource = GioSSS.get_default();
-
-    if (schemaDir.query_exists(null)) {
-        schemaSource = GioSSS.new_from_directory(
-            schemaDir.get_path(),
-            schemaSource,
-            false
-        );
-    }
-
-    const schemaObj = schemaSource.lookup(schema, true);
-    if (!schemaObj) {
-        throw new Error(`Schema ${schema} could not be found for extension ${Me.metadata.uuid}`);
-    }
-    return new Gio.Settings({
-        settings_schema: schemaObj
-    });
-}
-
 var Prefs = class Prefs {
     constructor() {
-        const settings = getSettings(SETTING_SCHEMA);
+        const settings = ExtensionUtils.getSettings(SETTING_SCHEMA);
 
         this.CPU_USAGE_TEXT = new PrefValue(settings, 'cpu-usage-text', 'string');
         this.MEMORY_USAGE_TEXT = new PrefValue(settings, 'memory-usage-text', 'string');
