@@ -14,6 +14,7 @@ const DEFAULT_SETTINGS = {
     downloadSpeedText: '↓',
     isUploadSpeedEnable: true,
     uploadSpeedText: '↑',
+    itemSeparator: ' ',
     refreshInterval: 1
 };
 
@@ -29,6 +30,7 @@ const SimpleSystemMonitorPrefsWidget = GObject.registerClass({
         'download_speed_text',
         'upload_speed_enable_switch',
         'upload_speed_text',
+        'item_separator',
         'refresh_interval'
     ]
 }, class SimpleSystemMonitorPrefsWidget extends Gtk.Box {
@@ -50,6 +52,7 @@ const SimpleSystemMonitorPrefsWidget = GObject.registerClass({
         this._download_speed_text.set_text(Configuration.DOWNLOAD_SPEED_TEXT.get());
         this._upload_speed_enable_switch.set_active(Configuration.IS_UPLOAD_SPEED_ENABLE.get());
         this._upload_speed_text.set_text(Configuration.UPLOAD_SPEED_TEXT.get());
+        this._item_separator.set_text(Configuration.ITEM_SEPARATOR.get());
         this._refresh_interval.set_value(Configuration.REFRESH_INTERVAL.get());
     }
 
@@ -62,6 +65,7 @@ const SimpleSystemMonitorPrefsWidget = GObject.registerClass({
         Configuration.DOWNLOAD_SPEED_TEXT.set(DEFAULT_SETTINGS.downloadSpeedText);
         Configuration.IS_UPLOAD_SPEED_ENABLE.set(DEFAULT_SETTINGS.isUploadSpeedEnable);
         Configuration.UPLOAD_SPEED_TEXT.set(DEFAULT_SETTINGS.uploadSpeedText);
+        Configuration.ITEM_SEPARATOR.set(DEFAULT_SETTINGS.itemSeparator);
         Configuration.REFRESH_INTERVAL.set(DEFAULT_SETTINGS.refreshInterval);
     }
 
@@ -95,6 +99,10 @@ const SimpleSystemMonitorPrefsWidget = GObject.registerClass({
 
     upload_usage_text_changed(widget) {
         Configuration.UPLOAD_SPEED_TEXT.set(widget.get_text());
+    }
+
+    item_separator_changed(widget) {
+        Configuration.ITEM_SEPARATOR.set(widget.get_text());
     }
 
     refresh_interval_changed(widget) {

@@ -14,6 +14,7 @@ var Prefs = class Prefs {
         this.DOWNLOAD_SPEED_TEXT = new PrefValue(settings, 'download-speed-text', 'string');
         this.IS_UPLOAD_SPEED_ENABLE = new PrefValue(settings, 'is-upload-speed-enable', 'boolean');
         this.UPLOAD_SPEED_TEXT = new PrefValue(settings, 'upload-speed-text', 'string');
+        this.ITEM_SEPARATOR = new PrefValue(settings, 'item-separator', 'string');
         this.REFRESH_INTERVAL = new PrefValue(settings, 'refresh-interval', 'int');
     }
 }

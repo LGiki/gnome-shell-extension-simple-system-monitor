@@ -214,6 +214,31 @@
             </layout>
           </object>
         </child>
+        <!-- Item Separator -->
+        <child>
+          <object class="GtkLabel">
+            <property name="can_focus">0</property>
+            <property name="label" translatable="yes">Item Separator</property>
+            <property name="margin_top">20</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">8</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkEntry" id="item_separator">
+            <property name="visible">1</property>
+            <property name="can_focus">1</property>
+            <property name="text">↑</property>
+            <property name="valign">center</property>
+            <signal name="changed" handler="item_separator_changed" swapped="no" />
+            <layout>
+              <property name="column">1</property>
+              <property name="row">8</property>
+            </layout>
+          </object>
+        </child>
         <!-- Refresh Interval -->
         <child>
           <object class="GtkLabel">
@@ -222,7 +247,7 @@
             <property name="margin_top">20</property>
             <layout>
               <property name="column">0</property>
-              <property name="row">8</property>
+              <property name="row">9</property>
             </layout>
           </object>
         </child>
@@ -238,7 +263,7 @@
             <signal name="value-changed" handler="refresh_interval_changed" swapped="no" />
             <layout>
               <property name="column">1</property>
-              <property name="row">8</property>
+              <property name="row">9</property>
             </layout>
           </object>
         </child>
@@ -252,7 +277,7 @@
             <signal name="clicked" handler="reset_settings_to_default_clicked" swapped="no" />
             <layout>
               <property name="column">0</property>
-              <property name="row">9</property>
+              <property name="row">10</property>
               <property name="column_span">2</property>
             </layout>
           </object>

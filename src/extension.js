@@ -264,7 +264,7 @@ const toDisplayString = (texts, enable, cpuUsage, memoryUsage, netSpeed) => {
     if (enable.isUploadSpeedEnable) {
         displayItems.push(`${texts.uploadSpeedText} ${formatNetSpeedWithUnit(netSpeed['up'])}`);
     }
-    return displayItems.join(' ');
+    return displayItems.join(texts.itemSeparator);
 }
 
 const Indicator = GObject.registerClass(
@@ -313,6 +313,7 @@ class Extension {
             memoryUsageText: this._prefs.MEMORY_USAGE_TEXT.get(),
             downloadSpeedText: this._prefs.DOWNLOAD_SPEED_TEXT.get(),
             uploadSpeedText: this._prefs.UPLOAD_SPEED_TEXT.get(),
+            itemSeparator: this._prefs.ITEM_SEPARATOR.get(),
         };
 
         this._enable = {
@@ -356,19 +357,19 @@ class Extension {
     _listen_setting_change() {
         this._prefs.IS_CPU_USAGE_ENABLE.changed(() => {
             this._enable.isCpuUsageEnable = this._prefs.IS_CPU_USAGE_ENABLE.get();
-        })
+        });
 
         this._prefs.IS_MEMORY_USAGE_ENABLE.changed(() => {
             this._enable.isMemoryUsageEnable = this._prefs.IS_MEMORY_USAGE_ENABLE.get();
-        })
+        });
 
         this._prefs.IS_DOWNLOAD_SPEED_ENABLE.changed(() => {
             this._enable.isDownloadSpeedEnable = this._prefs.IS_DOWNLOAD_SPEED_ENABLE.get();
-        })
+        });
 
         this._prefs.IS_UPLOAD_SPEED_ENABLE.changed(() => {
             this._enable.isUploadSpeedEnable = this._prefs.IS_UPLOAD_SPEED_ENABLE.get();
-        })
+        });
 
         this._prefs.CPU_USAGE_TEXT.changed(() => {
             this._texts.cpuUsageText = this._prefs.CPU_USAGE_TEXT.get();
@@ -384,6 +385,10 @@ class Extension {
 
         this._prefs.UPLOAD_SPEED_TEXT.changed(() => {
             this._texts.uploadSpeedText = this._prefs.UPLOAD_SPEED_TEXT.get();
+        });
+
+        this._prefs.ITEM_SEPARATOR.changed(() => {
+            this._texts.itemSeparator = this._prefs.ITEM_SEPARATOR.get();
         });
 
         this._prefs.REFRESH_INTERVAL.changed(() => {
@@ -404,6 +409,7 @@ class Extension {
         this._prefs.MEMORY_USAGE_TEXT.disconnect();
         this._prefs.DOWNLOAD_SPEED_TEXT.disconnect();
         this._prefs.UPLOAD_SPEED_TEXT.disconnect();
+        this._prefs.ITEM_SEPARATOR.disconnect();
         this._prefs.REFRESH_INTERVAL.disconnect();
     }
 }

@@ -46,5 +46,10 @@
       <summary>Refresh Interval In Second</summary>
       <description>Refresh Interval In Second</description>
     </key>
+    <key type="s" name="item-separator">
+      <default>' '</default>
+      <summary>Item Separator</summary>
+      <description>Item Separator</description>
+    </key>
   </schema>
 </schemalist>
