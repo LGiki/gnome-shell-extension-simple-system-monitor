@@ -232,6 +232,7 @@
             <property name="can_focus">1</property>
             <property name="text">↑</property>
             <property name="valign">center</property>
+            <property name="margin_top">20</property>
             <signal name="changed" handler="item_separator_changed" swapped="no" />
             <layout>
               <property name="column">1</property>
