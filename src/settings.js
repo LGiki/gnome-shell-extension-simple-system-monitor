@@ -6,9 +6,13 @@ var Prefs = class Prefs {
     constructor() {
         const settings = ExtensionUtils.getSettings(SETTING_SCHEMA);
 
+        this.IS_CPU_USAGE_ENABLE = new PrefValue(settings, 'is-cpu-usage-enable', 'boolean');
         this.CPU_USAGE_TEXT = new PrefValue(settings, 'cpu-usage-text', 'string');
+        this.IS_MEMORY_USAGE_ENABLE = new PrefValue(settings, 'is-memory-usage-enable', 'boolean');
         this.MEMORY_USAGE_TEXT = new PrefValue(settings, 'memory-usage-text', 'string');
+        this.IS_DOWNLOAD_SPEED_ENABLE = new PrefValue(settings, 'is-download-speed-enable', 'boolean');
         this.DOWNLOAD_SPEED_TEXT = new PrefValue(settings, 'download-speed-text', 'string');
+        this.IS_UPLOAD_SPEED_ENABLE = new PrefValue(settings, 'is-upload-speed-enable', 'boolean');
         this.UPLOAD_SPEED_TEXT = new PrefValue(settings, 'upload-speed-text', 'string');
         this.REFRESH_INTERVAL = new PrefValue(settings, 'refresh-interval', 'int');
     }

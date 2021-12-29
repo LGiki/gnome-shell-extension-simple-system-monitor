@@ -250,8 +250,21 @@ const formatNetSpeedWithUnit = (amount) => {
     return `${amount.toFixed(digits)} ${netSpeedUnits[unitIndex]}`;
 };
 
-const toDisplayString = (texts, cpuUsage, memoryUsage, netSpeed) => {
-    return `${texts.cpuUsageText} ${Math.round(cpuUsage * 100)}% ${texts.memoryUsageText} ${Math.round(memoryUsage * 100)}% ${texts.downloadSpeedText} ${formatNetSpeedWithUnit(netSpeed['down'])} ${texts.uploadSpeedText} ${formatNetSpeedWithUnit(netSpeed['up'])}`;
+const toDisplayString = (texts, enable, cpuUsage, memoryUsage, netSpeed) => {
+    const displayItems = [];
+    if (enable.isCpuUsageEnable) {
+        displayItems.push(`${texts.cpuUsageText} ${Math.round(cpuUsage * 100)}%`);
+    }
+    if (enable.isMemoryUsageEnable) {
+        displayItems.push(`${texts.memoryUsageText} ${Math.round(memoryUsage * 100)}%`);
+    }
+    if (enable.isDownloadSpeedEnable) {
+        displayItems.push(`${texts.downloadSpeedText} ${formatNetSpeedWithUnit(netSpeed['down'])}`);
+    }
+    if (enable.isUploadSpeedEnable) {
+        displayItems.push(`${texts.uploadSpeedText} ${formatNetSpeedWithUnit(netSpeed['up'])}`);
+    }
+    return displayItems.join(' ');
 }
 
 const Indicator = GObject.registerClass(
@@ -302,6 +315,13 @@ class Extension {
             uploadSpeedText: this._prefs.UPLOAD_SPEED_TEXT.get(),
         };
 
+        this._enable = {
+            isCpuUsageEnable: this._prefs.IS_CPU_USAGE_ENABLE.get(),
+            isMemoryUsageEnable: this._prefs.IS_MEMORY_USAGE_ENABLE.get(),
+            isDownloadSpeedEnable: this._prefs.IS_DOWNLOAD_SPEED_ENABLE.get(),
+            isUploadSpeedEnable: this._prefs.IS_UPLOAD_SPEED_ENABLE.get(),
+        }
+
         this._refresh_interval = this._prefs.REFRESH_INTERVAL.get();
 
         this._indicator = new Indicator();
@@ -328,12 +348,28 @@ class Extension {
         const currentMemoryUsage = getCurrentMemoryUsage();
         const currentNetSpeed = getCurrentNetSpeed(this._refresh_interval);
         const currentCPUUsage = getCurrentCPUUsage(this._refresh_interval);
-        const displayText = toDisplayString(this._texts, currentCPUUsage, currentMemoryUsage, currentNetSpeed);
+        const displayText = toDisplayString(this._texts, this._enable, currentCPUUsage, currentMemoryUsage, currentNetSpeed);
         this._indicator.setText(displayText);
         return GLib.SOURCE_CONTINUE;
     }
 
     _listen_setting_change() {
+        this._prefs.IS_CPU_USAGE_ENABLE.changed(() => {
+            this._enable.isCpuUsageEnable = this._prefs.IS_CPU_USAGE_ENABLE.get();
+        })
+
+        this._prefs.IS_MEMORY_USAGE_ENABLE.changed(() => {
+            this._enable.isMemoryUsageEnable = this._prefs.IS_MEMORY_USAGE_ENABLE.get();
+        })
+
+        this._prefs.IS_DOWNLOAD_SPEED_ENABLE.changed(() => {
+            this._enable.isDownloadSpeedEnable = this._prefs.IS_DOWNLOAD_SPEED_ENABLE.get();
+        })
+
+        this._prefs.IS_UPLOAD_SPEED_ENABLE.changed(() => {
+            this._enable.isUploadSpeedEnable = this._prefs.IS_UPLOAD_SPEED_ENABLE.get();
+        })
+
         this._prefs.CPU_USAGE_TEXT.changed(() => {
             this._texts.cpuUsageText = this._prefs.CPU_USAGE_TEXT.get();
         });
@@ -360,6 +396,10 @@ class Extension {
     }
 
     _destory_setting_change_listener() {
+        this._prefs.IS_CPU_USAGE_ENABLE.disconnect();
+        this._prefs.IS_MEMORY_USAGE_ENABLE.disconnect();
+        this._prefs.IS_DOWNLOAD_SPEED_ENABLE.disconnect();
+        this._prefs.IS_UPLOAD_SPEED_ENABLE.disconnect();
         this._prefs.CPU_USAGE_TEXT.disconnect();
         this._prefs.MEMORY_USAGE_TEXT.disconnect();
         this._prefs.DOWNLOAD_SPEED_TEXT.disconnect();

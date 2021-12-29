@@ -1,20 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
   <schema path="/org/gnome/shell/extensions/simple-system-monitor/" id="org.gnome.shell.extensions.simple-system-monitor">
+    <key type="b" name="is-cpu-usage-enable">
+      <default>true</default>
+      <summary>Show CPU Usage</summary>
+      <description>Show CPU Usage</description>
+    </key>
     <key type="s" name="cpu-usage-text">
       <default>'U'</default>
       <summary>CPU Usage Text</summary>
       <description>CPU Usage Text</description>
+    </key>
+    <key type="b" name="is-memory-usage-enable">
+      <default>true</default>
+      <summary>Show Memory Usage</summary>
+      <description>Show Memory Usage</description>
     </key>
     <key type="s" name="memory-usage-text">
       <default>'M'</default>
       <summary>Memory Usage Text</summary>
       <description>Memory Usage Text</description>
     </key>
+    <key type="b" name="is-download-speed-enable">
+      <default>true</default>
+      <summary>Show Download Speed</summary>
+      <description>Show Download Speed</description>
+    </key>
     <key type="s" name="download-speed-text">
       <default>'↓'</default>
       <summary>Download Speed Text</summary>
       <description>Download Speed Text</description>
+    </key>
+    <key type="b" name="is-upload-speed-enable">
+      <default>true</default>
+      <summary>Show Upload Speed</summary>
+      <description>Show Upload Speed</description>
     </key>
     <key type="s" name="upload-speed-text">
       <default>'↑'</default>
