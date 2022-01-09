@@ -59,6 +59,8 @@ const getCurrentNetSpeed = (refreshInterval) => {
         let totalDownBytes = 0;
         let totalUpBytes = 0;
         let line = null;
+        let length = 0;
+
         // See <https://gjs-docs.gnome.org/gio20~2.66p/gio.datainputstream#method-read_line>.
         while (([line, length] = dataInputStream.read_line(null)) && line != null) {
             // See <https://github.com/GNOME/gjs/blob/master/doc/ByteArray.md#tostringauint8array-encodingstringstring>.
@@ -74,19 +76,19 @@ const getCurrentNetSpeed = (refreshInterval) => {
             }
 
             // Skip virtual interfaces.
-            const interface = fields[0];
+            const networkInterface = fields[0];
             const currentInterfaceDownBytes = Number.parseInt(fields[1]);
             const currentInterfaceUpBytes = Number.parseInt(fields[9]);
-            if (interface == 'lo' ||
+            if (networkInterface == 'lo' ||
                 // Created by python-based bandwidth manager "traffictoll".
-                interface.match(/^ifb[0-9]+/) ||
+                networkInterface.match(/^ifb[0-9]+/) ||
                 // Created by lxd container manager.
-                interface.match(/^lxdbr[0-9]+/) ||
-                interface.match(/^virbr[0-9]+/) ||
-                interface.match(/^br[0-9]+/) ||
-                interface.match(/^vnet[0-9]+/) ||
-                interface.match(/^tun[0-9]+/) ||
-                interface.match(/^tap[0-9]+/) ||
+                networkInterface.match(/^lxdbr[0-9]+/) ||
+                networkInterface.match(/^virbr[0-9]+/) ||
+                networkInterface.match(/^br[0-9]+/) ||
+                networkInterface.match(/^vnet[0-9]+/) ||
+                networkInterface.match(/^tun[0-9]+/) ||
+                networkInterface.match(/^tap[0-9]+/) ||
                 isNaN(currentInterfaceDownBytes) ||
                 isNaN(currentInterfaceUpBytes)) {
                 continue;
@@ -131,6 +133,7 @@ const getCurrentCPUUsage = () => {
         let currentCPUUsed = 0;
         let currentCPUTotal = 0;
         let line = null;
+        let length = 0;
 
         while (([line, length] = dataInputStream.read_line(null)) && line != null) {
             if (line instanceof Uint8Array) {
@@ -184,6 +187,7 @@ const getCurrentMemoryUsage = () => {
         let memTotal = -1;
         let memAvailable = -1;
         let line = null;
+        let length = 0;
 
         while (([line, length] = dataInputStream.read_line(null)) && line != null) {
             if (line instanceof Uint8Array) {
