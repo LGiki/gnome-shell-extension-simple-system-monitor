@@ -252,16 +252,16 @@ const formatNetSpeedWithUnit = (amount) => {
 
 const toDisplayString = (texts, enable, cpuUsage, memoryUsage, netSpeed) => {
     const displayItems = [];
-    if (enable.isCpuUsageEnable) {
+    if (enable.isCpuUsageEnable && cpuUsage !== null) {
         displayItems.push(`${texts.cpuUsageText} ${Math.round(cpuUsage * 100)}%`);
     }
-    if (enable.isMemoryUsageEnable) {
+    if (enable.isMemoryUsageEnable && memoryUsage !== null) {
         displayItems.push(`${texts.memoryUsageText} ${Math.round(memoryUsage * 100)}%`);
     }
-    if (enable.isDownloadSpeedEnable) {
+    if (enable.isDownloadSpeedEnable && netSpeed !== null) {
         displayItems.push(`${texts.downloadSpeedText} ${formatNetSpeedWithUnit(netSpeed['down'])}`);
     }
-    if (enable.isUploadSpeedEnable) {
+    if (enable.isUploadSpeedEnable && netSpeed !== null) {
         displayItems.push(`${texts.uploadSpeedText} ${formatNetSpeedWithUnit(netSpeed['up'])}`);
     }
     return displayItems.join(texts.itemSeparator);
@@ -346,9 +346,18 @@ class Extension {
     }
 
     _refresh_monitor() {
-        const currentMemoryUsage = getCurrentMemoryUsage();
-        const currentNetSpeed = getCurrentNetSpeed(this._refresh_interval);
-        const currentCPUUsage = getCurrentCPUUsage(this._refresh_interval);
+        let currentCPUUsage = null;
+        let currentMemoryUsage = null;
+        let currentNetSpeed = null;
+        if (this._enable.isCpuUsageEnable) {
+            currentCPUUsage = getCurrentCPUUsage(this._refresh_interval);
+        }
+        if (this._enable.isMemoryUsageEnable) {
+            currentMemoryUsage = getCurrentMemoryUsage();
+        }
+        if (this._enable.isDownloadSpeedEnable || this._enable.isUploadSpeedEnable) {
+            currentNetSpeed = getCurrentNetSpeed(this._refresh_interval);
+        }
         const displayText = toDisplayString(this._texts, this._enable, currentCPUUsage, currentMemoryUsage, currentNetSpeed);
         this._indicator.setText(displayText);
         return GLib.SOURCE_CONTINUE;
