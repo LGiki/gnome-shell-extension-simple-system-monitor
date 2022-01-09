@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
-  <requires lib="gtk" version="4.0" />
+  <requires lib="gtk+" version="3.20" />
   <object class="GtkAdjustment" id="refresh_rate_adjustment">
     <!-- 86400 seconds = 24 * 60 * 60 = 1 day -->
     <property name="upper">86400</property>
@@ -12,8 +12,8 @@
     <child>
       <object class="GtkGrid">
         <property name="can_focus">1</property>
-        <property name="valign">center</property>
         <property name="halign">center</property>
+        <property name="valign">center</property>
         <property name="margin_top">10</property>
         <property name="margin_bottom">10</property>
         <property name="row_spacing">5</property>
@@ -24,11 +24,11 @@
           <object class="GtkLabel">
             <property name="can_focus">0</property>
             <property name="label" translatable="yes">Show CPU Usage</property>
-            <layout>
-              <property name="column">0</property>
-              <property name="row">0</property>
-            </layout>
           </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">0</property>
+          </packing>
         </child>
         <child>
           <object class="GtkSwitch" id="cpu_usage_enable_switch">
@@ -37,35 +37,35 @@
             <property name="halign">center</property>
             <property name="valign">center</property>
             <signal name="state-set" handler="cpu_usage_enable_switch_changed" swapped="no" />
-            <layout>
-              <property name="column">1</property>
-              <property name="row">0</property>
-            </layout>
           </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">0</property>
+          </packing>
         </child>
         <!-- CPU Usage Text -->
         <child>
           <object class="GtkLabel">
             <property name="can_focus">0</property>
             <property name="label" translatable="yes">CPU Usage Text</property>
-            <layout>
-              <property name="column">0</property>
-              <property name="row">1</property>
-            </layout>
           </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">1</property>
+          </packing>
         </child>
         <child>
           <object class="GtkEntry" id="cpu_usage_text">
             <property name="visible">1</property>
             <property name="can_focus">1</property>
-            <property name="text">U</property>
             <property name="valign">center</property>
+            <property name="text">U</property>
             <signal name="changed" handler="cpu_usage_text_changed" swapped="no" />
-            <layout>
-              <property name="column">1</property>
-              <property name="row">1</property>
-            </layout>
           </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">1</property>
+          </packing>
         </child>
         <!-- Memory Usage Enable -->
         <child>
@@ -73,11 +73,11 @@
             <property name="can_focus">0</property>
             <property name="label" translatable="yes">Show Memory Usage</property>
             <property name="margin_top">20</property>
-            <layout>
-              <property name="column">0</property>
-              <property name="row">2</property>
-            </layout>
           </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">2</property>
+          </packing>
         </child>
         <child>
           <object class="GtkSwitch" id="memory_usage_enable_switch">
@@ -87,35 +87,35 @@
             <property name="valign">center</property>
             <property name="margin_top">20</property>
             <signal name="state-set" handler="memory_usage_enable_switch_changed" swapped="no" />
-            <layout>
-              <property name="column">1</property>
-              <property name="row">2</property>
-            </layout>
           </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">2</property>
+          </packing>
         </child>
         <!-- Memory Usage Text -->
         <child>
           <object class="GtkLabel">
             <property name="can_focus">0</property>
             <property name="label" translatable="yes">Memory Usage Text</property>
-            <layout>
-              <property name="column">0</property>
-              <property name="row">3</property>
-            </layout>
           </object>
+            <packing>
+              <property name="left_attach">0</property>
+              <property name="top_attach">3</property>
+            </packing>
         </child>
         <child>
           <object class="GtkEntry" id="memory_usage_text">
             <property name="visible">1</property>
             <property name="can_focus">1</property>
-            <property name="text">M</property>
             <property name="valign">center</property>
+            <property name="text">M</property>
             <signal name="changed" handler="memory_usage_text_changed" swapped="no" />
-            <layout>
-              <property name="column">1</property>
-              <property name="row">3</property>
-            </layout>
           </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">3</property>
+          </packing>
         </child>
         <!-- Download Speed Enable -->
         <child>
@@ -123,11 +123,11 @@
             <property name="can_focus">0</property>
             <property name="label" translatable="yes">Show Download Speed</property>
             <property name="margin_top">20</property>
-            <layout>
-              <property name="column">0</property>
-              <property name="row">4</property>
-            </layout>
           </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">4</property>
+          </packing>
         </child>
         <child>
           <object class="GtkSwitch" id="download_speed_enable_switch">
@@ -137,35 +137,35 @@
             <property name="valign">center</property>
             <property name="margin_top">20</property>
             <signal name="state-set" handler="download_speed_enable_switch_changed" swapped="no" />
-            <layout>
-              <property name="column">1</property>
-              <property name="row">4</property>
-            </layout>
           </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">4</property>
+          </packing>
         </child>
         <!-- Download Speed Text -->
         <child>
           <object class="GtkLabel">
             <property name="can_focus">0</property>
             <property name="label" translatable="yes">Download Speed Text</property>
-            <layout>
-              <property name="column">0</property>
-              <property name="row">5</property>
-            </layout>
           </object>
+          <packing>
+              <property name="left_attach">0</property>
+              <property name="top_attach">5</property>
+            </packing>
         </child>
         <child>
           <object class="GtkEntry" id="download_speed_text">
             <property name="visible">1</property>
             <property name="can_focus">1</property>
-            <property name="text">↓</property>
             <property name="valign">center</property>
+            <property name="text">↓</property>
             <signal name="changed" handler="download_usage_text_changed" swapped="no" />
-            <layout>
-              <property name="column">1</property>
-              <property name="row">5</property>
-            </layout>
           </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">5</property>
+          </packing>
         </child>
         <!-- Upload Speed Enable -->
         <child>
@@ -173,11 +173,11 @@
             <property name="can_focus">0</property>
             <property name="label" translatable="yes">Show Upload Speed</property>
             <property name="margin_top">20</property>
-            <layout>
-              <property name="column">0</property>
-              <property name="row">6</property>
-            </layout>
           </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">6</property>
+          </packing>
         </child>
         <child>
           <object class="GtkSwitch" id="upload_speed_enable_switch">
@@ -187,35 +187,35 @@
             <property name="valign">center</property>
             <property name="margin_top">20</property>
             <signal name="state-set" handler="upload_speed_enable_switch_changed" swapped="no" />
-            <layout>
-              <property name="column">1</property>
-              <property name="row">6</property>
-            </layout>
           </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">6</property>
+          </packing>
         </child>
         <!-- Upload Speed Text -->
         <child>
           <object class="GtkLabel">
             <property name="can_focus">0</property>
             <property name="label" translatable="yes">Upload Speed Text</property>
-            <layout>
-              <property name="column">0</property>
-              <property name="row">7</property>
-            </layout>
           </object>
+          <packing>
+              <property name="left_attach">0</property>
+              <property name="top_attach">7</property>
+            </packing>
         </child>
         <child>
           <object class="GtkEntry" id="upload_speed_text">
             <property name="visible">1</property>
             <property name="can_focus">1</property>
-            <property name="text">↑</property>
             <property name="valign">center</property>
+            <property name="text">↑</property>
             <signal name="changed" handler="upload_usage_text_changed" swapped="no" />
-            <layout>
-              <property name="column">1</property>
-              <property name="row">7</property>
-            </layout>
           </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">7</property>
+          </packing>
         </child>
         <!-- Item Separator -->
         <child>
@@ -223,53 +223,51 @@
             <property name="can_focus">0</property>
             <property name="label" translatable="yes">Item Separator</property>
             <property name="margin_top">20</property>
-            <layout>
-              <property name="column">0</property>
-              <property name="row">8</property>
-            </layout>
           </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">8</property>
+          </packing>
         </child>
         <child>
           <object class="GtkEntry" id="item_separator">
             <property name="visible">1</property>
             <property name="can_focus">1</property>
-            <property name="text">↑</property>
+            <property name="text">/</property>
             <property name="valign">center</property>
             <property name="margin_top">20</property>
             <signal name="changed" handler="item_separator_changed" swapped="no" />
-            <layout>
-              <property name="column">1</property>
-              <property name="row">8</property>
-            </layout>
           </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">8</property>
+          </packing>
         </child>
         <!-- Refresh Interval -->
         <child>
           <object class="GtkLabel">
             <property name="can_focus">0</property>
             <property name="label" translatable="yes">Refresh Interval (second)</property>
-            <property name="margin_top">20</property>
-            <layout>
-              <property name="column">0</property>
-              <property name="row">9</property>
-            </layout>
           </object>
+          <packing>
+              <property name="left_attach">0</property>
+              <property name="top_attach">9</property>
+            </packing>
         </child>
         <child>
           <object class="GtkSpinButton" id="refresh_interval">
             <property name="visible">1</property>
             <property name="can_focus">1</property>
             <property name="numeric">1</property>
+            <property name="valign">center</property>
             <property name="value">1</property>
             <property name="adjustment">refresh_rate_adjustment</property>
-            <property name="margin_top">20</property>
-            <property name="valign">center</property>
             <signal name="value-changed" handler="refresh_interval_changed" swapped="no" />
-            <layout>
-              <property name="column">1</property>
-              <property name="row">9</property>
-            </layout>
           </object>
+          <packing>
+              <property name="left_attach">1</property>
+              <property name="top_attach">9</property>
+            </packing>
         </child>
         <child>
           <object class="GtkButton">
@@ -277,14 +275,13 @@
             <property name="visible">1</property>
             <property name="can_focus">1</property>
             <property name="receives_default">1</property>
-            <property name="margin_top">20</property>
             <signal name="clicked" handler="reset_settings_to_default_clicked" swapped="no" />
-            <layout>
-              <property name="column">0</property>
-              <property name="row">10</property>
-              <property name="column_span">2</property>
-            </layout>
           </object>
+          <packing>
+              <property name="left_attach">0</property>
+              <property name="top_attach">10</property>
+              <property name="width">2</property>
+            </packing>
         </child>
       </object>
     </child>

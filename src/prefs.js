@@ -18,9 +18,11 @@ const DEFAULT_SETTINGS = {
     refreshInterval: 1
 };
 
+const WIDGET_TEMPLATE_FILE = Gtk.get_major_version() === 3 ? 'prefs_gtk3.ui' : 'prefs.ui';
+
 const SimpleSystemMonitorPrefsWidget = GObject.registerClass({
     GTypeName: 'SimpleSystemMonitorPrefsWidget',
-    Template: Me.dir.get_child('prefs.ui').get_uri(),
+    Template: Me.dir.get_child(WIDGET_TEMPLATE_FILE).get_uri(),
     InternalChildren: [
         'cpu_usage_enable_switch',
         'cpu_usage_text',
@@ -120,5 +122,8 @@ function init() { }
 function buildPrefsWidget() {
     const widget = new SimpleSystemMonitorPrefsWidget();
     widget.homogeneous = true;
+    if (Gtk.get_major_version() === 3) {
+        widget.show_all();
+    }
     return widget;
 }
