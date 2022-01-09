@@ -1,5 +1,7 @@
 # Simple System Monitor
 
+<img src="./icon.svg" width="130" height="99" align="right" />
+
 [![GitHub](https://img.shields.io/github/license/LGiki/gnome-shell-extension-simple-system-monitor?style=flat-square)](https://github.com/LGiki/gnome-shell-extension-simple-system-monitor/blob/master/LICENSE)
 
 Simple system monitor extension for GNOME.
