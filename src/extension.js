@@ -251,16 +251,21 @@ const formatNetSpeedWithUnit = (amount) => {
     }
 
     // See <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toFixed>.
-    return `${amount.toFixed(digits)} ${netSpeedUnits[unitIndex]}`;
+    return `${amount.toFixed(digits).toString().padStart(4)} ${netSpeedUnits[unitIndex]}`;
 };
+
+// Format a usage value in [0, 1] as an integer percent value.
+const formatUsageVal = (usage) => {
+  return Math.round(usage * 100).toString().padStart(3) + "%";
+}
 
 const toDisplayString = (texts, enable, cpuUsage, memoryUsage, netSpeed) => {
     const displayItems = [];
     if (enable.isCpuUsageEnable && cpuUsage !== null) {
-        displayItems.push(`${texts.cpuUsageText} ${Math.round(cpuUsage * 100)}%`);
+        displayItems.push(`${texts.cpuUsageText} ${formatUsageVal(cpuUsage)}`);
     }
     if (enable.isMemoryUsageEnable && memoryUsage !== null) {
-        displayItems.push(`${texts.memoryUsageText} ${Math.round(memoryUsage * 100)}%`);
+        displayItems.push(`${texts.memoryUsageText} ${formatUsageVal(memoryUsage)}`);
     }
     if (enable.isDownloadSpeedEnable && netSpeed !== null) {
         displayItems.push(`${texts.downloadSpeedText} ${formatNetSpeedWithUnit(netSpeed['down'])}`);
@@ -279,7 +284,6 @@ const Indicator = GObject.registerClass(
             this._label = new St.Label({
                 'y_align': Clutter.ActorAlign.CENTER,
                 'text': 'Initialization',
-                'style_class': 'label'
             });
 
             this.add_child(this._label);
@@ -291,11 +295,15 @@ const Indicator = GObject.registerClass(
             this.menu.addMenuItem(settingMenuItem);
         }
 
+        setFontFamily(fontFamily) {
+            return this._label.set_style(`font-family: "${fontFamily}";`);
+        }
+
         setText(text) {
             return this._label.set_text(text);
         }
-    });
-
+    }
+);
 
 
 class Extension {
@@ -330,6 +338,9 @@ class Extension {
         this._refresh_interval = this._prefs.REFRESH_INTERVAL.get();
 
         this._indicator = new Indicator();
+
+        this._indicator.setFontFamily(this._prefs.FONT_FAMILY.get());
+
         Main.panel.addToStatusArea(this._uuid, this._indicator, 0, 'right');
 
         this._timeout = GLib.timeout_add_seconds(GLib.PRIORITY_DEFAULT_IDLE, this._refresh_interval, this._refresh_monitor.bind(this));
@@ -404,6 +415,10 @@ class Extension {
             this._texts.itemSeparator = this._prefs.ITEM_SEPARATOR.get();
         });
 
+        this._prefs.FONT_FAMILY.changed(() => {
+            this._indicator.setFontFamily(this._prefs.FONT_FAMILY.get());
+        });
+
         this._prefs.REFRESH_INTERVAL.changed(() => {
             this._refresh_interval = this._prefs.REFRESH_INTERVAL.get();
             if (this._timeout != null) {
@@ -424,6 +439,7 @@ class Extension {
         this._prefs.UPLOAD_SPEED_TEXT.disconnect();
         this._prefs.ITEM_SEPARATOR.disconnect();
         this._prefs.REFRESH_INTERVAL.disconnect();
+        this._prefs.FONT_FAMILY.disconnect();
     }
 }
 

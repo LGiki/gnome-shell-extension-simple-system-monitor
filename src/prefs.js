@@ -15,7 +15,8 @@ const DEFAULT_SETTINGS = {
     isUploadSpeedEnable: true,
     uploadSpeedText: '↑',
     itemSeparator: ' ',
-    refreshInterval: 1
+    refreshInterval: 1,
+    fontFamily: 'Sans'
 };
 
 const WIDGET_TEMPLATE_FILE = Gtk.get_major_version() === 3 ? 'prefs_gtk3.ui' : 'prefs.ui';
@@ -33,7 +34,8 @@ const SimpleSystemMonitorPrefsWidget = GObject.registerClass({
         'upload_speed_enable_switch',
         'upload_speed_text',
         'item_separator',
-        'refresh_interval'
+        'refresh_interval',
+        'font_family'
     ]
 }, class SimpleSystemMonitorPrefsWidget extends Gtk.Box {
     _init() {
@@ -56,6 +58,7 @@ const SimpleSystemMonitorPrefsWidget = GObject.registerClass({
         this._upload_speed_text.set_text(Configuration.UPLOAD_SPEED_TEXT.get());
         this._item_separator.set_text(Configuration.ITEM_SEPARATOR.get());
         this._refresh_interval.set_value(Configuration.REFRESH_INTERVAL.get());
+        this._font_family.set_font(Configuration.FONT_FAMILY.get());
     }
 
     reset_settings_to_default() {
@@ -69,6 +72,13 @@ const SimpleSystemMonitorPrefsWidget = GObject.registerClass({
         Configuration.UPLOAD_SPEED_TEXT.set(DEFAULT_SETTINGS.uploadSpeedText);
         Configuration.ITEM_SEPARATOR.set(DEFAULT_SETTINGS.itemSeparator);
         Configuration.REFRESH_INTERVAL.set(DEFAULT_SETTINGS.refreshInterval);
+        Configuration.FONT_FAMILY.set(DEFAULT_SETTINGS.fontFamily);
+    }
+
+    font_changed(widget) {
+        const font = widget.get_font();
+        const fontFamily = font.substring(0, font.lastIndexOf(' '));
+        Configuration.FONT_FAMILY.set(fontFamily);
     }
 
     cpu_usage_enable_switch_changed(widget) {

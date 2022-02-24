@@ -16,6 +16,7 @@ var Prefs = class Prefs {
         this.UPLOAD_SPEED_TEXT = new PrefValue(settings, 'upload-speed-text', 'string');
         this.ITEM_SEPARATOR = new PrefValue(settings, 'item-separator', 'string');
         this.REFRESH_INTERVAL = new PrefValue(settings, 'refresh-interval', 'int');
+        this.FONT_FAMILY = new PrefValue(settings, 'font-family', 'string');
     }
 }
 

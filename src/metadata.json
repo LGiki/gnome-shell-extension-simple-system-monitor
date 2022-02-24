@@ -2,11 +2,10 @@
   "name": "Simple System Monitor",
   "description": "Show current CPU usage, memory usage and net speed on panel.",
   "uuid": "ssm-gnome@lgiki.net",
-  "version": 4,
+  "version": 5,
   "shell-version": [
     "40",
     "41",
-    "3.34",
     "3.36",
     "3.38"
   ],

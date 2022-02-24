@@ -51,5 +51,10 @@
       <summary>Item Separator</summary>
       <description>Item Separator</description>
     </key>
+    <key type="s" name="font-family">
+      <default>'Sans'</default>
+      <summary>Font</summary>
+      <description>Font</description>
+    </key>
   </schema>
 </schemalist>

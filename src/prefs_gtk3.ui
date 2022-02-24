@@ -150,9 +150,9 @@
             <property name="label" translatable="yes">Download Speed Text</property>
           </object>
           <packing>
-              <property name="left_attach">0</property>
-              <property name="top_attach">5</property>
-            </packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">5</property>
+          </packing>
         </child>
         <child>
           <object class="GtkEntry" id="download_speed_text">
@@ -200,9 +200,9 @@
             <property name="label" translatable="yes">Upload Speed Text</property>
           </object>
           <packing>
-              <property name="left_attach">0</property>
-              <property name="top_attach">7</property>
-            </packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">7</property>
+          </packing>
         </child>
         <child>
           <object class="GtkEntry" id="upload_speed_text">
@@ -250,9 +250,9 @@
             <property name="label" translatable="yes">Refresh Interval (second)</property>
           </object>
           <packing>
-              <property name="left_attach">0</property>
-              <property name="top_attach">9</property>
-            </packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">9</property>
+          </packing>
         </child>
         <child>
           <object class="GtkSpinButton" id="refresh_interval">
@@ -265,9 +265,38 @@
             <signal name="value-changed" handler="refresh_interval_changed" swapped="no" />
           </object>
           <packing>
-              <property name="left_attach">1</property>
-              <property name="top_attach">9</property>
-            </packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">9</property>
+          </packing>
+        </child>
+        <!-- Font Family -->
+        <child>
+          <object class="GtkLabel">
+            <property name="can_focus">0</property>
+            <property name="label" translatable="yes">Font</property>
+          </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">10</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkFontButton" id="font_family">
+            <property name="visible">1</property>
+            <property name="can_focus">1</property>
+            <property name="margin_top">20</property>
+            <property name="receives_default">1</property>
+            <property name="font">Sans</property>
+            <property name="language">en-us</property>
+            <property name="use_font">1</property>
+            <property name="level">GTK_FONT_CHOOSER_LEVEL_FAMILY</property>
+            <property name="preview_text">U 12% M 34% ↓ 56 K/s ↑ 78 K/s</property>
+            <signal name="font-set" handler="font_changed" swapped="no" />
+          </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">10</property>
+          </packing>
         </child>
         <child>
           <object class="GtkButton">
@@ -279,7 +308,7 @@
           </object>
           <packing>
               <property name="left_attach">0</property>
-              <property name="top_attach">10</property>
+              <property name="top_attach">11</property>
               <property name="width">2</property>
             </packing>
         </child>
