@@ -17,6 +17,8 @@ var Prefs = class Prefs {
         this.ITEM_SEPARATOR = new PrefValue(settings, 'item-separator', 'string');
         this.REFRESH_INTERVAL = new PrefValue(settings, 'refresh-interval', 'int');
         this.FONT_FAMILY = new PrefValue(settings, 'font-family', 'string');
+        this.FONT_SIZE = new PrefValue(settings, 'font-size', 'string');
+        this.TEXT_COLOR = new PrefValue(settings, 'text-color', 'string');
     }
 }
 

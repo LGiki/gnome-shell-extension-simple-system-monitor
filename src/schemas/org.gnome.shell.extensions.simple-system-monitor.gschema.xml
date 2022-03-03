@@ -53,8 +53,18 @@
     </key>
     <key type="s" name="font-family">
       <default>'Sans'</default>
-      <summary>Font</summary>
-      <description>Font</description>
+      <summary>Font Family</summary>
+      <description>Font Family</description>
+    </key>
+    <key type="s" name="font-size">
+      <default>'14'</default>
+      <summary>Font Size</summary>
+      <description>Font Size</description>
+    </key>
+    <key type="s" name="text-color">
+      <default>'#dddddd'</default>
+      <summary>Text Color</summary>
+      <description>Text Color</description>
     </key>
   </schema>
 </schemalist>

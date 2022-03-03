@@ -247,6 +247,7 @@
         <child>
           <object class="GtkLabel">
             <property name="can_focus">0</property>
+            <property name="margin_top">20</property>
             <property name="label" translatable="yes">Refresh Interval (second)</property>
           </object>
           <packing>
@@ -257,6 +258,7 @@
         <child>
           <object class="GtkSpinButton" id="refresh_interval">
             <property name="visible">1</property>
+            <property name="margin_top">20</property>
             <property name="can_focus">1</property>
             <property name="numeric">1</property>
             <property name="valign">center</property>
@@ -273,6 +275,7 @@
         <child>
           <object class="GtkLabel">
             <property name="can_focus">0</property>
+            <property name="margin_top">20</property>
             <property name="label" translatable="yes">Font</property>
           </object>
           <packing>
@@ -281,7 +284,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkFontButton" id="font_family">
+          <object class="GtkFontButton" id="font_button">
             <property name="visible">1</property>
             <property name="can_focus">1</property>
             <property name="margin_top">20</property>
@@ -289,7 +292,7 @@
             <property name="font">Sans</property>
             <property name="language">en-us</property>
             <property name="use_font">1</property>
-            <property name="level">GTK_FONT_CHOOSER_LEVEL_FAMILY</property>
+            <property name="level">GTK_FONT_CHOOSER_LEVEL_FAMILY | GTK_FONT_CHOOSER_LEVEL_SIZE</property>
             <property name="preview_text">U 12% M 34% ↓ 56 K/s ↑ 78 K/s</property>
             <signal name="font-set" handler="font_changed" swapped="no" />
           </object>
@@ -298,17 +301,41 @@
             <property name="top_attach">10</property>
           </packing>
         </child>
+        <!-- Text Color -->
+        <child>
+          <object class="GtkLabel">
+            <property name="can_focus">0</property>
+            <property name="label" translatable="yes">Text Color</property>
+          </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">11</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkColorButton" id='text_color'>
+            <property name="visible">1</property>
+            <property name="can_focus">1</property>
+            <property name="receives_default">1</property>
+            <signal name="color-set" handler="color_changed" swapped="no" />
+          </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">11</property>
+          </packing>
+        </child>
         <child>
           <object class="GtkButton">
             <property name="label" translatable="yes">Reset Settings To Default</property>
             <property name="visible">1</property>
             <property name="can_focus">1</property>
             <property name="receives_default">1</property>
+            <property name="margin_top">20</property>
             <signal name="clicked" handler="reset_settings_to_default_clicked" swapped="no" />
           </object>
           <packing>
               <property name="left_attach">0</property>
-              <property name="top_attach">11</property>
+              <property name="top_attach">12</property>
               <property name="width">2</property>
             </packing>
         </child>

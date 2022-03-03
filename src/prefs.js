@@ -1,4 +1,4 @@
-const { GObject, Gtk } = imports.gi;
+const { GObject, Gtk, Gdk } = imports.gi;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
@@ -16,10 +16,24 @@ const DEFAULT_SETTINGS = {
     uploadSpeedText: '↑',
     itemSeparator: ' ',
     refreshInterval: 1,
-    fontFamily: 'Sans'
+    fontFamily: 'Sans',
+    fontSize: '14',
+    textColor: '#DDDDDD'
 };
 
 const WIDGET_TEMPLATE_FILE = Gtk.get_major_version() === 3 ? 'prefs_gtk3.ui' : 'prefs.ui';
+
+const N_ = function (e) {
+    return e;
+};
+
+const colorToHex = (color) => {
+    return N_('#%02x%02x%02x').format(
+        255 * color.red,
+        255 * color.green,
+        255 * color.blue,
+    );
+}
 
 const SimpleSystemMonitorPrefsWidget = GObject.registerClass({
     GTypeName: 'SimpleSystemMonitorPrefsWidget',
@@ -35,7 +49,8 @@ const SimpleSystemMonitorPrefsWidget = GObject.registerClass({
         'upload_speed_text',
         'item_separator',
         'refresh_interval',
-        'font_family'
+        'font_button',
+        'text_color'
     ]
 }, class SimpleSystemMonitorPrefsWidget extends Gtk.Box {
     _init() {
@@ -58,7 +73,10 @@ const SimpleSystemMonitorPrefsWidget = GObject.registerClass({
         this._upload_speed_text.set_text(Configuration.UPLOAD_SPEED_TEXT.get());
         this._item_separator.set_text(Configuration.ITEM_SEPARATOR.get());
         this._refresh_interval.set_value(Configuration.REFRESH_INTERVAL.get());
-        this._font_family.set_font(Configuration.FONT_FAMILY.get());
+        this._font_button.set_font(`${Configuration.FONT_FAMILY.get()} ${Configuration.FONT_SIZE.get()}`);
+        const color = new Gdk.RGBA();
+        color.parse(Configuration.TEXT_COLOR.get());
+        this._text_color.set_rgba(color);
     }
 
     reset_settings_to_default() {
@@ -73,12 +91,21 @@ const SimpleSystemMonitorPrefsWidget = GObject.registerClass({
         Configuration.ITEM_SEPARATOR.set(DEFAULT_SETTINGS.itemSeparator);
         Configuration.REFRESH_INTERVAL.set(DEFAULT_SETTINGS.refreshInterval);
         Configuration.FONT_FAMILY.set(DEFAULT_SETTINGS.fontFamily);
+        Configuration.FONT_SIZE.set(DEFAULT_SETTINGS.fontSize);
+        Configuration.TEXT_COLOR.set(DEFAULT_SETTINGS.textColor);
+    }
+
+    color_changed(widget) {
+        Configuration.TEXT_COLOR.set(colorToHex(widget.get_rgba()));
     }
 
     font_changed(widget) {
         const font = widget.get_font();
-        const fontFamily = font.substring(0, font.lastIndexOf(' '));
+        const lastSpaceIndex = font.lastIndexOf(' ');
+        const fontFamily = font.substring(0, lastSpaceIndex);
+        const fontSize = font.substring(lastSpaceIndex, font.length);
         Configuration.FONT_FAMILY.set(fontFamily);
+        Configuration.FONT_SIZE.set(fontSize);
     }
 
     cpu_usage_enable_switch_changed(widget) {

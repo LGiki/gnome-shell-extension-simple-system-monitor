@@ -256,7 +256,7 @@ const formatNetSpeedWithUnit = (amount) => {
 
 // Format a usage value in [0, 1] as an integer percent value.
 const formatUsageVal = (usage) => {
-  return Math.round(usage * 100).toString().padStart(3) + "%";
+    return Math.round(usage * 100).toString().padStart(3) + "%";
 }
 
 const toDisplayString = (texts, enable, cpuUsage, memoryUsage, netSpeed) => {
@@ -295,8 +295,8 @@ const Indicator = GObject.registerClass(
             this.menu.addMenuItem(settingMenuItem);
         }
 
-        setFontFamily(fontFamily) {
-            return this._label.set_style(`font-family: "${fontFamily}";`);
+        setFontStyle(fontFamily, fontSize, textColor) {
+            return this._label.set_style(`font-family: "${fontFamily}";font-size: ${fontSize}px; color: ${textColor};`);
         }
 
         setText(text) {
@@ -339,7 +339,7 @@ class Extension {
 
         this._indicator = new Indicator();
 
-        this._indicator.setFontFamily(this._prefs.FONT_FAMILY.get());
+        this._update_text_style();
 
         Main.panel.addToStatusArea(this._uuid, this._indicator, 0, 'right');
 
@@ -358,6 +358,10 @@ class Extension {
             GLib.source_remove(this._timeout);
             this._timeout = null;
         }
+    }
+
+    _update_text_style() {
+        this._indicator.setFontStyle(this._prefs.FONT_FAMILY.get(), this._prefs.FONT_SIZE.get(), this._prefs.TEXT_COLOR.get());
     }
 
     _refresh_monitor() {
@@ -415,9 +419,9 @@ class Extension {
             this._texts.itemSeparator = this._prefs.ITEM_SEPARATOR.get();
         });
 
-        this._prefs.FONT_FAMILY.changed(() => {
-            this._indicator.setFontFamily(this._prefs.FONT_FAMILY.get());
-        });
+        this._prefs.FONT_FAMILY.changed(() => this._update_text_style());
+        this._prefs.FONT_SIZE.changed(() => this._update_text_style());
+        this._prefs.TEXT_COLOR.changed(() => this._update_text_style());
 
         this._prefs.REFRESH_INTERVAL.changed(() => {
             this._refresh_interval = this._prefs.REFRESH_INTERVAL.get();
@@ -440,6 +444,8 @@ class Extension {
         this._prefs.ITEM_SEPARATOR.disconnect();
         this._prefs.REFRESH_INTERVAL.disconnect();
         this._prefs.FONT_FAMILY.disconnect();
+        this._prefs.FONT_SIZE.disconnect();
+        this._prefs.TEXT_COLOR.disconnect();
     }
 }
 
