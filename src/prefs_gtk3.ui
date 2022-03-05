@@ -289,7 +289,7 @@
             <property name="can_focus">1</property>
             <property name="margin_top">20</property>
             <property name="receives_default">1</property>
-            <property name="font">Sans</property>
+            <property name="font">Sans 12</property>
             <property name="language">en-us</property>
             <property name="use_font">1</property>
             <property name="level">GTK_FONT_CHOOSER_LEVEL_FAMILY | GTK_FONT_CHOOSER_LEVEL_SIZE</property>

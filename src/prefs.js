@@ -17,7 +17,7 @@ const DEFAULT_SETTINGS = {
     itemSeparator: ' ',
     refreshInterval: 1,
     fontFamily: 'Sans',
-    fontSize: '14',
+    fontSize: '12',
     textColor: '#DDDDDD'
 };
 
