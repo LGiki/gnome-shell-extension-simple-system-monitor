@@ -10,7 +10,7 @@ Show current CPU usage, memory usage and net speed on panel.
 
 It only shows text like `U 1% M 23% ↓ 456 K/s ↑ 789 K/s` on the right part of panel.
 
-For best experience, please use [monospaced font](https://en.wikipedia.org/wiki/Monospaced_font).
+For best experience, please use [monospaced font](https://en.wikipedia.org/wiki/Monospaced_font), e.g. [JetBrains Mono](https://www.jetbrains.com/lp/mono/), [Source Code Pro](http://adobe-fonts.github.io/source-code-pro/), [FiraCode](https://github.com/tonsky/FiraCode), [Hack](https://github.com/source-foundry/Hack).
 
 # Screenshot
 
