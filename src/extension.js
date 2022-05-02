@@ -1,5 +1,5 @@
 /* extension.js
- * 
+ *
  * This is a fork of <https://extensions.gnome.org/extension/4478/net-speed/>.
  *
  * This program is free software: you can redistribute it and/or modify
@@ -274,7 +274,8 @@ const toDisplayString = (texts, enable, cpuUsage, memoryUsage, netSpeed) => {
     if (enable.isUploadSpeedEnable && netSpeed !== null) {
         displayItems.push(`${texts.uploadSpeedText} ${formatNetSpeedWithUnit(netSpeed['up'])}`);
     }
-    return displayItems.join(texts.itemSeparator);
+    let unescapedSeparator = texts.itemSeparator.replace(/\\n/g, '\n')
+    return displayItems.join(unescapedSeparator);
 }
 
 const Indicator = GObject.registerClass(
