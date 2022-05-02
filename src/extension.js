@@ -256,17 +256,17 @@ const formatNetSpeedWithUnit = (amount) => {
 };
 
 // Format a usage value in [0, 1] as an integer percent value.
-const formatUsageVal = (usage) => {
-    return Math.round(usage * 100).toString().padStart(3) + "%";
+const formatUsageVal = (showPercentSign, usage) => {
+    return Math.round(usage * 100).toString().padStart(3) + (showPercentSign ? "%" : "");
 }
 
-const toDisplayString = (texts, enable, cpuUsage, memoryUsage, netSpeed) => {
+const toDisplayString = (showPercentSign, texts, enable, cpuUsage, memoryUsage, netSpeed) => {
     const displayItems = [];
     if (enable.isCpuUsageEnable && cpuUsage !== null) {
-        displayItems.push(`${texts.cpuUsageText} ${formatUsageVal(cpuUsage)}`);
+        displayItems.push(`${texts.cpuUsageText} ${formatUsageVal(showPercentSign, cpuUsage)}`);
     }
     if (enable.isMemoryUsageEnable && memoryUsage !== null) {
-        displayItems.push(`${texts.memoryUsageText} ${formatUsageVal(memoryUsage)}`);
+        displayItems.push(`${texts.memoryUsageText} ${formatUsageVal(showPercentSign, memoryUsage)}`);
     }
     if (enable.isDownloadSpeedEnable && netSpeed !== null) {
         displayItems.push(`${texts.downloadSpeedText} ${formatNetSpeedWithUnit(netSpeed['down'])}`);
@@ -340,6 +340,8 @@ class Extension {
             isUploadSpeedEnable: this._prefs.IS_UPLOAD_SPEED_ENABLE.get(),
         }
 
+        this._showPercentSign = this._prefs.SHOW_PERCENT_SIGN.get();
+
         this._refresh_interval = this._prefs.REFRESH_INTERVAL.get();
 
         this._indicator = new Indicator();
@@ -382,12 +384,16 @@ class Extension {
         if (this._enable.isDownloadSpeedEnable || this._enable.isUploadSpeedEnable) {
             currentNetSpeed = getCurrentNetSpeed(this._refresh_interval);
         }
-        const displayText = toDisplayString(this._texts, this._enable, currentCPUUsage, currentMemoryUsage, currentNetSpeed);
+        const displayText = toDisplayString(this._showPercentSign, this._texts, this._enable, currentCPUUsage, currentMemoryUsage, currentNetSpeed);
         this._indicator.setText(displayText);
         return GLib.SOURCE_CONTINUE;
     }
 
     _listen_setting_change() {
+        this._prefs.SHOW_PERCENT_SIGN.changed(() => {
+            this._showPercentSign = this._prefs.SHOW_PERCENT_SIGN.get();
+        });
+
         this._prefs.IS_CPU_USAGE_ENABLE.changed(() => {
             this._enable.isCpuUsageEnable = this._prefs.IS_CPU_USAGE_ENABLE.get();
         });
@@ -438,6 +444,7 @@ class Extension {
     }
 
     _destory_setting_change_listener() {
+        this._prefs.SHOW_PERCENT_SIGN.disconnect();
         this._prefs.IS_CPU_USAGE_ENABLE.disconnect();
         this._prefs.IS_MEMORY_USAGE_ENABLE.disconnect();
         this._prefs.IS_DOWNLOAD_SPEED_ENABLE.disconnect();

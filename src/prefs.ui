@@ -19,14 +19,39 @@
         <property name="row_spacing">5</property>
         <property name="column_spacing">5</property>
         <property name="column_homogeneous">1</property>
+        <!-- Show Percent Sign -->
+        <child>
+          <object class="GtkLabel">
+            <property name="can_focus">0</property>
+            <property name="label" translatable="yes">Show Percent Sign</property>
+            <layout>
+              <property name="column">0</property>
+              <property name="row">0</property>
+            </layout>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSwitch" id="show_percent_sign_switch">
+            <property name="visible">1</property>
+            <property name="can_focus">1</property>
+            <property name="halign">center</property>
+            <property name="valign">center</property>
+            <signal name="state-set" handler="show_percent_sign_switch_changed" swapped="no" />
+            <layout>
+              <property name="column">1</property>
+              <property name="row">0</property>
+            </layout>
+          </object>
+        </child>
         <!-- CPU Usage Enable -->
         <child>
           <object class="GtkLabel">
             <property name="can_focus">0</property>
             <property name="label" translatable="yes">Show CPU Usage</property>
+            <property name="margin_top">20</property>
             <layout>
               <property name="column">0</property>
-              <property name="row">0</property>
+              <property name="row">1</property>
             </layout>
           </object>
         </child>
@@ -36,10 +61,11 @@
             <property name="can_focus">1</property>
             <property name="halign">center</property>
             <property name="valign">center</property>
+            <property name="margin_top">20</property>
             <signal name="state-set" handler="cpu_usage_enable_switch_changed" swapped="no" />
             <layout>
               <property name="column">1</property>
-              <property name="row">0</property>
+              <property name="row">1</property>
             </layout>
           </object>
         </child>
@@ -50,7 +76,7 @@
             <property name="label" translatable="yes">CPU Usage Text</property>
             <layout>
               <property name="column">0</property>
-              <property name="row">1</property>
+              <property name="row">2</property>
             </layout>
           </object>
         </child>
@@ -63,7 +89,7 @@
             <signal name="changed" handler="cpu_usage_text_changed" swapped="no" />
             <layout>
               <property name="column">1</property>
-              <property name="row">1</property>
+              <property name="row">2</property>
             </layout>
           </object>
         </child>
@@ -75,7 +101,7 @@
             <property name="margin_top">20</property>
             <layout>
               <property name="column">0</property>
-              <property name="row">2</property>
+              <property name="row">3</property>
             </layout>
           </object>
         </child>
@@ -89,7 +115,7 @@
             <signal name="state-set" handler="memory_usage_enable_switch_changed" swapped="no" />
             <layout>
               <property name="column">1</property>
-              <property name="row">2</property>
+              <property name="row">3</property>
             </layout>
           </object>
         </child>
@@ -100,7 +126,7 @@
             <property name="label" translatable="yes">Memory Usage Text</property>
             <layout>
               <property name="column">0</property>
-              <property name="row">3</property>
+              <property name="row">4</property>
             </layout>
           </object>
         </child>
@@ -113,7 +139,7 @@
             <signal name="changed" handler="memory_usage_text_changed" swapped="no" />
             <layout>
               <property name="column">1</property>
-              <property name="row">3</property>
+              <property name="row">4</property>
             </layout>
           </object>
         </child>
@@ -125,7 +151,7 @@
             <property name="margin_top">20</property>
             <layout>
               <property name="column">0</property>
-              <property name="row">4</property>
+              <property name="row">5</property>
             </layout>
           </object>
         </child>
@@ -139,7 +165,7 @@
             <signal name="state-set" handler="download_speed_enable_switch_changed" swapped="no" />
             <layout>
               <property name="column">1</property>
-              <property name="row">4</property>
+              <property name="row">5</property>
             </layout>
           </object>
         </child>
@@ -150,7 +176,7 @@
             <property name="label" translatable="yes">Download Speed Text</property>
             <layout>
               <property name="column">0</property>
-              <property name="row">5</property>
+              <property name="row">6</property>
             </layout>
           </object>
         </child>
@@ -163,7 +189,7 @@
             <signal name="changed" handler="download_usage_text_changed" swapped="no" />
             <layout>
               <property name="column">1</property>
-              <property name="row">5</property>
+              <property name="row">6</property>
             </layout>
           </object>
         </child>
@@ -175,7 +201,7 @@
             <property name="margin_top">20</property>
             <layout>
               <property name="column">0</property>
-              <property name="row">6</property>
+              <property name="row">7</property>
             </layout>
           </object>
         </child>
@@ -189,7 +215,7 @@
             <signal name="state-set" handler="upload_speed_enable_switch_changed" swapped="no" />
             <layout>
               <property name="column">1</property>
-              <property name="row">6</property>
+              <property name="row">7</property>
             </layout>
           </object>
         </child>
@@ -200,7 +226,7 @@
             <property name="label" translatable="yes">Upload Speed Text</property>
             <layout>
               <property name="column">0</property>
-              <property name="row">7</property>
+              <property name="row">8</property>
             </layout>
           </object>
         </child>
@@ -213,7 +239,7 @@
             <signal name="changed" handler="upload_usage_text_changed" swapped="no" />
             <layout>
               <property name="column">1</property>
-              <property name="row">7</property>
+              <property name="row">8</property>
             </layout>
           </object>
         </child>
@@ -225,7 +251,7 @@
             <property name="margin_top">20</property>
             <layout>
               <property name="column">0</property>
-              <property name="row">8</property>
+              <property name="row">9</property>
             </layout>
           </object>
         </child>
@@ -239,7 +265,7 @@
             <signal name="changed" handler="item_separator_changed" swapped="no" />
             <layout>
               <property name="column">1</property>
-              <property name="row">8</property>
+              <property name="row">9</property>
             </layout>
           </object>
         </child>
@@ -251,7 +277,7 @@
             <property name="margin_top">20</property>
             <layout>
               <property name="column">0</property>
-              <property name="row">9</property>
+              <property name="row">10</property>
             </layout>
           </object>
         </child>
@@ -267,7 +293,7 @@
             <signal name="value-changed" handler="refresh_interval_changed" swapped="no" />
             <layout>
               <property name="column">1</property>
-              <property name="row">9</property>
+              <property name="row">10</property>
             </layout>
           </object>
         </child>
@@ -279,7 +305,7 @@
             <property name="margin_top">20</property>
             <layout>
               <property name="column">0</property>
-              <property name="row">10</property>
+              <property name="row">11</property>
             </layout>
           </object>
         </child>
@@ -297,7 +323,7 @@
             <signal name="font-set" handler="font_changed" swapped="no" />
             <layout>
               <property name="column">1</property>
-              <property name="row">10</property>
+              <property name="row">11</property>
             </layout>
           </object>
         </child>
@@ -308,7 +334,7 @@
             <property name="label" translatable="yes">Text Color</property>
             <layout>
               <property name="column">0</property>
-              <property name="row">11</property>
+              <property name="row">12</property>
             </layout>
           </object>
         </child>
@@ -320,7 +346,7 @@
             <signal name="color-set" handler="color_changed" swapped="no" />
             <layout>
               <property name="column">1</property>
-              <property name="row">11</property>
+              <property name="row">12</property>
             </layout>
           </object>
         </child>
@@ -334,7 +360,7 @@
             <signal name="clicked" handler="reset_settings_to_default_clicked" swapped="no" />
             <layout>
               <property name="column">0</property>
-              <property name="row">12</property>
+              <property name="row">13</property>
               <property name="column_span">2</property>
             </layout>
           </object>

@@ -6,6 +6,7 @@ var Prefs = class Prefs {
     constructor() {
         const settings = ExtensionUtils.getSettings(SETTING_SCHEMA);
 
+        this.SHOW_PERCENT_SIGN = new PrefValue(settings, 'show-percent-sign', 'boolean');
         this.IS_CPU_USAGE_ENABLE = new PrefValue(settings, 'is-cpu-usage-enable', 'boolean');
         this.CPU_USAGE_TEXT = new PrefValue(settings, 'cpu-usage-text', 'string');
         this.IS_MEMORY_USAGE_ENABLE = new PrefValue(settings, 'is-memory-usage-enable', 'boolean');
