@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
   <schema path="/org/gnome/shell/extensions/simple-system-monitor/" id="org.gnome.shell.extensions.simple-system-monitor">
+    <key type="b" name="show-percent-sign">
+      <default>true</default>
+      <summary>Show Percent Sign</summary>
+      <description>Show Percent Sign</description>
+    </key>
     <key type="b" name="is-cpu-usage-enable">
       <default>true</default>
       <summary>Show CPU Usage</summary>

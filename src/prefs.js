@@ -6,6 +6,7 @@ const Settings = Me.imports.settings;
 const Configuration = new Settings.Prefs();
 
 const DEFAULT_SETTINGS = {
+    showPercentSign: true,
     isCpuUsageEnable: true,
     cpuUsageText: 'U',
     isMemoryUsageEnable: true,
@@ -39,6 +40,7 @@ const SimpleSystemMonitorPrefsWidget = GObject.registerClass({
     GTypeName: 'SimpleSystemMonitorPrefsWidget',
     Template: Me.dir.get_child(WIDGET_TEMPLATE_FILE).get_uri(),
     InternalChildren: [
+        'show_percent_sign_switch',
         'cpu_usage_enable_switch',
         'cpu_usage_text',
         'memory_usage_enable_switch',
@@ -63,6 +65,7 @@ const SimpleSystemMonitorPrefsWidget = GObject.registerClass({
     }
 
     update_widget_setting_values() {
+        this._show_percent_sign_switch.set_active(Configuration.SHOW_PERCENT_SIGN.get());
         this._cpu_usage_enable_switch.set_active(Configuration.IS_CPU_USAGE_ENABLE.get());
         this._cpu_usage_text.set_text(Configuration.CPU_USAGE_TEXT.get());
         this._memory_usage_enable_switch.set_active(Configuration.IS_MEMORY_USAGE_ENABLE.get());
@@ -80,6 +83,7 @@ const SimpleSystemMonitorPrefsWidget = GObject.registerClass({
     }
 
     reset_settings_to_default() {
+        Configuration.SHOW_PERCENT_SIGN.set(DEFAULT_SETTINGS.showPercentSign);
         Configuration.IS_CPU_USAGE_ENABLE.set(DEFAULT_SETTINGS.isCpuUsageEnable);
         Configuration.CPU_USAGE_TEXT.set(DEFAULT_SETTINGS.cpuUsageText);
         Configuration.IS_MEMORY_USAGE_ENABLE.set(DEFAULT_SETTINGS.isMemoryUsageEnable);
@@ -106,6 +110,10 @@ const SimpleSystemMonitorPrefsWidget = GObject.registerClass({
         const fontSize = font.substring(lastSpaceIndex, font.length);
         Configuration.FONT_FAMILY.set(fontFamily);
         Configuration.FONT_SIZE.set(fontSize);
+    }
+
+    show_percent_sign_switch_changed(widget) {
+        Configuration.SHOW_PERCENT_SIGN.set(widget.get_active());
     }
 
     cpu_usage_enable_switch_changed(widget) {
