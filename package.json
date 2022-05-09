@@ -1,0 +1,16 @@
+{
+    "name": "gnome-shell-extension-simple-system-monitor",
+    "version": "1.0.0",
+    "description": "Show current CPU usage, memory usage and net speed on panel.",
+    "main": "src/extension.js",
+    "repository": "git@github.com:LGiki/gnome-shell-extension-simple-system-monitor.git",
+    "author": "LGiki <qq547221432@gmail.com>",
+    "license": "MIT",
+    "private": false,
+    "scripts": {
+        "format": "prettier --config .prettierrc --write ."
+    },
+    "devDependencies": {
+        "prettier": "2.6.2"
+    }
+}
