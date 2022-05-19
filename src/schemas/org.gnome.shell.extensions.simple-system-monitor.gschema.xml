@@ -62,7 +62,7 @@
       <description>Font Family</description>
     </key>
     <key type="s" name="font-size">
-      <default>'12'</default>
+      <default>'14'</default>
       <summary>Font Size</summary>
       <description>Font Size</description>
     </key>
