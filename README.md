@@ -22,6 +22,22 @@ For best experience, please use [monospaced font](https://en.wikipedia.org/wiki/
 
 - from AUR: [gnome-shell-extension-simple-system-monitor](https://aur.archlinux.org/packages/gnome-shell-extension-simple-system-monitor/)
 
+# Build
+
+Use the following command to build this GNOME extension:
+
+```bash
+git clone https://github.com/LGiki/gnome-shell-extension-simple-system-monitor.git
+cd gnome-shell-extension-simple-system-monitor
+./build.sh
+```
+
+After successful build, the `ssm-gnome@lgiki.net.shell-extension.zip` file will be generated. You can use the following command to install the built GNOME extension:
+
+```bash
+gnome-extensions install ssm-gnome\@lgiki.net.shell-extension.zip --force
+```
+
 # License
 
 [GPL-2.0](https://github.com/LGiki/gnome-shell-extension-simple-system-monitor/blob/master/LICENSE)
