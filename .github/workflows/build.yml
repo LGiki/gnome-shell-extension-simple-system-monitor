@@ -1,0 +1,54 @@
+name: Release Extension
+on:
+  push:
+    tags:
+      - v*
+jobs:
+  build-extension:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - uses: actions/setup-python@v3
+        with:
+          python-version: '3.8.1'
+          architecture: 'x64'
+      - name: Setup Ninja
+        uses: ashutoshvarma/setup-ninja@master
+        with:
+          version: 1.10.0
+      - name: Install meson
+        run: |
+          python3 -m pip install ninja
+          python3 -m pip install meson
+      - name: Setup cmake
+        uses: jwlawson/actions-setup-cmake@v1.12
+        with:
+          cmake-version: '3.20.0'
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgnome-autoar-0-0 libgnome-autoar-0-dev \
+          libjson-glib-1.0-0 libjson-glib-dev gettext asciidoc
+      - name: Build and install gnome extensions tool
+        run: |
+          cd $HOME
+          git clone https://gitlab.gnome.org/GNOME/gnome-shell.git --depth=1
+          cd gnome-shell/subprojects/extensions-tool/
+          ./generate-translations.sh
+          mkdir build
+          cd build
+          meson ..
+          ninja
+          mkdir -p $HOME/.local/bin
+          mv src/gnome-extensions $HOME/.local/bin
+          echo $HOME/.local/bin >> $GITHUB_PATH
+      - name: Build extension
+        run: ./build.sh
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: ssm-gnome@lgiki.net.shell-extension.zip
