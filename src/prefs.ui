@@ -569,12 +569,13 @@
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="selection-mode">none</property>
+
+                <!-- Font Family -->
                 <child>
                   <object class="GtkListBoxRow">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
 
-                    <!-- Font Family -->
                     <child>
                       <object class="GtkBox">
                         <property name="visible">True</property>
@@ -592,13 +593,34 @@
                             <property name="spacing">32</property>
 
                             <child>
-                              <object class="GtkLabel">
+                              <object class="GtkBox">
                                 <property name="visible">True</property>
                                 <property name="can-focus">False</property>
-                                <property name="valign">center</property>
-                                <property name="label" translatable="yes">Font</property>
-                                <property name="xalign">0</property>
-                                <property name="hexpand">1</property>
+                                <property name="orientation">vertical</property>
+                                <property name="spacing">4</property>
+    
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="valign">center</property>
+                                    <property name="label" translatable="yes">Font</property>
+                                    <property name="xalign">0</property>
+                                    <property name="hexpand">1</property>
+                                  </object>
+                                </child>
+
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="valign">center</property>
+                                    <property name="label" translatable="yes">For best experience, please use monospaced font</property>
+                                    <property name="xalign">0</property>
+                                    <property name="hexpand">1</property>
+                                    <property name="opacity">0.55</property>
+                                  </object>
+                                </child>
                               </object>
                             </child>
 
