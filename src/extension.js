@@ -30,6 +30,11 @@ const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 const Settings = Me.imports.settings;
 const Util = imports.misc.util;
+const Gettext = imports.gettext;
+const GettextDomain = Me.metadata['gettext-domain'];
+const Domain = Gettext.domain(GettextDomain);
+
+const _ = Domain.gettext;
 
 const netSpeedUnits = ['B/s', 'K/s', 'M/s', 'G/s', 'T/s', 'P/s', 'E/s', 'Z/s', 'Y/s'];
 
@@ -294,7 +299,7 @@ const Indicator = GObject.registerClass(
 
             this.add_child(this._label);
 
-            let settingMenuItem = new PopupMenu.PopupMenuItem('Setting');
+            let settingMenuItem = new PopupMenu.PopupMenuItem(_('Setting'));
             settingMenuItem.connect('activate', () => {
                 if (typeof ExtensionUtils.openPrefs === 'function') {
                     ExtensionUtils.openPrefs();
@@ -487,5 +492,6 @@ class Extension {
 }
 
 function init(meta) {
+    ExtensionUtils.initTranslations();
     return new Extension(meta.uuid);
 }

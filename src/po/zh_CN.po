@@ -100,3 +100,7 @@ msgstr "为了获得最佳体验，请使用等宽字体"
 #: prefs.ui:710
 msgid "Misc"
 msgstr "杂项"
+
+#: extension.js:302
+msgid "Setting"
+msgstr "设置"

@@ -100,3 +100,7 @@ msgstr ""
 #: prefs.ui:710
 msgid "Misc"
 msgstr ""
+
+#: extension.js:302
+msgid "Setting"
+msgstr ""
