@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<interface>
+<interface domain="gnome-shell-extension-simple-system-monitor">
   <requires lib="gtk" version="4.0" />
   <object class="GtkAdjustment" id="refresh_rate_adjustment">
     <!-- 86400 seconds = 24 * 60 * 60 = 1 day -->

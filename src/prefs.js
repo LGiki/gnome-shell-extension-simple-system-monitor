@@ -165,7 +165,9 @@ const SimpleSystemMonitorPrefsWidget = GObject.registerClass(
     },
 );
 
-function init() {}
+function init() {
+    ExtensionUtils.initTranslations();
+}
 
 function buildPrefsWidget() {
     const widget = new SimpleSystemMonitorPrefsWidget();

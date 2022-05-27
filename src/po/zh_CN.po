@@ -1,0 +1,102 @@
+# Simple System Monitor GNOME Shell Extension Translation
+# Copyright (C) 2021-2022 THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the Simple System Monitor package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Simple System Monitor\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-05-27 15:11+0800\n"
+"PO-Revision-Date: 2022-05-27 15:30+0800\n"
+"Last-Translator: LGiki <lgiki@lgiki.net>\n"
+"Language-Team: Chinese Simplified\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: prefs_gtk3.ui:26 prefs.ui:857
+msgid "Show Percent Sign"
+msgstr "显示百分号"
+
+#: prefs_gtk3.ui:50 prefs.ui:75
+msgid "Show CPU Usage"
+msgstr "显示CPU使用率"
+
+#: prefs_gtk3.ui:76 prefs.ui:122
+msgid "CPU Usage Text"
+msgstr "CPU使用率文本"
+
+#: prefs_gtk3.ui:100 prefs.ui:206
+msgid "Show Memory Usage"
+msgstr "显示内存使用率"
+
+#: prefs_gtk3.ui:126 prefs.ui:254
+msgid "Memory Usage Text"
+msgstr "内存使用率文本"
+
+#: prefs_gtk3.ui:150 prefs.ui:337
+msgid "Show Download Speed"
+msgstr "显示网络下载速度"
+
+#: prefs_gtk3.ui:176 prefs.ui:385
+msgid "Download Speed Text"
+msgstr "网络下载速度文本"
+
+#: prefs_gtk3.ui:200 prefs.ui:468
+msgid "Show Upload Speed"
+msgstr "显示网络上传速度"
+
+#: prefs_gtk3.ui:226 prefs.ui:516
+msgid "Upload Speed Text"
+msgstr "网络上传速度文本"
+
+#: prefs_gtk3.ui:250 prefs.ui:757
+msgid "Item Separator"
+msgstr "项目分隔符"
+
+#: prefs_gtk3.ui:277 prefs.ui:806
+msgid "Refresh Interval (second)"
+msgstr "刷新间隔 (秒)"
+
+#: prefs_gtk3.ui:305 prefs.ui:607
+msgid "Font"
+msgstr "字体"
+
+#: prefs_gtk3.ui:334 prefs.ui:674
+msgid "Text Color"
+msgstr "文本颜色"
+
+#: prefs_gtk3.ui:355 prefs.ui:886
+msgid "Reset Settings To Default"
+msgstr "重置设置为默认值"
+
+#: prefs.ui:28
+msgid "CPU Usage"
+msgstr "CPU使用率"
+
+#: prefs.ui:159
+msgid "Memory Usage"
+msgstr "内存使用率"
+
+#: prefs.ui:290
+msgid "Download Speed"
+msgstr "网络下载速度"
+
+#: prefs.ui:421
+msgid "Upload Speed"
+msgstr "网络上传速度"
+
+#: prefs.ui:552
+msgid "Customize"
+msgstr "自定义"
+
+#: prefs.ui:618
+msgid "For best experience, please use monospaced font"
+msgstr "为了获得最佳体验，请使用等宽字体"
+
+#: prefs.ui:710
+msgid "Misc"
+msgstr "杂项"
