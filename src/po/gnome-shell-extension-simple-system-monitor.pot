@@ -101,6 +101,10 @@ msgstr ""
 msgid "Misc"
 msgstr ""
 
-#: extension.js:302
+#: extension.js:303
+msgid "Open System Monitor"
+msgstr ""
+
+#: extension.js:311
 msgid "Setting"
 msgstr ""

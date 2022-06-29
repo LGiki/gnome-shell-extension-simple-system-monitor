@@ -33,6 +33,7 @@ const Util = imports.misc.util;
 const Gettext = imports.gettext;
 const GettextDomain = Me.metadata['gettext-domain'];
 const Domain = Gettext.domain(GettextDomain);
+const Shell = imports.gi.Shell;
 
 const _ = Domain.gettext;
 
@@ -299,7 +300,15 @@ const Indicator = GObject.registerClass(
 
             this.add_child(this._label);
 
-            let settingMenuItem = new PopupMenu.PopupMenuItem(_('Setting'));
+            const openSystemMonitorItem = new PopupMenu.PopupMenuItem(_('Open System Monitor'));
+            openSystemMonitorItem.connect('activate', () => {
+                const appSystem = Shell.AppSystem.get_default();
+                const systemMonitorApp = appSystem.lookup_app('gnome-system-monitor.desktop');
+                systemMonitorApp.activate();
+            });
+            this.menu.addMenuItem(openSystemMonitorItem);
+
+            const settingMenuItem = new PopupMenu.PopupMenuItem(_('Setting'));
             settingMenuItem.connect('activate', () => {
                 if (typeof ExtensionUtils.openPrefs === 'function') {
                     ExtensionUtils.openPrefs();

@@ -101,6 +101,10 @@ msgstr "为了获得最佳体验，请使用等宽字体"
 msgid "Misc"
 msgstr "杂项"
 
-#: extension.js:302
+#: extension.js:303
+msgid "Open System Monitor"
+msgstr "打开系统监视器"
+
+#: extension.js:311
 msgid "Setting"
 msgstr "设置"
