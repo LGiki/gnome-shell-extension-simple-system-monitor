@@ -265,8 +265,13 @@ const Indicator = GObject.registerClass(
             const openSystemMonitorItem = new PopupMenu.PopupMenuItem(_('Open System Monitor'));
             openSystemMonitorItem.connect('activate', () => {
                 const appSystem = Shell.AppSystem.get_default();
-                const systemMonitorApp = appSystem.lookup_app('gnome-system-monitor.desktop');
-                systemMonitorApp.activate();
+                let systemMonitorApp = appSystem.lookup_app('gnome-system-monitor.desktop');
+                if (systemMonitorApp) {
+                    systemMonitorApp.activate();
+                } else {
+                    systemMonitorApp = appSystem.lookup_app('org.gnome.Usage.desktop');
+                    systemMonitorApp.activate();
+                }
             });
             this.menu.addMenuItem(openSystemMonitorItem);
 
