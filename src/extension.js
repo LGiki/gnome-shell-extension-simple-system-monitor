@@ -51,30 +51,16 @@ const getCurrentNetSpeed = (refreshInterval) => {
 
     try {
         const inputFile = Gio.File.new_for_path('/proc/net/dev');
-        const fileInputStream = inputFile.read(null);
-        // See <https://gjs.guide/guides/gobject/basics.html#gobject-construction>.
-        // If we want new operator, we need to pass params in object.
-        // Short param is only used for static constructor.
-        const dataInputStream = new Gio.DataInputStream({
-            base_stream: fileInputStream,
-        });
+        const [, content] = inputFile.load_contents(null);
+        const contentStr = ByteArray.toString(content);
+        const contentLines = contentStr.split('\n');
 
         // Caculate the sum of all interfaces' traffic line by line.
         let totalDownBytes = 0;
         let totalUpBytes = 0;
-        let line = null;
-        let length = 0;
 
-        // See <https://gjs-docs.gnome.org/gio20~2.66p/gio.datainputstream#method-read_line>.
-        while (([line, length] = dataInputStream.read_line(null)) && line != null) {
-            // See <https://github.com/GNOME/gjs/blob/master/doc/ByteArray.md#tostringauint8array-encodingstringstring>.
-            // It seems Uint8Array is only returned at the first time.
-            if (line instanceof Uint8Array) {
-                line = ByteArray.toString(line).trim();
-            } else {
-                line = line.toString().trim();
-            }
-            const fields = line.split(/\W+/);
+        for (let i = 0; i < contentLines.length; i++) {
+            const fields = contentLines[i].trim().split(/\W+/);
             if (fields.length <= 2) {
                 break;
             }
@@ -104,8 +90,6 @@ const getCurrentNetSpeed = (refreshInterval) => {
             totalUpBytes += currentInterfaceUpBytes;
         }
 
-        fileInputStream.close(null);
-
         if (lastTotalNetDownBytes === 0) {
             lastTotalNetDownBytes = totalDownBytes;
         }
@@ -131,24 +115,15 @@ const getCurrentCPUUsage = () => {
 
     try {
         const inputFile = Gio.File.new_for_path('/proc/stat');
-        const fileInputStream = inputFile.read(null);
-        const dataInputStream = new Gio.DataInputStream({
-            base_stream: fileInputStream,
-        });
+        const [, content] = inputFile.load_contents(null);
+        const contentStr = ByteArray.toString(content);
+        const contentLines = contentStr.split('\n');
 
         let currentCPUUsed = 0;
         let currentCPUTotal = 0;
-        let line = null;
-        let length = 0;
 
-        while (([line, length] = dataInputStream.read_line(null)) && line != null) {
-            if (line instanceof Uint8Array) {
-                line = ByteArray.toString(line).trim();
-            } else {
-                line = line.toString().trim();
-            }
-
-            const fields = line.split(/\W+/);
+        for (let i = 0; i < contentLines.length; i++) {
+            const fields = contentLines[i].trim().split(/\W+/);
 
             if (fields.length < 2) {
                 continue;
@@ -164,8 +139,6 @@ const getCurrentCPUUsage = () => {
                 break;
             }
         }
-
-        fileInputStream.close(null);
 
         // Avoid divide by zero
         if (currentCPUTotal - lastCPUTotal !== 0) {
@@ -185,24 +158,15 @@ const getCurrentMemoryUsage = () => {
 
     try {
         const inputFile = Gio.File.new_for_path('/proc/meminfo');
-        const fileInputStream = inputFile.read(null);
-        const dataInputStream = new Gio.DataInputStream({
-            base_stream: fileInputStream,
-        });
+        const [, content] = inputFile.load_contents(null);
+        const contentStr = ByteArray.toString(content);
+        const contentLines = contentStr.split('\n');
 
         let memTotal = -1;
         let memAvailable = -1;
-        let line = null;
-        let length = 0;
 
-        while (([line, length] = dataInputStream.read_line(null)) && line != null) {
-            if (line instanceof Uint8Array) {
-                line = ByteArray.toString(line).trim();
-            } else {
-                line = line.toString().trim();
-            }
-
-            const fields = line.split(/\W+/);
+        for (let i = 0; i < contentLines.length; i++) {
+            const fields = contentLines[i].trim().split(/\W+/);
 
             if (fields.length < 2) {
                 break;
@@ -223,8 +187,6 @@ const getCurrentMemoryUsage = () => {
                 break;
             }
         }
-
-        fileInputStream.close(null);
 
         if (memTotal !== -1 && memAvailable !== -1) {
             const memUsed = memTotal - memAvailable;
