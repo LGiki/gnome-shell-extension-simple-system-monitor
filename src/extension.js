@@ -223,22 +223,36 @@ const formatNetSpeedWithUnit = (amount) => {
 };
 
 // Format a usage value in [0, 1] as an integer percent value.
-const formatUsageVal = (showPercentSign, usage) => {
+const formatUsageVal = (usage, showExtraSpaces, showPercentSign) => {
     return (
         Math.round(usage * 100)
             .toString()
-            .padStart(3) + (showPercentSign ? '%' : '')
+            .padStart(showExtraSpaces ? 3 : 2) + (showPercentSign ? '%' : '')
     );
 };
 
-const toDisplayString = (showPercentSign, texts, enable, cpuUsage, memoryUsage, netSpeed) => {
+const toDisplayString = (
+    showExtraSpaces,
+    showPercentSign,
+    texts,
+    enable,
+    cpuUsage,
+    memoryUsage,
+    netSpeed,
+) => {
     const displayItems = [];
     if (enable.isCpuUsageEnable && cpuUsage !== null) {
-        displayItems.push(`${texts.cpuUsageText} ${formatUsageVal(showPercentSign, cpuUsage)}`);
+        displayItems.push(
+            `${texts.cpuUsageText} ${formatUsageVal(cpuUsage, showExtraSpaces, showPercentSign)}`,
+        );
     }
     if (enable.isMemoryUsageEnable && memoryUsage !== null) {
         displayItems.push(
-            `${texts.memoryUsageText} ${formatUsageVal(showPercentSign, memoryUsage)}`,
+            `${texts.memoryUsageText} ${formatUsageVal(
+                memoryUsage,
+                showExtraSpaces,
+                showPercentSign,
+            )}`,
         );
     }
     if (enable.isDownloadSpeedEnable && netSpeed !== null) {
@@ -327,6 +341,8 @@ class Extension {
             isUploadSpeedEnable: this._prefs.IS_UPLOAD_SPEED_ENABLE.get(),
         };
 
+        this._showExtraSpaces = this._prefs.SHOW_EXTRA_SPACES.get();
+
         this._showPercentSign = this._prefs.SHOW_PERCENT_SIGN.get();
 
         this._refresh_interval = this._prefs.REFRESH_INTERVAL.get();
@@ -380,6 +396,7 @@ class Extension {
             currentNetSpeed = getCurrentNetSpeed(this._refresh_interval);
         }
         const displayText = toDisplayString(
+            this._showExtraSpaces,
             this._showPercentSign,
             this._texts,
             this._enable,
@@ -392,6 +409,10 @@ class Extension {
     }
 
     _listen_setting_change() {
+        this._prefs.SHOW_EXTRA_SPACES.changed(() => {
+            this._showExtraSpaces = this._prefs.SHOW_EXTRA_SPACES.get();
+        });
+
         this._prefs.SHOW_PERCENT_SIGN.changed(() => {
             this._showPercentSign = this._prefs.SHOW_PERCENT_SIGN.get();
         });
@@ -450,6 +471,7 @@ class Extension {
     }
 
     _destory_setting_change_listener() {
+        this._prefs.SHOW_EXTRA_SPACES.disconnect();
         this._prefs.SHOW_PERCENT_SIGN.disconnect();
         this._prefs.IS_CPU_USAGE_ENABLE.disconnect();
         this._prefs.IS_MEMORY_USAGE_ENABLE.disconnect();

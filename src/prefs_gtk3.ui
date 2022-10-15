@@ -19,30 +19,6 @@
         <property name="row_spacing">5</property>
         <property name="column_spacing">5</property>
         <property name="column_homogeneous">1</property>
-        <!-- Show Percent Sign -->
-        <child>
-          <object class="GtkLabel">
-            <property name="can_focus">0</property>
-            <property name="label" translatable="yes">Show Percent Sign</property>
-          </object>
-          <packing>
-            <property name="left_attach">0</property>
-            <property name="top_attach">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkSwitch" id="show_percent_sign_switch">
-            <property name="visible">1</property>
-            <property name="can_focus">1</property>
-            <property name="halign">center</property>
-            <property name="valign">center</property>
-            <signal name="state-set" handler="show_percent_sign_switch_changed" swapped="no" />
-          </object>
-          <packing>
-            <property name="left_attach">1</property>
-            <property name="top_attach">0</property>
-          </packing>
-        </child>
         <!-- CPU Usage Enable -->
         <child>
           <object class="GtkLabel">
@@ -52,7 +28,7 @@
           </object>
           <packing>
             <property name="left_attach">0</property>
-            <property name="top_attach">1</property>
+            <property name="top_attach">0</property>
           </packing>
         </child>
         <child>
@@ -66,7 +42,7 @@
           </object>
           <packing>
             <property name="left_attach">1</property>
-            <property name="top_attach">1</property>
+            <property name="top_attach">0</property>
           </packing>
         </child>
         <!-- CPU Usage Text -->
@@ -77,7 +53,7 @@
           </object>
           <packing>
             <property name="left_attach">0</property>
-            <property name="top_attach">2</property>
+            <property name="top_attach">1</property>
           </packing>
         </child>
         <child>
@@ -90,7 +66,7 @@
           </object>
           <packing>
             <property name="left_attach">1</property>
-            <property name="top_attach">2</property>
+            <property name="top_attach">1</property>
           </packing>
         </child>
         <!-- Memory Usage Enable -->
@@ -102,7 +78,7 @@
           </object>
           <packing>
             <property name="left_attach">0</property>
-            <property name="top_attach">3</property>
+            <property name="top_attach">2</property>
           </packing>
         </child>
         <child>
@@ -116,7 +92,7 @@
           </object>
           <packing>
             <property name="left_attach">1</property>
-            <property name="top_attach">3</property>
+            <property name="top_attach">2</property>
           </packing>
         </child>
         <!-- Memory Usage Text -->
@@ -127,7 +103,7 @@
           </object>
             <packing>
               <property name="left_attach">0</property>
-              <property name="top_attach">4</property>
+              <property name="top_attach">3</property>
             </packing>
         </child>
         <child>
@@ -140,7 +116,7 @@
           </object>
           <packing>
             <property name="left_attach">1</property>
-            <property name="top_attach">4</property>
+            <property name="top_attach">3</property>
           </packing>
         </child>
         <!-- Download Speed Enable -->
@@ -152,7 +128,7 @@
           </object>
           <packing>
             <property name="left_attach">0</property>
-            <property name="top_attach">5</property>
+            <property name="top_attach">4</property>
           </packing>
         </child>
         <child>
@@ -166,7 +142,7 @@
           </object>
           <packing>
             <property name="left_attach">1</property>
-            <property name="top_attach">5</property>
+            <property name="top_attach">4</property>
           </packing>
         </child>
         <!-- Download Speed Text -->
@@ -177,7 +153,7 @@
           </object>
           <packing>
             <property name="left_attach">0</property>
-            <property name="top_attach">6</property>
+            <property name="top_attach">5</property>
           </packing>
         </child>
         <child>
@@ -190,7 +166,7 @@
           </object>
           <packing>
             <property name="left_attach">1</property>
-            <property name="top_attach">6</property>
+            <property name="top_attach">5</property>
           </packing>
         </child>
         <!-- Upload Speed Enable -->
@@ -202,7 +178,7 @@
           </object>
           <packing>
             <property name="left_attach">0</property>
-            <property name="top_attach">7</property>
+            <property name="top_attach">6</property>
           </packing>
         </child>
         <child>
@@ -216,7 +192,7 @@
           </object>
           <packing>
             <property name="left_attach">1</property>
-            <property name="top_attach">7</property>
+            <property name="top_attach">6</property>
           </packing>
         </child>
         <!-- Upload Speed Text -->
@@ -227,7 +203,7 @@
           </object>
           <packing>
             <property name="left_attach">0</property>
-            <property name="top_attach">8</property>
+            <property name="top_attach">7</property>
           </packing>
         </child>
         <child>
@@ -240,7 +216,7 @@
           </object>
           <packing>
             <property name="left_attach">1</property>
-            <property name="top_attach">8</property>
+            <property name="top_attach">7</property>
           </packing>
         </child>
         <!-- Item Separator -->
@@ -252,7 +228,7 @@
           </object>
           <packing>
             <property name="left_attach">0</property>
-            <property name="top_attach">9</property>
+            <property name="top_attach">8</property>
           </packing>
         </child>
         <child>
@@ -266,7 +242,7 @@
           </object>
           <packing>
             <property name="left_attach">1</property>
-            <property name="top_attach">9</property>
+            <property name="top_attach">8</property>
           </packing>
         </child>
         <!-- Refresh Interval -->
@@ -278,7 +254,7 @@
           </object>
           <packing>
             <property name="left_attach">0</property>
-            <property name="top_attach">10</property>
+            <property name="top_attach">9</property>
           </packing>
         </child>
         <child>
@@ -294,7 +270,7 @@
           </object>
           <packing>
             <property name="left_attach">1</property>
-            <property name="top_attach">10</property>
+            <property name="top_attach">9</property>
           </packing>
         </child>
         <!-- Font Family -->
@@ -306,7 +282,7 @@
           </object>
           <packing>
             <property name="left_attach">0</property>
-            <property name="top_attach">11</property>
+            <property name="top_attach">10</property>
           </packing>
         </child>
         <child>
@@ -324,7 +300,7 @@
           </object>
           <packing>
             <property name="left_attach">1</property>
-            <property name="top_attach">11</property>
+            <property name="top_attach">10</property>
           </packing>
         </child>
         <!-- Text Color -->
@@ -335,7 +311,7 @@
           </object>
           <packing>
             <property name="left_attach">0</property>
-            <property name="top_attach">12</property>
+            <property name="top_attach">11</property>
           </packing>
         </child>
         <child>
@@ -347,9 +323,58 @@
           </object>
           <packing>
             <property name="left_attach">1</property>
+            <property name="top_attach">11</property>
+          </packing>
+        </child>
+        <!-- Show Percent Sign -->
+        <child>
+          <object class="GtkLabel">
+            <property name="can_focus">0</property>
+            <property name="label" translatable="yes">Show Percent Sign</property>
+          </object>
+          <packing>
+            <property name="left_attach">0</property>
             <property name="top_attach">12</property>
           </packing>
         </child>
+        <child>
+          <object class="GtkSwitch" id="show_percent_sign_switch">
+            <property name="visible">1</property>
+            <property name="can_focus">1</property>
+            <property name="halign">center</property>
+            <property name="valign">center</property>
+            <signal name="state-set" handler="show_percent_sign_switch_changed" swapped="no" />
+          </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">12</property>
+          </packing>
+        </child>
+        <!-- Show Extra Spaces -->
+        <child>
+          <object class="GtkLabel">
+            <property name="can_focus">0</property>
+            <property name="label" translatable="yes">Show Extra Spaces</property>
+          </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">13</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkSwitch" id="show_extra_spaces_switch">
+            <property name="visible">1</property>
+            <property name="can_focus">1</property>
+            <property name="halign">center</property>
+            <property name="valign">center</property>
+            <signal name="state-set" handler="show_extra_spaces_switch_changed" swapped="no" />
+          </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">13</property>
+          </packing>
+        </child>
+        <!-- Reset Settings To Default -->
         <child>
           <object class="GtkButton">
             <property name="label" translatable="yes">Reset Settings To Default</property>
@@ -361,7 +386,7 @@
           </object>
           <packing>
               <property name="left_attach">0</property>
-              <property name="top_attach">13</property>
+              <property name="top_attach">14</property>
               <property name="width">2</property>
             </packing>
         </child>
