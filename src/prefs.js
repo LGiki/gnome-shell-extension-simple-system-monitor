@@ -6,6 +6,7 @@ const Settings = Me.imports.settings;
 const Configuration = new Settings.Prefs();
 
 const DEFAULT_SETTINGS = {
+    fontWeight: 700,
     showExtraSpaces: true,
     showPercentSign: true,
     isCpuUsageEnable: true,
@@ -38,6 +39,7 @@ const SimpleSystemMonitorPrefsWidget = GObject.registerClass(
         GTypeName: 'SimpleSystemMonitorPrefsWidget',
         Template: Me.dir.get_child(WIDGET_TEMPLATE_FILE).get_uri(),
         InternalChildren: [
+            'font_weight',
             'show_extra_spaces_switch',
             'show_percent_sign_switch',
             'cpu_usage_enable_switch',
@@ -65,6 +67,7 @@ const SimpleSystemMonitorPrefsWidget = GObject.registerClass(
         }
 
         update_widget_setting_values() {
+            this._font_weight.set_value(Configuration.FONT_WEIGHT.get());
             this._show_extra_spaces_switch.set_active(Configuration.SHOW_EXTRA_SPACES.get());
             this._show_percent_sign_switch.set_active(Configuration.SHOW_PERCENT_SIGN.get());
             this._cpu_usage_enable_switch.set_active(Configuration.IS_CPU_USAGE_ENABLE.get());
@@ -88,6 +91,7 @@ const SimpleSystemMonitorPrefsWidget = GObject.registerClass(
         }
 
         reset_settings_to_default() {
+            Configuration.FONT_WEIGHT.set(DEFAULT_SETTINGS.fontWeight);
             Configuration.SHOW_EXTRA_SPACES.set(DEFAULT_SETTINGS.showExtraSpaces);
             Configuration.SHOW_PERCENT_SIGN.set(DEFAULT_SETTINGS.showPercentSign);
             Configuration.IS_CPU_USAGE_ENABLE.set(DEFAULT_SETTINGS.isCpuUsageEnable);
@@ -116,6 +120,10 @@ const SimpleSystemMonitorPrefsWidget = GObject.registerClass(
             const fontSize = font.substring(lastSpaceIndex, font.length);
             Configuration.FONT_FAMILY.set(fontFamily);
             Configuration.FONT_SIZE.set(fontSize);
+        }
+
+        font_weight_changed(widget) {
+            Configuration.FONT_WEIGHT.set(widget.get_value());
         }
 
         show_extra_spaces_switch_changed(widget) {

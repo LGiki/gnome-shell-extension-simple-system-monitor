@@ -116,3 +116,11 @@ msgstr "杂项"
 #: prefs.ui:924
 msgid "Display an extra space between text and value"
 msgstr "在文本和数值之间显示一个额外的空格"
+
+#: prefs.ui:697
+msgid "The larger the value, the bolder the font"
+msgstr "数值越大，字体越粗"
+
+#: prefs_gtk3.ui:316 prefs.ui:686
+msgid "Font Weight"
+msgstr "字体粗细"

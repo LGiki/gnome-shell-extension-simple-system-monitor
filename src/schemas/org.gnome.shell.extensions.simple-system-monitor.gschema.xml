@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <schemalist>
   <schema path="/org/gnome/shell/extensions/simple-system-monitor/" id="org.gnome.shell.extensions.simple-system-monitor">
+    <key type="i" name="font-weight">
+      <default>700</default>
+      <summary>Font Weight</summary>
+      <description>Font Weight</description>
+    </key>
     <key type="b" name="show-extra-spaces">
       <default>true</default>
       <summary>Show Extra Spaces</summary>

@@ -300,9 +300,9 @@ const Indicator = GObject.registerClass(
             this.menu.addMenuItem(settingMenuItem);
         }
 
-        setFontStyle(fontFamily, fontSize, textColor) {
+        setFontStyle(fontFamily, fontSize, textColor, fontWeight) {
             return this._label.set_style(
-                `font-family: "${fontFamily}";font-size: ${fontSize}px; color: ${textColor};`,
+                `font-family: "${fontFamily}"; font-size: ${fontSize}px; color: ${textColor}; font-weight: ${fontWeight};`,
             );
         }
 
@@ -379,6 +379,7 @@ class Extension {
             this._prefs.FONT_FAMILY.get(),
             this._prefs.FONT_SIZE.get(),
             this._prefs.TEXT_COLOR.get(),
+            this._prefs.FONT_WEIGHT.get(),
         );
     }
 
@@ -456,6 +457,7 @@ class Extension {
         this._prefs.FONT_FAMILY.changed(() => this._update_text_style());
         this._prefs.FONT_SIZE.changed(() => this._update_text_style());
         this._prefs.TEXT_COLOR.changed(() => this._update_text_style());
+        this._prefs.FONT_WEIGHT.changed(() => this._update_text_style());
 
         this._prefs.REFRESH_INTERVAL.changed(() => {
             this._refresh_interval = this._prefs.REFRESH_INTERVAL.get();
@@ -486,6 +488,7 @@ class Extension {
         this._prefs.FONT_FAMILY.disconnect();
         this._prefs.FONT_SIZE.disconnect();
         this._prefs.TEXT_COLOR.disconnect();
+        this._prefs.FONT_WEIGHT.disconnect();
     }
 }
 
