@@ -351,7 +351,10 @@ class Extension {
 
         this._update_text_style();
 
-        Main.panel.addToStatusArea(this._uuid, this._indicator, 0, 'right');
+        const extensionPosition = this._prefs.EXTENSION_POSITION.get();
+        const extensionOrder = this._prefs.EXTENSION_ORDER.get();
+
+        Main.panel.addToStatusArea(this._uuid, this._indicator, extensionOrder, extensionPosition);
 
         this._timeout = GLib.timeout_add_seconds(
             GLib.PRIORITY_DEFAULT_IDLE,

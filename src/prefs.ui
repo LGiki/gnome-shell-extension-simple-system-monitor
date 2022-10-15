@@ -13,6 +13,21 @@
     <property name="lower">100</property>
     <property name="step-increment">100</property>
   </object>
+  <object class="GtkAdjustment" id="extension_order_adjustment">
+    <property name="upper">255</property>
+    <property name="lower">-255</property>
+    <property name="step-increment">1</property>
+  </object>
+  <object class="GtkListStore" id="extension_position_list_store">
+    <columns>
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row><col id="0">Left</col></row>
+      <row><col id="0">Center</col></row>
+      <row><col id="0">Right</col></row>
+    </data>
+  </object>
   <template class="SimpleSystemMonitorPrefsWidget" parent="GtkBox">
     <child>
 
@@ -637,6 +652,7 @@
                                 <property name="font">Sans 12</property>
                                 <property name="language">en-us</property>
                                 <property name="use_font">1</property>
+                                <property name="valign">center</property>
                                 <property name="level">GTK_FONT_CHOOSER_LEVEL_FAMILY | GTK_FONT_CHOOSER_LEVEL_SIZE</property>
                                 <property name="preview_text">U 12% M 34% ↓ 56 K/s ↑ 78 K/s</property>
                                 <signal name="font-set" handler="font_changed" swapped="no" />
@@ -761,6 +777,190 @@
                                 <property name="valign">center</property>
                                 <property name="receives_default">1</property>
                                 <signal name="color-set" handler="color_changed" swapped="no" />
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkBox">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="margin-bottom">12</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">Position</property>
+                <attributes>
+                  <attribute name="weight" value="bold" />
+                </attributes>
+              </object>
+            </child>
+          </object>
+        </child>
+
+        <child>
+          <object class="GtkFrame">
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="label-xalign">0</property>
+            <property name="margin-bottom">36</property>
+            <child>
+              <object class="GtkListBox">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="selection-mode">none</property>
+
+                <!-- Extension Position -->
+                <child>
+                  <object class="GtkListBoxRow">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+
+                    <child>
+                      <object class="GtkBox">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="margin-start">12</property>
+                        <property name="margin-end">12</property>
+                        <property name="margin-top">12</property>
+                        <property name="margin-bottom">12</property>
+                        <property name="orientation">vertical</property>
+
+                        <child>
+                          <object class="GtkBox">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="spacing">32</property>
+
+                            <child>
+                              <object class="GtkBox">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="orientation">vertical</property>
+                                <property name="spacing">4</property>
+    
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="valign">center</property>
+                                    <property name="label" translatable="yes">Extension Position</property>
+                                    <property name="xalign">0</property>
+                                    <property name="hexpand">1</property>
+                                  </object>
+                                </child>
+
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="valign">center</property>
+                                    <property name="label" translatable="yes">Re-login Required</property>
+                                    <property name="xalign">0</property>
+                                    <property name="hexpand">1</property>
+                                    <property name="opacity">0.55</property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+
+                            <child>
+                              <object class="GtkComboBox" id="extension_position_combo_box">
+                                <property name="model">extension_position_list_store</property>
+                                <property name="valign">center</property>
+                                <signal name="changed" handler="extension_position_combo_box_changed" swapped="no" />
+                                <child>
+                                  <object class="GtkCellRendererText"/>
+                                  <attributes>
+                                    <attribute name="text">0</attribute>
+                                  </attributes>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+
+                <!-- Extension Order -->
+                <child>
+                  <object class="GtkListBoxRow">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+
+                    <child>
+                      <object class="GtkBox">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="margin-start">12</property>
+                        <property name="margin-end">12</property>
+                        <property name="margin-top">12</property>
+                        <property name="margin-bottom">12</property>
+                        <property name="orientation">vertical</property>
+
+                        <child>
+                          <object class="GtkBox">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="spacing">32</property>
+
+                            <child>
+                              <object class="GtkBox">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="orientation">vertical</property>
+                                <property name="spacing">4</property>
+    
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="valign">center</property>
+                                    <property name="label" translatable="yes">Extension Order</property>
+                                    <property name="xalign">0</property>
+                                    <property name="hexpand">1</property>
+                                  </object>
+                                </child>
+
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="valign">center</property>
+                                    <property name="label" translatable="yes">Re-login Required
+0: I don't care where the icon is
+Negative Values: starting from the right side
+Positive Values: starting from the left side</property>
+                                    <property name="xalign">0</property>
+                                    <property name="hexpand">1</property>
+                                    <property name="opacity">0.55</property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+
+                            <child>
+                              <object class="GtkSpinButton" id="extension_order">
+                                <property name="visible">1</property>
+                                <property name="can_focus">1</property>
+                                <property name="numeric">1</property>
+                                <property name="value">1</property>
+                                <property name="adjustment">extension_order_adjustment</property>
+                                <property name="valign">center</property>
+                                <signal name="value-changed" handler="extension_order_changed" swapped="no" />
                               </object>
                             </child>
                           </object>

@@ -6,6 +6,8 @@ var Prefs = class Prefs {
     constructor() {
         const settings = ExtensionUtils.getSettings(SETTING_SCHEMA);
 
+        this.EXTENSION_POSITION = new PrefValue(settings, 'extension-position', 'string');
+        this.EXTENSION_ORDER = new PrefValue(settings, 'extension-order', 'int');
         this.FONT_WEIGHT = new PrefValue(settings, 'font-weight', 'int');
         this.SHOW_EXTRA_SPACES = new PrefValue(settings, 'show-extra-spaces', 'boolean');
         this.SHOW_PERCENT_SIGN = new PrefValue(settings, 'show-percent-sign', 'boolean');
