@@ -13,8 +13,7 @@ jobs:
           node-version: '14'
       - uses: actions/setup-python@v3
         with:
-          python-version: '3.8.1'
-          architecture: 'x64'
+          python-version: '3.10'
       - name: Setup Ninja
         uses: ashutoshvarma/setup-ninja@master
         with:
