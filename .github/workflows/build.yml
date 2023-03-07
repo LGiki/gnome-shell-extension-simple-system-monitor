@@ -20,6 +20,7 @@ jobs:
           version: 1.10.0
       - name: Install meson
         run: |
+          python3 -m pip install asciidoc
           python3 -m pip install ninja
           python3 -m pip install meson
       - name: Setup cmake
