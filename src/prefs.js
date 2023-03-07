@@ -24,6 +24,8 @@ const DEFAULT_SETTINGS = {
     fontFamily: 'Sans',
     fontSize: '14',
     textColor: '#DDDDDD',
+    isSwapUsageEnable: false,
+    swapUsageText: 'S',
 };
 
 const WIDGET_TEMPLATE_FILE = Gtk.get_major_version() === 3 ? 'prefs_gtk3.ui' : 'prefs.ui';
@@ -84,6 +86,8 @@ const SimpleSystemMonitorPrefsWidget = GObject.registerClass(
             'refresh_interval',
             'font_button',
             'text_color',
+            'swap_usage_enable_switch',
+            'swap_usage_text',
         ],
     },
     class SimpleSystemMonitorPrefsWidget extends Gtk.Box {
@@ -119,6 +123,8 @@ const SimpleSystemMonitorPrefsWidget = GObject.registerClass(
             this._font_button.set_font(
                 `${Configuration.FONT_FAMILY.get()} ${Configuration.FONT_SIZE.get()}`,
             );
+            this._swap_usage_enable_switch.set_active(Configuration.IS_SWAP_USAGE_ENABLE.get());
+            this._swap_usage_text.set_text(Configuration.SWAP_USAGE_TEXT.get());
             const color = new Gdk.RGBA();
             color.parse(Configuration.TEXT_COLOR.get());
             this._text_color.set_rgba(color);
@@ -143,6 +149,8 @@ const SimpleSystemMonitorPrefsWidget = GObject.registerClass(
             Configuration.FONT_FAMILY.set(DEFAULT_SETTINGS.fontFamily);
             Configuration.FONT_SIZE.set(DEFAULT_SETTINGS.fontSize);
             Configuration.TEXT_COLOR.set(DEFAULT_SETTINGS.textColor);
+            Configuration.IS_SWAP_USAGE_ENABLE.set(DEFAULT_SETTINGS.isSwapUsageEnable);
+            Configuration.SWAP_USAGE_TEXT.set(DEFAULT_SETTINGS.swapUsageText);
         }
 
         color_changed(widget) {
@@ -196,12 +204,20 @@ const SimpleSystemMonitorPrefsWidget = GObject.registerClass(
             Configuration.IS_UPLOAD_SPEED_ENABLE.set(widget.get_active());
         }
 
+        swap_usage_enable_switch_changed(widget) {
+            Configuration.IS_SWAP_USAGE_ENABLE.set(widget.get_active());
+        }
+
         cpu_usage_text_changed(widget) {
             Configuration.CPU_USAGE_TEXT.set(widget.get_text());
         }
 
         memory_usage_text_changed(widget) {
             Configuration.MEMORY_USAGE_TEXT.set(widget.get_text());
+        }
+
+        swap_usage_text_changed(widget) {
+            Configuration.SWAP_USAGE_TEXT.set(widget.get_text());
         }
 
         download_usage_text_changed(widget) {

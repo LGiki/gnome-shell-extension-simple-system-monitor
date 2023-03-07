@@ -28,6 +28,8 @@ var Prefs = class Prefs {
         this.FONT_FAMILY = new PrefValue(settings, 'font-family', 'string');
         this.FONT_SIZE = new PrefValue(settings, 'font-size', 'string');
         this.TEXT_COLOR = new PrefValue(settings, 'text-color', 'string');
+        this.IS_SWAP_USAGE_ENABLE = new PrefValue(settings, 'is-swap-usage-enable', 'boolean');
+        this.SWAP_USAGE_TEXT = new PrefValue(settings, 'swap-usage-text', 'string');
     }
 };
 

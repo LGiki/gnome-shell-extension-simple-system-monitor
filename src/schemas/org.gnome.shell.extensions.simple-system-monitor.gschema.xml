@@ -91,5 +91,15 @@
       <summary>Text Color</summary>
       <description>Text Color</description>
     </key>
+    <key type="b" name="is-swap-usage-enable">
+      <default>false</default>
+      <summary>Show Swap Usage</summary>
+      <description>Show Swap Usage</description>
+    </key>
+    <key type="s" name="swap-usage-text">
+      <default>'S'</default>
+      <summary>Swap Usage Text</summary>
+      <description>Swap Usage Text</description>
+    </key>
   </schema>
 </schemalist>

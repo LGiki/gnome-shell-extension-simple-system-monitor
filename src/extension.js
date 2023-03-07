@@ -153,6 +153,51 @@ const getCurrentCPUUsage = () => {
     return currentCPUUsage;
 };
 
+const getCurrentSwapUsage = () => {
+    let currentSwapUsage = 0;
+
+    try {
+        const inputFile = Gio.File.new_for_path('/proc/meminfo');
+        const [, content] = inputFile.load_contents(null);
+        const contentStr = ByteArray.toString(content);
+        const contentLines = contentStr.split('\n');
+
+        let swapTotal = -1;
+        let swapFree = -1;
+
+        for (let i = 0; i < contentLines.length; i++) {
+            const fields = contentLines[i].trim().split(/\W+/);
+
+            if (fields.length < 2) {
+                break;
+            }
+
+            const itemName = fields[0];
+            const itemValue = Number.parseInt(fields[1]);
+
+            if (itemName == 'SwapTotal') {
+                swapTotal = itemValue;
+            }
+
+            if (itemName == 'SwapFree') {
+                swapFree = itemValue;
+            }
+
+            if (swapTotal !== -1 && swapFree !== -1) {
+                break;
+            }
+        }
+
+        if (swapTotal !== -1 && swapFree !== -1 && swapTotal !== 0) {
+            currentSwapUsage = 1 - swapFree / swapTotal;
+        }
+    } catch (e) {
+        logError(e);
+    }
+
+    return currentSwapUsage;
+};
+
 const getCurrentMemoryUsage = () => {
     let currentMemoryUsage = 0;
 
@@ -239,6 +284,7 @@ const toDisplayString = (
     cpuUsage,
     memoryUsage,
     netSpeed,
+    swapUsage,
 ) => {
     const displayItems = [];
     if (enable.isCpuUsageEnable && cpuUsage !== null) {
@@ -253,6 +299,11 @@ const toDisplayString = (
                 showExtraSpaces,
                 showPercentSign,
             )}`,
+        );
+    }
+    if (enable.isSwapUsageEnable && swapUsage !== null) {
+        displayItems.push(
+            `${texts.swapUsageText} ${formatUsageVal(swapUsage, showExtraSpaces, showPercentSign)}`,
         );
     }
     if (enable.isDownloadSpeedEnable && netSpeed !== null) {
@@ -331,6 +382,7 @@ class Extension {
             memoryUsageText: this._prefs.MEMORY_USAGE_TEXT.get(),
             downloadSpeedText: this._prefs.DOWNLOAD_SPEED_TEXT.get(),
             uploadSpeedText: this._prefs.UPLOAD_SPEED_TEXT.get(),
+            swapUsageText: this._prefs.SWAP_USAGE_TEXT.get(),
             itemSeparator: this._prefs.ITEM_SEPARATOR.get(),
         };
 
@@ -339,6 +391,7 @@ class Extension {
             isMemoryUsageEnable: this._prefs.IS_MEMORY_USAGE_ENABLE.get(),
             isDownloadSpeedEnable: this._prefs.IS_DOWNLOAD_SPEED_ENABLE.get(),
             isUploadSpeedEnable: this._prefs.IS_UPLOAD_SPEED_ENABLE.get(),
+            isSwapUsageEnable: this._prefs.IS_SWAP_USAGE_ENABLE.get(),
         };
 
         this._showExtraSpaces = this._prefs.SHOW_EXTRA_SPACES.get();
@@ -390,8 +443,9 @@ class Extension {
         let currentCPUUsage = null;
         let currentMemoryUsage = null;
         let currentNetSpeed = null;
+        let currentSwapUsage = null;
         if (this._enable.isCpuUsageEnable) {
-            currentCPUUsage = getCurrentCPUUsage(this._refresh_interval);
+            currentCPUUsage = getCurrentCPUUsage();
         }
         if (this._enable.isMemoryUsageEnable) {
             currentMemoryUsage = getCurrentMemoryUsage();
@@ -399,6 +453,10 @@ class Extension {
         if (this._enable.isDownloadSpeedEnable || this._enable.isUploadSpeedEnable) {
             currentNetSpeed = getCurrentNetSpeed(this._refresh_interval);
         }
+        if (this._enable.isSwapUsageEnable) {
+            currentSwapUsage = getCurrentSwapUsage();
+        }
+
         const displayText = toDisplayString(
             this._showExtraSpaces,
             this._showPercentSign,
@@ -407,6 +465,7 @@ class Extension {
             currentCPUUsage,
             currentMemoryUsage,
             currentNetSpeed,
+            currentSwapUsage,
         );
         this._indicator.setText(displayText);
         return GLib.SOURCE_CONTINUE;
@@ -437,6 +496,10 @@ class Extension {
             this._enable.isUploadSpeedEnable = this._prefs.IS_UPLOAD_SPEED_ENABLE.get();
         });
 
+        this._prefs.IS_SWAP_USAGE_ENABLE.changed(() => {
+            this._enable.isSwapUsageEnable = this._prefs.IS_SWAP_USAGE_ENABLE.get();
+        });
+
         this._prefs.CPU_USAGE_TEXT.changed(() => {
             this._texts.cpuUsageText = this._prefs.CPU_USAGE_TEXT.get();
         });
@@ -451,6 +514,10 @@ class Extension {
 
         this._prefs.UPLOAD_SPEED_TEXT.changed(() => {
             this._texts.uploadSpeedText = this._prefs.UPLOAD_SPEED_TEXT.get();
+        });
+
+        this._prefs.SWAP_USAGE_TEXT.changed(() => {
+            this._texts.swapUsageText = this._prefs.SWAP_USAGE_TEXT.get();
         });
 
         this._prefs.ITEM_SEPARATOR.changed(() => {
@@ -492,6 +559,8 @@ class Extension {
         this._prefs.FONT_SIZE.disconnect();
         this._prefs.TEXT_COLOR.disconnect();
         this._prefs.FONT_WEIGHT.disconnect();
+        this._prefs.IS_SWAP_USAGE_ENABLE.disconnect();
+        this._prefs.SWAP_USAGE_TEXT.disconnect();
     }
 }
 

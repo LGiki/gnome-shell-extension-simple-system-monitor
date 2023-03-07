@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Simple System Monitor\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-27 15:11+0800\n"
-"PO-Revision-Date: 2022-05-27 15:30+0800\n"
+"PO-Revision-Date: 2023-03-07 15:30+0800\n"
 "Last-Translator: LGiki <lgiki@lgiki.net>\n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -17,131 +17,135 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: extension.js:279
+#: extension.js:330
 msgid "Open System Monitor"
 msgstr "打开系统监视器"
 
-#: extension.js:292
+#: extension.js:343
 msgid "Setting"
 msgstr "设置"
 
-#: prefs_gtk3.ui:46 prefs.ui:95
+#: prefs_gtk3.ui:52 prefs.ui:95
 msgid "Show CPU Usage"
-msgstr "显示CPU使用率"
+msgstr "显示 CPU 使用率"
 
-#: prefs_gtk3.ui:72 prefs.ui:142
+#: prefs_gtk3.ui:78 prefs.ui:142
 msgid "CPU Usage Text"
-msgstr "CPU使用率文本"
+msgstr "CPU 使用率文本"
 
-#: prefs_gtk3.ui:96 prefs.ui:226
+#: prefs_gtk3.ui:102 prefs.ui:226
 msgid "Show Memory Usage"
 msgstr "显示内存使用率"
 
-#: prefs_gtk3.ui:122 prefs.ui:274
+#: prefs_gtk3.ui:128 prefs.ui:274
 msgid "Memory Usage Text"
 msgstr "内存使用率文本"
 
-#: prefs_gtk3.ui:146 prefs.ui:357
+#: prefs_gtk3.ui:153 prefs.ui:357
+msgid "Show Swap Usage"
+msgstr "显示 Swap 使用率"
+
+#: prefs_gtk3.ui:179 prefs.ui:405
+msgid "Swap Usage Text"
+msgstr "Swap 使用率文本"
+
+#: prefs_gtk3.ui:203 prefs.ui:488
 msgid "Show Download Speed"
 msgstr "显示网络下载速度"
 
-#: prefs_gtk3.ui:172 prefs.ui:405
+#: prefs_gtk3.ui:229 prefs.ui:536
 msgid "Download Speed Text"
 msgstr "网络下载速度文本"
 
-#: prefs_gtk3.ui:196 prefs.ui:488
+#: prefs_gtk3.ui:253 prefs.ui:619
 msgid "Show Upload Speed"
 msgstr "显示网络上传速度"
 
-#: prefs_gtk3.ui:222 prefs.ui:536
+#: prefs_gtk3.ui:279 prefs.ui:667
 msgid "Upload Speed Text"
 msgstr "网络上传速度文本"
 
-#: prefs_gtk3.ui:246 prefs.ui:1034
+#: prefs_gtk3.ui:303 prefs.ui:1165
 msgid "Item Separator"
 msgstr "项目分隔符"
 
-#: prefs_gtk3.ui:273 prefs.ui:1083
+#: prefs_gtk3.ui:330 prefs.ui:1214
 msgid "Refresh Interval (second)"
 msgstr "刷新间隔 (秒)"
 
-#: prefs_gtk3.ui:301 prefs.ui:627
+#: prefs_gtk3.ui:358 prefs.ui:758
 msgid "Font"
 msgstr "字体"
 
-#: prefs_gtk3.ui:358 prefs.ui:767
+#: prefs_gtk3.ui:388 prefs.ui:833
+msgid "Font Weight"
+msgstr "字体粗细"
+
+#: prefs_gtk3.ui:415 prefs.ui:898
 msgid "Text Color"
 msgstr "文本颜色"
 
-#: prefs_gtk3.ui:438 prefs.ui:1134
+#: prefs_gtk3.ui:438 prefs.ui:989
+msgid "Extension Position"
+msgstr "插件显示位置"
+
+#: prefs_gtk3.ui:469 prefs.ui:1063
+msgid "Extension Order"
+msgstr "插件显示顺序"
+
+#: prefs_gtk3.ui:495 prefs.ui:1265
 msgid "Show Percent Sign"
 msgstr "显示百分号"
 
-#: prefs_gtk3.ui:462 prefs.ui:1190
+#: prefs_gtk3.ui:519 prefs.ui:1321
 msgid "Show Extra Spaces"
 msgstr "显示额外的空格"
 
-#: prefs_gtk3.ui:485 prefs.ui:1233
+#: prefs_gtk3.ui:542 prefs.ui:1364
 msgid "Reset Settings To Default"
 msgstr "重置设置为默认值"
 
 #: prefs.ui:48
 msgid "CPU Usage"
-msgstr "CPU使用率"
+msgstr "CPU 使用率"
 
 #: prefs.ui:179
 msgid "Memory Usage"
 msgstr "内存使用率"
 
 #: prefs.ui:310
+msgid "Swap Usage"
+msgstr "Swap 使用率"
+
+#: prefs.ui:441
 msgid "Download Speed"
 msgstr "网络下载速度"
 
-#: prefs.ui:441
+#: prefs.ui:572
 msgid "Upload Speed"
 msgstr "网络上传速度"
 
-#: prefs.ui:572
+#: prefs.ui:703
 msgid "Customize"
 msgstr "自定义"
 
-#: prefs.ui:638
+#: prefs.ui:769
 msgid "For best experience, please use monospaced font"
 msgstr "为了获得最佳体验，请使用等宽字体"
 
-#: prefs.ui:987
-msgid "Misc"
-msgstr "杂项"
-
-#: prefs.ui:1201
-msgid "Display an extra space between text and value"
-msgstr "在文本和数值之间显示一个额外的空格"
-
-#: prefs.ui:713
+#: prefs.ui:844
 msgid "The larger the value, the bolder the font"
 msgstr "数值越大，字体越粗"
 
-#: prefs_gtk3.ui:331 prefs.ui:702
-msgid "Font Weight"
-msgstr "字体粗细"
-
-#: prefs_gtk3.ui:381 prefs.ui:858
-msgid "Extension Position"
-msgstr "插件显示位置"
-
-#: prefs_gtk3.ui:412 prefs.ui:932
-msgid "Extension Order"
-msgstr "插件显示顺序"
-
-#: prefs.ui:803
+#: prefs.ui:934
 msgid "Position"
 msgstr "显示位置"
 
-#: prefs.ui:869
+#: prefs.ui:1000
 msgid "Re-login Required"
 msgstr "需要重新登录"
 
-#: prefs.ui:943
+#: prefs.ui:1074
 msgid ""
 "Re-login Required\n"
 "0: I don't care where the icon is\n"
@@ -152,3 +156,11 @@ msgstr ""
 "0: 我不关心图标在哪儿\n"
 "负值：从右侧开始\n"
 "正值：从左侧开始"
+
+#: prefs.ui:1118
+msgid "Misc"
+msgstr "杂项"
+
+#: prefs.ui:1332
+msgid "Display an extra space between text and value"
+msgstr "在文本和数值之间显示一个额外的空格"
