@@ -1,10 +1,11 @@
-const ExtensionUtils = imports.misc.extensionUtils;
+import { Extension, gettext as _ } from 'resource:///org/gnome/shell/extensions/extension.js';
 
 const SETTING_SCHEMA = 'org.gnome.shell.extensions.simple-system-monitor';
 
-var Prefs = class Prefs {
+export var Prefs = class Prefs {
     constructor() {
-        const settings = ExtensionUtils.getSettings(SETTING_SCHEMA);
+        const extension = Extension.lookupByUUID('ssm-gnome@lgiki.net');
+        const settings = extension.getSettings(SETTING_SCHEMA);
 
         this.EXTENSION_POSITION = new PrefValue(settings, 'extension-position', 'string');
         this.EXTENSION_ORDER = new PrefValue(settings, 'extension-order', 'int');
@@ -33,7 +34,7 @@ var Prefs = class Prefs {
     }
 };
 
-class PrefValue {
+export class PrefValue {
     constructor(gioSettings, key, type) {
         this._gioSettings = gioSettings;
         this._key = key;

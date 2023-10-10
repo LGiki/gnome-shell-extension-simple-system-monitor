@@ -1,8 +1,9 @@
-const { GObject, Gtk, Gdk } = imports.gi;
+import GObject from 'gi://GObject';
+import Gtk from 'gi://Gtk';
+import Gdk from 'gi://Gdk';
 
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
-const Settings = Me.imports.settings;
+import * as Settings from './settings.js';
+
 const Configuration = new Settings.Prefs();
 
 const DEFAULT_SETTINGS = {
@@ -242,10 +243,6 @@ const SimpleSystemMonitorPrefsWidget = GObject.registerClass(
         }
     },
 );
-
-function init() {
-    ExtensionUtils.initTranslations();
-}
 
 function buildPrefsWidget() {
     const widget = new SimpleSystemMonitorPrefsWidget();
