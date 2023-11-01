@@ -30,16 +30,17 @@ import Shell from 'gi://Shell';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
 
+
 // Attention: This module is not available as an ECMAScript Module
 const ByteArray = imports.byteArray;
 
 import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
 import * as Settings from './settings.js';
+
 import * as Util from 'resource:///org/gnome/shell/misc/util.js';
 
-import * as Shell from 'gi://Shell';
 
-import { Extension, gettext as _ } from 'resource:///org/gnome/shell/extensions/extension.js';
+import {Extension, gettext as _} from 'resource:///org/gnome/shell/extensions/extension.js';
 
 const netSpeedUnits = ['B/s', 'K/s', 'M/s', 'G/s', 'T/s', 'P/s', 'E/s', 'Z/s', 'Y/s'];
 
@@ -380,7 +381,7 @@ export default class SSMExtension extends Extension {
         lastCPUUsed = 0;
         lastCPUTotal = 0;
 
-        this._prefs = new Settings.Prefs();
+        this._prefs = new Settings.Prefs(this.getSettings(Settings.SETTING_SCHEMA));
 
         this._texts = {
             cpuUsageText: this._prefs.CPU_USAGE_TEXT.get(),

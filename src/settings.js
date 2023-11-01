@@ -1,12 +1,13 @@
-import { Extension, gettext as _ } from 'resource:///org/gnome/shell/extensions/extension.js';
 
-const SETTING_SCHEMA = 'org.gnome.shell.extensions.simple-system-monitor';
+//import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
+
+export const SETTING_SCHEMA = 'org.gnome.shell.extensions.simple-system-monitor';
+
 
 export var Prefs = class Prefs {
-    constructor() {
-        const extension = Extension.lookupByUUID('ssm-gnome@lgiki.net');
-        const settings = extension.getSettings(SETTING_SCHEMA);
+    
 
+    constructor(settings) {
         this.EXTENSION_POSITION = new PrefValue(settings, 'extension-position', 'string');
         this.EXTENSION_ORDER = new PrefValue(settings, 'extension-order', 'int');
         this.FONT_WEIGHT = new PrefValue(settings, 'font-weight', 'int');
