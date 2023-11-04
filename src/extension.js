@@ -352,11 +352,7 @@ const Indicator = GObject.registerClass(
 
             const settingMenuItem = new PopupMenu.PopupMenuItem(_('Setting'));
             settingMenuItem.connect('activate', () => {
-                if (typeof this.extension.openPreferences === 'function') {
-                    this.extension.openPreferences();
-                } else {
-                    Util.spawn(['gnome-shell-extension-prefs', extension.uuid]);
-                }
+                this.extension.openPreferences();
             });
             this.menu.addMenuItem(settingMenuItem);
         }
