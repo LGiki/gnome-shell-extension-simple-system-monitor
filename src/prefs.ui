@@ -35,6 +35,10 @@
       <object class="GtkBox">
         <property name="visible">True</property>
         <property name="can-focus">True</property>
+        <property name="margin-start">30</property>
+        <property name="margin-end">30</property>
+        <property name="margin-top">30</property>
+        <property name="margin-bottom">30</property>
         <property name="orientation">vertical</property>
 
         <child>
