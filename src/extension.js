@@ -30,15 +30,11 @@ import Shell from 'gi://Shell';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
 
-
 // Attention: This module is not available as an ECMAScript Module
 const ByteArray = imports.byteArray;
 
 import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
 import * as Settings from './settings.js';
-
-import * as Util from 'resource:///org/gnome/shell/misc/util.js';
-
 
 import {Extension, gettext as _} from 'resource:///org/gnome/shell/extensions/extension.js';
 
