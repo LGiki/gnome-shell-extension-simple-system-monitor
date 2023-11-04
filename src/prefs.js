@@ -81,16 +81,6 @@ export default class SSMPreferences extends ExtensionPreferences {
             initWidget(this.dir)
         }
 
-        const page = new Adw.PreferencesPage();
-
-
-        // CPU
-        const cpuGroup = new Adw.PreferencesGroup({
-            title: _('CPU Usage'),
-        });
-        
-        page.add(cpuGroup);
-
         window.add(new SimpleSystemMonitorPrefsWidget(this._configuration));
     }
 }
