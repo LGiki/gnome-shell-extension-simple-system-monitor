@@ -23,6 +23,5 @@ echo "Start packing..."
 gnome-extensions pack src \
     --extra-source="settings.js" \
     --extra-source="prefs.ui" \
-    --extra-source="prefs_gtk3.ui" \
     --force
 echo "Done."
