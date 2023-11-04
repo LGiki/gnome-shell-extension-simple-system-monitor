@@ -2,7 +2,10 @@ import GObject from 'gi://GObject';
 import Gdk from 'gi://Gdk';
 import Adw from 'gi://Adw';
 
-import {ExtensionPreferences, gettext as _} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
+import {
+    ExtensionPreferences,
+    gettext as _,
+} from 'resource:///org/gnome/Shell/Extensions/js/extensions/prefs.js';
 
 import * as Settings from './settings.js';
 
@@ -63,25 +66,23 @@ const extensionPositionLabelToIndex = (selectedString) => {
     }
 };
 
-let SimpleSystemMonitorPrefsWidget = undefined
-let Configuration = undefined
+let SimpleSystemMonitorPrefsWidget = undefined;
+let Configuration = undefined;
 export default class SSMPreferences extends ExtensionPreferences {
-    
     fillPreferencesWindow(window) {
-        this._configuration = new Settings.Prefs(this.getSettings(Settings.SETTING_SCHEMA))
+        this._configuration = new Settings.Prefs(this.getSettings(Settings.SETTING_SCHEMA));
         window._settings = this.getSettings(Settings.SETTING_SCHEMA);
 
         if (Configuration === undefined) {
-            Configuration = this._configuration
+            Configuration = this._configuration;
         }
         if (SimpleSystemMonitorPrefsWidget === undefined) {
-            initWidget(this.dir)
+            initWidget(this.dir);
         }
 
         window.add(new SimpleSystemMonitorPrefsWidget(this._configuration));
     }
 }
-
 
 function initWidget(dir) {
     SimpleSystemMonitorPrefsWidget = GObject.registerClass(
@@ -113,10 +114,10 @@ function initWidget(dir) {
         class SimpleSystemMonitorPrefsWidget extends Adw.PreferencesPage {
             _init() {
                 super._init();
-    
+
                 this.update_widget_setting_values();
             }
-    
+
             update_widget_setting_values() {
                 this._extension_position_combo_box.set_active(
                     extensionPositionLabelToIndex(Configuration.EXTENSION_POSITION.get()),
@@ -127,13 +128,17 @@ function initWidget(dir) {
                 this._show_percent_sign_switch.set_active(Configuration.SHOW_PERCENT_SIGN.get());
                 this._cpu_usage_enable_switch.set_active(Configuration.IS_CPU_USAGE_ENABLE.get());
                 this._cpu_usage_text.set_text(Configuration.CPU_USAGE_TEXT.get());
-                this._memory_usage_enable_switch.set_active(Configuration.IS_MEMORY_USAGE_ENABLE.get());
+                this._memory_usage_enable_switch.set_active(
+                    Configuration.IS_MEMORY_USAGE_ENABLE.get(),
+                );
                 this._memory_usage_text.set_text(Configuration.MEMORY_USAGE_TEXT.get());
                 this._download_speed_enable_switch.set_active(
                     Configuration.IS_DOWNLOAD_SPEED_ENABLE.get(),
                 );
                 this._download_speed_text.set_text(Configuration.DOWNLOAD_SPEED_TEXT.get());
-                this._upload_speed_enable_switch.set_active(Configuration.IS_UPLOAD_SPEED_ENABLE.get());
+                this._upload_speed_enable_switch.set_active(
+                    Configuration.IS_UPLOAD_SPEED_ENABLE.get(),
+                );
                 this._upload_speed_text.set_text(Configuration.UPLOAD_SPEED_TEXT.get());
                 this._item_separator.set_text(Configuration.ITEM_SEPARATOR.get());
                 this._refresh_interval.set_value(Configuration.REFRESH_INTERVAL.get());
@@ -146,7 +151,7 @@ function initWidget(dir) {
                 color.parse(Configuration.TEXT_COLOR.get());
                 this._text_color.set_rgba(color);
             }
-    
+
             reset_settings_to_default() {
                 Configuration.EXTENSION_POSITION.set(DEFAULT_SETTINGS.extensionPosition);
                 Configuration.EXTENSION_ORDER.set(DEFAULT_SETTINGS.extensionOrder);
@@ -169,11 +174,11 @@ function initWidget(dir) {
                 Configuration.IS_SWAP_USAGE_ENABLE.set(DEFAULT_SETTINGS.isSwapUsageEnable);
                 Configuration.SWAP_USAGE_TEXT.set(DEFAULT_SETTINGS.swapUsageText);
             }
-    
+
             color_changed(widget) {
                 Configuration.TEXT_COLOR.set(colorToHex(widget.get_rgba()));
             }
-    
+
             font_changed(widget) {
                 const font = widget.get_font();
                 const lastSpaceIndex = font.lastIndexOf(' ');
@@ -182,77 +187,77 @@ function initWidget(dir) {
                 Configuration.FONT_FAMILY.set(fontFamily);
                 Configuration.FONT_SIZE.set(fontSize);
             }
-    
+
             extension_position_combo_box_changed(widget) {
                 const selectedIndex = widget.get_active();
                 const selectedString = extensionPositionIndexToLabel(selectedIndex);
                 Configuration.EXTENSION_POSITION.set(selectedString);
             }
-    
+
             extension_order_changed(widget) {
                 Configuration.EXTENSION_ORDER.set(widget.get_value());
             }
-    
+
             font_weight_changed(widget) {
                 Configuration.FONT_WEIGHT.set(widget.get_value());
             }
-    
+
             show_extra_spaces_switch_changed(widget) {
                 Configuration.SHOW_EXTRA_SPACES.set(widget.get_active());
             }
-    
+
             show_percent_sign_switch_changed(widget) {
                 Configuration.SHOW_PERCENT_SIGN.set(widget.get_active());
             }
-    
+
             cpu_usage_enable_switch_changed(widget) {
                 Configuration.IS_CPU_USAGE_ENABLE.set(widget.get_active());
             }
-    
+
             memory_usage_enable_switch_changed(widget) {
                 Configuration.IS_MEMORY_USAGE_ENABLE.set(widget.get_active());
             }
-    
+
             download_speed_enable_switch_changed(widget) {
                 Configuration.IS_DOWNLOAD_SPEED_ENABLE.set(widget.get_active());
             }
-    
+
             upload_speed_enable_switch_changed(widget) {
                 Configuration.IS_UPLOAD_SPEED_ENABLE.set(widget.get_active());
             }
-    
+
             swap_usage_enable_switch_changed(widget) {
                 Configuration.IS_SWAP_USAGE_ENABLE.set(widget.get_active());
             }
-    
+
             cpu_usage_text_changed(widget) {
                 Configuration.CPU_USAGE_TEXT.set(widget.get_text());
             }
-    
+
             memory_usage_text_changed(widget) {
                 Configuration.MEMORY_USAGE_TEXT.set(widget.get_text());
             }
-    
+
             swap_usage_text_changed(widget) {
                 Configuration.SWAP_USAGE_TEXT.set(widget.get_text());
             }
-    
+
             download_usage_text_changed(widget) {
                 Configuration.DOWNLOAD_SPEED_TEXT.set(widget.get_text());
             }
-    
+
             upload_usage_text_changed(widget) {
                 Configuration.UPLOAD_SPEED_TEXT.set(widget.get_text());
             }
-    
+
             item_separator_changed(widget) {
                 Configuration.ITEM_SEPARATOR.set(widget.get_text());
             }
-    
+
             refresh_interval_changed(widget) {
                 Configuration.REFRESH_INTERVAL.set(widget.get_value());
             }
-    
+
             reset_settings_to_default_clicked(widget) {
                 this.reset_settings_to_default();
                 this.update_widget_setting_values();
