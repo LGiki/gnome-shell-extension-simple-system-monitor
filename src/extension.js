@@ -20,22 +20,27 @@
 
 /* exported init */
 
-const { GObject, St, Clutter, GLib, Gio } = imports.gi;
+import GLib from 'gi://GLib';
+import GObject from 'gi://GObject';
+import St from 'gi://St';
+import Clutter from 'gi://Clutter';
+import Gio from 'gi://Gio';
+import Shell from 'gi://Shell';
 
-const Main = imports.ui.main;
-const PanelMenu = imports.ui.panelMenu;
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
+import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
+
+
+// Attention: This module is not available as an ECMAScript Module
 const ByteArray = imports.byteArray;
-const PopupMenu = imports.ui.popupMenu;
-const ExtensionUtils = imports.misc.extensionUtils;
-const Me = ExtensionUtils.getCurrentExtension();
-const Settings = Me.imports.settings;
-const Util = imports.misc.util;
-const Gettext = imports.gettext;
-const GettextDomain = Me.metadata['gettext-domain'];
-const Domain = Gettext.domain(GettextDomain);
-const Shell = imports.gi.Shell;
 
-const _ = Domain.gettext;
+import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
+import * as Settings from './settings.js';
+
+import * as Util from 'resource:///org/gnome/shell/misc/util.js';
+
+
+import {Extension, gettext as _} from 'resource:///org/gnome/shell/extensions/extension.js';
 
 const netSpeedUnits = ['B/s', 'K/s', 'M/s', 'G/s', 'T/s', 'P/s', 'E/s', 'Z/s', 'Y/s'];
 
@@ -317,6 +322,11 @@ const toDisplayString = (
 
 const Indicator = GObject.registerClass(
     class Indicator extends PanelMenu.Button {
+        constructor() {
+            super();
+            this.extension = Extension.lookupByUUID('ssm-gnome@lgiki.net');
+        }
+
         _init() {
             super._init(0.0, 'Simple System Monitor');
 
@@ -342,11 +352,7 @@ const Indicator = GObject.registerClass(
 
             const settingMenuItem = new PopupMenu.PopupMenuItem(_('Setting'));
             settingMenuItem.connect('activate', () => {
-                if (typeof ExtensionUtils.openPrefs === 'function') {
-                    ExtensionUtils.openPrefs();
-                } else {
-                    Util.spawn(['gnome-shell-extension-prefs', Me.uuid]);
-                }
+                this.extension.openPreferences();
             });
             this.menu.addMenuItem(settingMenuItem);
         }
@@ -363,11 +369,7 @@ const Indicator = GObject.registerClass(
     },
 );
 
-class Extension {
-    constructor(uuid) {
-        this._uuid = uuid;
-    }
-
+export default class SSMExtension extends Extension {
     enable() {
         lastTotalNetDownBytes = 0;
         lastTotalNetUpBytes = 0;
@@ -375,7 +377,7 @@ class Extension {
         lastCPUUsed = 0;
         lastCPUTotal = 0;
 
-        this._prefs = new Settings.Prefs();
+        this._prefs = new Settings.Prefs(this.getSettings(Settings.SETTING_SCHEMA));
 
         this._texts = {
             cpuUsageText: this._prefs.CPU_USAGE_TEXT.get(),
@@ -407,7 +409,7 @@ class Extension {
         const extensionPosition = this._prefs.EXTENSION_POSITION.get();
         const extensionOrder = this._prefs.EXTENSION_ORDER.get();
 
-        Main.panel.addToStatusArea(this._uuid, this._indicator, extensionOrder, extensionPosition);
+        Main.panel.addToStatusArea(this.uuid, this._indicator, extensionOrder, extensionPosition);
 
         this._timeout = GLib.timeout_add_seconds(
             GLib.PRIORITY_DEFAULT_IDLE,
@@ -562,9 +564,4 @@ class Extension {
         this._prefs.IS_SWAP_USAGE_ENABLE.disconnect();
         this._prefs.SWAP_USAGE_TEXT.disconnect();
     }
-}
-
-function init(meta) {
-    ExtensionUtils.initTranslations();
-    return new Extension(meta.uuid);
 }

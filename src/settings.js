@@ -1,11 +1,13 @@
-const ExtensionUtils = imports.misc.extensionUtils;
 
-const SETTING_SCHEMA = 'org.gnome.shell.extensions.simple-system-monitor';
+//import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
 
-var Prefs = class Prefs {
-    constructor() {
-        const settings = ExtensionUtils.getSettings(SETTING_SCHEMA);
+export const SETTING_SCHEMA = 'org.gnome.shell.extensions.simple-system-monitor';
 
+
+export var Prefs = class Prefs {
+    
+
+    constructor(settings) {
         this.EXTENSION_POSITION = new PrefValue(settings, 'extension-position', 'string');
         this.EXTENSION_ORDER = new PrefValue(settings, 'extension-order', 'int');
         this.FONT_WEIGHT = new PrefValue(settings, 'font-weight', 'int');
@@ -33,7 +35,7 @@ var Prefs = class Prefs {
     }
 };
 
-class PrefValue {
+export class PrefValue {
     constructor(gioSettings, key, type) {
         this._gioSettings = gioSettings;
         this._key = key;

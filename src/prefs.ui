@@ -28,12 +28,17 @@
       <row><col id="0">Right</col></row>
     </data>
   </object>
-  <template class="SimpleSystemMonitorPrefsWidget" parent="GtkBox">
+  <template class="SimpleSystemMonitorPrefsWidget" parent="AdwPreferencesPage">
     <child>
-
+    <object class="GtkScrolledWindow">
+    <child>
       <object class="GtkBox">
         <property name="visible">True</property>
         <property name="can-focus">True</property>
+        <property name="margin-start">30</property>
+        <property name="margin-end">30</property>
+        <property name="margin-top">30</property>
+        <property name="margin-bottom">30</property>
         <property name="orientation">vertical</property>
 
         <child>
@@ -1370,6 +1375,8 @@ Positive Values: starting from the left side</property>
         </child>
 
       </object>
+    </child>
+    </object>
     </child>
   </template>
 </interface>
