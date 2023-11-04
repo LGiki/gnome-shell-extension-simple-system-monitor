@@ -1,5 +1,4 @@
 import GObject from 'gi://GObject';
-import Gtk from 'gi://Gtk';
 import Gdk from 'gi://Gdk';
 import Adw from 'gi://Adw';
 
@@ -29,8 +28,6 @@ const DEFAULT_SETTINGS = {
     isSwapUsageEnable: false,
     swapUsageText: 'S',
 };
-
-const WIDGET_TEMPLATE_FILE = Gtk.get_major_version() === 3 ? 'prefs_gtk3.ui' : 'prefs.ui';
 
 const N_ = function (e) {
     return e;
@@ -90,7 +87,7 @@ function initWidget(dir) {
     SimpleSystemMonitorPrefsWidget = GObject.registerClass(
         {
             GTypeName: 'SimpleSystemMonitorPrefsWidget',
-            Template: dir.get_child(WIDGET_TEMPLATE_FILE).get_uri(),
+            Template: dir.get_child('prefs.ui').get_uri(),
             InternalChildren: [
                 'extension_position_combo_box',
                 'extension_order',
@@ -115,10 +112,7 @@ function initWidget(dir) {
         },
         class SimpleSystemMonitorPrefsWidget extends Adw.PreferencesPage {
             _init() {
-                super._init({
-                    //orientation: Gtk.Orientation.VERTICAL,
-                    //spacing: 30,
-                });
+                super._init();
     
                 this.update_widget_setting_values();
             }
