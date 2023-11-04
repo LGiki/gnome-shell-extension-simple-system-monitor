@@ -25,83 +25,83 @@ msgstr "打开系统监视器"
 msgid "Setting"
 msgstr "设置"
 
-#: prefs_gtk3.ui:52 prefs.ui:95
+#: prefs.ui:95
 msgid "Show CPU Usage"
 msgstr "显示 CPU 使用率"
 
-#: prefs_gtk3.ui:78 prefs.ui:142
+#: prefs.ui:142
 msgid "CPU Usage Text"
 msgstr "CPU 使用率文本"
 
-#: prefs_gtk3.ui:102 prefs.ui:226
+#: prefs.ui:226
 msgid "Show Memory Usage"
 msgstr "显示内存使用率"
 
-#: prefs_gtk3.ui:128 prefs.ui:274
+#: prefs.ui:274
 msgid "Memory Usage Text"
 msgstr "内存使用率文本"
 
-#: prefs_gtk3.ui:153 prefs.ui:357
+#: prefs.ui:357
 msgid "Show Swap Usage"
 msgstr "显示 Swap 使用率"
 
-#: prefs_gtk3.ui:179 prefs.ui:405
+#: prefs.ui:405
 msgid "Swap Usage Text"
 msgstr "Swap 使用率文本"
 
-#: prefs_gtk3.ui:203 prefs.ui:488
+#: prefs.ui:488
 msgid "Show Download Speed"
 msgstr "显示网络下载速度"
 
-#: prefs_gtk3.ui:229 prefs.ui:536
+#: prefs.ui:536
 msgid "Download Speed Text"
 msgstr "网络下载速度文本"
 
-#: prefs_gtk3.ui:253 prefs.ui:619
+#: prefs.ui:619
 msgid "Show Upload Speed"
 msgstr "显示网络上传速度"
 
-#: prefs_gtk3.ui:279 prefs.ui:667
+#: prefs.ui:667
 msgid "Upload Speed Text"
 msgstr "网络上传速度文本"
 
-#: prefs_gtk3.ui:303 prefs.ui:1165
+#: prefs.ui:1165
 msgid "Item Separator"
 msgstr "项目分隔符"
 
-#: prefs_gtk3.ui:330 prefs.ui:1214
+#: prefs.ui:1214
 msgid "Refresh Interval (second)"
 msgstr "刷新间隔 (秒)"
 
-#: prefs_gtk3.ui:358 prefs.ui:758
+#: prefs.ui:758
 msgid "Font"
 msgstr "字体"
 
-#: prefs_gtk3.ui:388 prefs.ui:833
+#: prefs.ui:833
 msgid "Font Weight"
 msgstr "字体粗细"
 
-#: prefs_gtk3.ui:415 prefs.ui:898
+#: prefs.ui:898
 msgid "Text Color"
 msgstr "文本颜色"
 
-#: prefs_gtk3.ui:438 prefs.ui:989
+#: prefs.ui:989
 msgid "Extension Position"
 msgstr "插件显示位置"
 
-#: prefs_gtk3.ui:469 prefs.ui:1063
+#: prefs.ui:1063
 msgid "Extension Order"
 msgstr "插件显示顺序"
 
-#: prefs_gtk3.ui:495 prefs.ui:1265
+#: prefs.ui:1265
 msgid "Show Percent Sign"
 msgstr "显示百分号"
 
-#: prefs_gtk3.ui:519 prefs.ui:1321
+#: prefs.ui:1321
 msgid "Show Extra Spaces"
 msgstr "显示额外的空格"
 
-#: prefs_gtk3.ui:542 prefs.ui:1364
+#: prefs.ui:1364
 msgid "Reset Settings To Default"
 msgstr "重置设置为默认值"
 

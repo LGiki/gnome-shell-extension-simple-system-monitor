@@ -25,83 +25,83 @@ msgstr ""
 msgid "Setting"
 msgstr ""
 
-#: prefs_gtk3.ui:52 prefs.ui:95
+#: prefs.ui:95
 msgid "Show CPU Usage"
 msgstr ""
 
-#: prefs_gtk3.ui:78 prefs.ui:142
+#: prefs.ui:142
 msgid "CPU Usage Text"
 msgstr ""
 
-#: prefs_gtk3.ui:102 prefs.ui:226
+#: prefs.ui:226
 msgid "Show Memory Usage"
 msgstr ""
 
-#: prefs_gtk3.ui:128 prefs.ui:274
+#: prefs.ui:274
 msgid "Memory Usage Text"
 msgstr ""
 
-#: prefs_gtk3.ui:153 prefs.ui:357
+#: prefs.ui:357
 msgid "Show Swap Usage"
 msgstr ""
 
-#: prefs_gtk3.ui:179 prefs.ui:405
+#: prefs.ui:405
 msgid "Swap Usage Text"
 msgstr ""
 
-#: prefs_gtk3.ui:203 prefs.ui:488
+#: prefs.ui:488
 msgid "Show Download Speed"
 msgstr ""
 
-#: prefs_gtk3.ui:229 prefs.ui:536
+#: prefs.ui:536
 msgid "Download Speed Text"
 msgstr ""
 
-#: prefs_gtk3.ui:253 prefs.ui:619
+#: prefs.ui:619
 msgid "Show Upload Speed"
 msgstr ""
 
-#: prefs_gtk3.ui:279 prefs.ui:667
+#: prefs.ui:667
 msgid "Upload Speed Text"
 msgstr ""
 
-#: prefs_gtk3.ui:303 prefs.ui:1165
+#: prefs.ui:1165
 msgid "Item Separator"
 msgstr ""
 
-#: prefs_gtk3.ui:330 prefs.ui:1214
+#: prefs.ui:1214
 msgid "Refresh Interval (second)"
 msgstr ""
 
-#: prefs_gtk3.ui:358 prefs.ui:758
+#: prefs.ui:758
 msgid "Font"
 msgstr ""
 
-#: prefs_gtk3.ui:388 prefs.ui:833
+#: prefs.ui:833
 msgid "Font Weight"
 msgstr ""
 
-#: prefs_gtk3.ui:415 prefs.ui:898
+#: prefs.ui:898
 msgid "Text Color"
 msgstr ""
 
-#: prefs_gtk3.ui:438 prefs.ui:989
+#: prefs.ui:989
 msgid "Extension Position"
 msgstr ""
 
-#: prefs_gtk3.ui:469 prefs.ui:1063
+#: prefs.ui:1063
 msgid "Extension Order"
 msgstr ""
 
-#: prefs_gtk3.ui:495 prefs.ui:1265
+#: prefs.ui:1265
 msgid "Show Percent Sign"
 msgstr ""
 
-#: prefs_gtk3.ui:519 prefs.ui:1321
+#: prefs.ui:1321
 msgid "Show Extra Spaces"
 msgstr ""
 
-#: prefs_gtk3.ui:542 prefs.ui:1364
+#: prefs.ui:1364
 msgid "Reset Settings To Default"
 msgstr ""
 
