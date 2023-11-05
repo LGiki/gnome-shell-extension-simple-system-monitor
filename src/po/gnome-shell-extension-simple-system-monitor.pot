@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Simple System Monitor\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-05-27 15:11+0800\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2023-11-06 07:27+0800\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
@@ -17,135 +17,123 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: extension.js:330
+#: extension.js:349
 msgid "Open System Monitor"
 msgstr ""
 
-#: extension.js:343
+#: extension.js:362
 msgid "Setting"
 msgstr ""
 
-#: prefs.ui:95
-msgid "Show CPU Usage"
-msgstr ""
-
-#: prefs.ui:142
-msgid "CPU Usage Text"
-msgstr ""
-
-#: prefs.ui:226
-msgid "Show Memory Usage"
-msgstr ""
-
-#: prefs.ui:274
-msgid "Memory Usage Text"
-msgstr ""
-
-#: prefs.ui:357
-msgid "Show Swap Usage"
-msgstr ""
-
-#: prefs.ui:405
-msgid "Swap Usage Text"
-msgstr ""
-
-#: prefs.ui:488
-msgid "Show Download Speed"
-msgstr ""
-
-#: prefs.ui:536
-msgid "Download Speed Text"
-msgstr ""
-
-#: prefs.ui:619
-msgid "Show Upload Speed"
-msgstr ""
-
-#: prefs.ui:667
-msgid "Upload Speed Text"
-msgstr ""
-
-#: prefs.ui:1165
-msgid "Item Separator"
-msgstr ""
-
-#: prefs.ui:1214
-msgid "Refresh Interval (second)"
-msgstr ""
-
-#: prefs.ui:758
-msgid "Font"
-msgstr ""
-
-#: prefs.ui:833
-msgid "Font Weight"
-msgstr ""
-
-#: prefs.ui:898
-msgid "Text Color"
-msgstr ""
-
-#: prefs.ui:989
-msgid "Extension Position"
-msgstr ""
-
-#: prefs.ui:1063
-msgid "Extension Order"
-msgstr ""
-
-#: prefs.ui:1265
-msgid "Show Percent Sign"
-msgstr ""
-
-#: prefs.ui:1321
-msgid "Show Extra Spaces"
-msgstr ""
-
-#: prefs.ui:1364
-msgid "Reset Settings To Default"
-msgstr ""
-
-#: prefs.ui:48
+#: prefs.ui:53
 msgid "CPU Usage"
 msgstr ""
 
-#: prefs.ui:179
+#: prefs.ui:100
+msgid "Show CPU Usage"
+msgstr ""
+
+#: prefs.ui:147
+msgid "CPU Usage Text"
+msgstr ""
+
+#: prefs.ui:184
 msgid "Memory Usage"
 msgstr ""
 
-#: prefs.ui:310
+#: prefs.ui:231
+msgid "Show Memory Usage"
+msgstr ""
+
+#: prefs.ui:279
+msgid "Memory Usage Text"
+msgstr ""
+
+#: prefs.ui:315
 msgid "Swap Usage"
 msgstr ""
 
-#: prefs.ui:441
+#: prefs.ui:362
+msgid "Show Swap Usage"
+msgstr ""
+
+#: prefs.ui:410
+msgid "Swap Usage Text"
+msgstr ""
+
+#: prefs.ui:446
 msgid "Download Speed"
 msgstr ""
 
-#: prefs.ui:572
+#: prefs.ui:493
+msgid "Show Download Speed"
+msgstr ""
+
+#: prefs.ui:541
+msgid "Download Speed Text"
+msgstr ""
+
+#: prefs.ui:577
 msgid "Upload Speed"
 msgstr ""
 
-#: prefs.ui:703
+#: prefs.ui:624
+msgid "Show Upload Speed"
+msgstr ""
+
+#: prefs.ui:672
+msgid "Upload Speed Text"
+msgstr ""
+
+#: prefs.ui:708
 msgid "Customize"
 msgstr ""
 
-#: prefs.ui:769
+#: prefs.ui:763
+msgid "Show Full Net Speed Unit"
+msgstr ""
+
+#: prefs.ui:774
+msgid "If this is disabled, \"/s\" will be removed from net speed unit"
+msgstr ""
+
+#: prefs.ui:832
+msgid "Font"
+msgstr ""
+
+#: prefs.ui:843
 msgid "For best experience, please use monospaced font"
 msgstr ""
 
-#: prefs.ui:844
+#: prefs.ui:907
+msgid "Font Weight"
+msgstr ""
+
+#: prefs.ui:918
 msgid "The larger the value, the bolder the font"
 msgstr ""
 
-#: prefs.ui:934
+#: prefs.ui:972
+msgid "Text Color"
+msgstr ""
+
+#: prefs.ui:1008
 msgid "Position"
 msgstr ""
 
-#: prefs.ui:1000
-msgid "Re-login Required"
+#: prefs.ui:1063
+msgid "Extension Position"
 msgstr ""
 
 #: prefs.ui:1074
+msgid "Re-login Required"
+msgstr ""
+
+#: prefs.ui:1137
+msgid "Extension Order"
+msgstr ""
+
+#: prefs.ui:1148
 msgid ""
 "Re-login Required\n"
 "0: I don't care where the icon is\n"
@@ -153,10 +141,30 @@ msgid ""
 "Positive Values: starting from the left side"
 msgstr ""
 
-#: prefs.ui:1118
+#: prefs.ui:1192
 msgid "Misc"
 msgstr ""
 
-#: prefs.ui:1332
+#: prefs.ui:1239
+msgid "Item Separator"
+msgstr ""
+
+#: prefs.ui:1288
+msgid "Refresh Interval (second)"
+msgstr ""
+
+#: prefs.ui:1339
+msgid "Show Percent Sign"
+msgstr ""
+
+#: prefs.ui:1395
+msgid "Show Extra Spaces"
+msgstr ""
+
+#: prefs.ui:1406
 msgid "Display an extra space between text and value"
+msgstr ""
+
+#: prefs.ui:1438
+msgid "Reset Settings To Default"
 msgstr ""

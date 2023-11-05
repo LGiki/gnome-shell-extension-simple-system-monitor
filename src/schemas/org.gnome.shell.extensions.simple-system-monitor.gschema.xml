@@ -101,5 +101,10 @@
       <summary>Swap Usage Text</summary>
       <description>Swap Usage Text</description>
     </key>
+    <key type="b" name="show-full-net-speed-unit">
+      <default>true</default>
+      <summary>Show full net speed unit</summary>
+      <description>Show full net speed unit</description>
+    </key>
   </schema>
 </schemalist>

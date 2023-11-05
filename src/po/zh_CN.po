@@ -17,135 +17,123 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: extension.js:330
+#: extension.js:349
 msgid "Open System Monitor"
 msgstr "打开系统监视器"
 
-#: extension.js:343
+#: extension.js:362
 msgid "Setting"
 msgstr "设置"
 
-#: prefs.ui:95
-msgid "Show CPU Usage"
-msgstr "显示 CPU 使用率"
-
-#: prefs.ui:142
-msgid "CPU Usage Text"
-msgstr "CPU 使用率文本"
-
-#: prefs.ui:226
-msgid "Show Memory Usage"
-msgstr "显示内存使用率"
-
-#: prefs.ui:274
-msgid "Memory Usage Text"
-msgstr "内存使用率文本"
-
-#: prefs.ui:357
-msgid "Show Swap Usage"
-msgstr "显示 Swap 使用率"
-
-#: prefs.ui:405
-msgid "Swap Usage Text"
-msgstr "Swap 使用率文本"
-
-#: prefs.ui:488
-msgid "Show Download Speed"
-msgstr "显示网络下载速度"
-
-#: prefs.ui:536
-msgid "Download Speed Text"
-msgstr "网络下载速度文本"
-
-#: prefs.ui:619
-msgid "Show Upload Speed"
-msgstr "显示网络上传速度"
-
-#: prefs.ui:667
-msgid "Upload Speed Text"
-msgstr "网络上传速度文本"
-
-#: prefs.ui:1165
-msgid "Item Separator"
-msgstr "项目分隔符"
-
-#: prefs.ui:1214
-msgid "Refresh Interval (second)"
-msgstr "刷新间隔 (秒)"
-
-#: prefs.ui:758
-msgid "Font"
-msgstr "字体"
-
-#: prefs.ui:833
-msgid "Font Weight"
-msgstr "字体粗细"
-
-#: prefs.ui:898
-msgid "Text Color"
-msgstr "文本颜色"
-
-#: prefs.ui:989
-msgid "Extension Position"
-msgstr "插件显示位置"
-
-#: prefs.ui:1063
-msgid "Extension Order"
-msgstr "插件显示顺序"
-
-#: prefs.ui:1265
-msgid "Show Percent Sign"
-msgstr "显示百分号"
-
-#: prefs.ui:1321
-msgid "Show Extra Spaces"
-msgstr "显示额外的空格"
-
-#: prefs.ui:1364
-msgid "Reset Settings To Default"
-msgstr "重置设置为默认值"
-
-#: prefs.ui:48
+#: prefs.ui:53
 msgid "CPU Usage"
 msgstr "CPU 使用率"
 
-#: prefs.ui:179
+#: prefs.ui:100
+msgid "Show CPU Usage"
+msgstr "显示 CPU 使用率"
+
+#: prefs.ui:147
+msgid "CPU Usage Text"
+msgstr "CPU 使用率文本"
+
+#: prefs.ui:184
 msgid "Memory Usage"
 msgstr "内存使用率"
 
-#: prefs.ui:310
+#: prefs.ui:231
+msgid "Show Memory Usage"
+msgstr "显示内存使用率"
+
+#: prefs.ui:279
+msgid "Memory Usage Text"
+msgstr "内存使用率文本"
+
+#: prefs.ui:315
 msgid "Swap Usage"
 msgstr "Swap 使用率"
 
-#: prefs.ui:441
+#: prefs.ui:362
+msgid "Show Swap Usage"
+msgstr "显示 Swap 使用率"
+
+#: prefs.ui:410
+msgid "Swap Usage Text"
+msgstr "Swap 使用率文本"
+
+#: prefs.ui:446
 msgid "Download Speed"
 msgstr "网络下载速度"
 
-#: prefs.ui:572
+#: prefs.ui:493
+msgid "Show Download Speed"
+msgstr "显示网络下载速度"
+
+#: prefs.ui:541
+msgid "Download Speed Text"
+msgstr "网络下载速度文本"
+
+#: prefs.ui:577
 msgid "Upload Speed"
 msgstr "网络上传速度"
 
-#: prefs.ui:703
+#: prefs.ui:624
+msgid "Show Upload Speed"
+msgstr "显示网络上传速度"
+
+#: prefs.ui:672
+msgid "Upload Speed Text"
+msgstr "网络上传速度文本"
+
+#: prefs.ui:708
 msgid "Customize"
 msgstr "自定义"
 
-#: prefs.ui:769
+#: prefs.ui:763
+msgid "Show Full Net Speed Unit"
+msgstr "显示完整的网速单位"
+
+#: prefs.ui:774
+msgid "If this is disabled, \"/s\" will be removed from net speed unit"
+msgstr "如果关闭此项，网速单位将不会显示\"/s\""
+
+#: prefs.ui:832
+msgid "Font"
+msgstr "字体"
+
+#: prefs.ui:843
 msgid "For best experience, please use monospaced font"
 msgstr "为了获得最佳体验，请使用等宽字体"
 
-#: prefs.ui:844
+#: prefs.ui:907
+msgid "Font Weight"
+msgstr "字体粗细"
+
+#: prefs.ui:918
 msgid "The larger the value, the bolder the font"
 msgstr "数值越大，字体越粗"
 
-#: prefs.ui:934
+#: prefs.ui:972
+msgid "Text Color"
+msgstr "文本颜色"
+
+#: prefs.ui:1008
 msgid "Position"
 msgstr "显示位置"
 
-#: prefs.ui:1000
+#: prefs.ui:1063
+msgid "Extension Position"
+msgstr "插件显示位置"
+
+#: prefs.ui:1074
 msgid "Re-login Required"
 msgstr "需要重新登录"
 
-#: prefs.ui:1074
+#: prefs.ui:1137
+msgid "Extension Order"
+msgstr "插件显示顺序"
+
+#: prefs.ui:1148
 msgid ""
 "Re-login Required\n"
 "0: I don't care where the icon is\n"
@@ -157,10 +145,30 @@ msgstr ""
 "负值：从右侧开始\n"
 "正值：从左侧开始"
 
-#: prefs.ui:1118
+#: prefs.ui:1192
 msgid "Misc"
 msgstr "杂项"
 
-#: prefs.ui:1332
+#: prefs.ui:1239
+msgid "Item Separator"
+msgstr "项目分隔符"
+
+#: prefs.ui:1288
+msgid "Refresh Interval (second)"
+msgstr "刷新间隔 (秒)"
+
+#: prefs.ui:1339
+msgid "Show Percent Sign"
+msgstr "显示百分号"
+
+#: prefs.ui:1395
+msgid "Show Extra Spaces"
+msgstr "显示额外的空格"
+
+#: prefs.ui:1406
 msgid "Display an extra space between text and value"
 msgstr "在文本和数值之间显示一个额外的空格"
+
+#: prefs.ui:1438
+msgid "Reset Settings To Default"
+msgstr "重置设置为默认值"

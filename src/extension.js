@@ -38,7 +38,7 @@ import * as Settings from './settings.js';
 
 import { Extension, gettext as _ } from 'resource:///org/gnome/shell/extensions/extension.js';
 
-const netSpeedUnits = ['B/s', 'K/s', 'M/s', 'G/s', 'T/s', 'P/s', 'E/s', 'Z/s', 'Y/s'];
+const netSpeedUnits = ['B', 'K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'];
 
 let lastTotalNetDownBytes = 0;
 let lastTotalNetUpBytes = 0;
@@ -244,7 +244,7 @@ const getCurrentMemoryUsage = () => {
     return currentMemoryUsage;
 };
 
-const formatNetSpeedWithUnit = (amount) => {
+const formatNetSpeedWithUnit = (amount, showFullNetSpeedUnit) => {
     let unitIndex = 0;
     while (amount >= 1000 && unitIndex < netSpeedUnits.length - 1) {
         amount /= 1000;
@@ -265,7 +265,9 @@ const formatNetSpeedWithUnit = (amount) => {
     }
 
     // See <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/toFixed>.
-    return `${amount.toFixed(digits).toString().padStart(4)} ${netSpeedUnits[unitIndex]}`;
+    return `${amount.toFixed(digits).toString().padStart(4)} ${netSpeedUnits[unitIndex]}${
+        showFullNetSpeedUnit ? '/s' : ''
+    }`;
 };
 
 // Format a usage value in [0, 1] as an integer percent value.
@@ -278,6 +280,7 @@ const formatUsageVal = (usage, showExtraSpaces, showPercentSign) => {
 };
 
 const toDisplayString = (
+    showFullNetSpeedUnit,
     showExtraSpaces,
     showPercentSign,
     texts,
@@ -308,10 +311,20 @@ const toDisplayString = (
         );
     }
     if (enable.isDownloadSpeedEnable && netSpeed !== null) {
-        displayItems.push(`${texts.downloadSpeedText} ${formatNetSpeedWithUnit(netSpeed['down'])}`);
+        displayItems.push(
+            `${texts.downloadSpeedText} ${formatNetSpeedWithUnit(
+                netSpeed['down'],
+                showFullNetSpeedUnit,
+            )}`,
+        );
     }
     if (enable.isUploadSpeedEnable && netSpeed !== null) {
-        displayItems.push(`${texts.uploadSpeedText} ${formatNetSpeedWithUnit(netSpeed['up'])}`);
+        displayItems.push(
+            `${texts.uploadSpeedText} ${formatNetSpeedWithUnit(
+                netSpeed['up'],
+                showFullNetSpeedUnit,
+            )}`,
+        );
     }
     return displayItems.join(texts.itemSeparator);
 };
@@ -398,6 +411,8 @@ export default class SSMExtension extends Extension {
 
         this._refresh_interval = this._prefs.REFRESH_INTERVAL.get();
 
+        this._showFullNetSpeedUnit = this._prefs.SHOW_FULL_NET_SPEED_UNIT.get();
+
         this._indicator = new Indicator();
 
         this._update_text_style();
@@ -456,6 +471,7 @@ export default class SSMExtension extends Extension {
         }
 
         const displayText = toDisplayString(
+            this._showFullNetSpeedUnit,
             this._showExtraSpaces,
             this._showPercentSign,
             this._texts,
@@ -522,6 +538,10 @@ export default class SSMExtension extends Extension {
             this._texts.itemSeparator = this._prefs.ITEM_SEPARATOR.get();
         });
 
+        this._prefs.SHOW_FULL_NET_SPEED_UNIT.changed(() => {
+            this._showFullNetSpeedUnit = this._prefs.SHOW_FULL_NET_SPEED_UNIT.get();
+        });
+
         this._prefs.FONT_FAMILY.changed(() => this._update_text_style());
         this._prefs.FONT_SIZE.changed(() => this._update_text_style());
         this._prefs.TEXT_COLOR.changed(() => this._update_text_style());
@@ -559,5 +579,6 @@ export default class SSMExtension extends Extension {
         this._prefs.FONT_WEIGHT.disconnect();
         this._prefs.IS_SWAP_USAGE_ENABLE.disconnect();
         this._prefs.SWAP_USAGE_TEXT.disconnect();
+        this._prefs.SHOW_FULL_NET_SPEED_UNIT.disconnect();
     }
 }

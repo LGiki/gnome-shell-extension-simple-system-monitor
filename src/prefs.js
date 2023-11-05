@@ -30,6 +30,7 @@ const DEFAULT_SETTINGS = {
     textColor: '#DDDDDD',
     isSwapUsageEnable: false,
     swapUsageText: 'S',
+    showFullNetSpeedUnit: true,
 };
 
 const N_ = function (e) {
@@ -109,12 +110,12 @@ function initWidget(dir) {
                 'text_color',
                 'swap_usage_enable_switch',
                 'swap_usage_text',
+                'show_full_net_speed_unit_switch',
             ],
         },
         class SimpleSystemMonitorPrefsWidget extends Adw.PreferencesPage {
             _init() {
                 super._init();
-
                 this.update_widget_setting_values();
             }
 
@@ -150,6 +151,9 @@ function initWidget(dir) {
                 const color = new Gdk.RGBA();
                 color.parse(Configuration.TEXT_COLOR.get());
                 this._text_color.set_rgba(color);
+                this._show_full_net_speed_unit_switch.set_active(
+                    Configuration.SHOW_FULL_NET_SPEED_UNIT.get(),
+                );
             }
 
             reset_settings_to_default() {
@@ -173,6 +177,9 @@ function initWidget(dir) {
                 Configuration.TEXT_COLOR.set(DEFAULT_SETTINGS.textColor);
                 Configuration.IS_SWAP_USAGE_ENABLE.set(DEFAULT_SETTINGS.isSwapUsageEnable);
                 Configuration.SWAP_USAGE_TEXT.set(DEFAULT_SETTINGS.swapUsageText);
+                Configuration.SHOW_FULL_UNIT_OF_NET_SPEED.set(
+                    DEFAULT_SETTINGS.showFullNetSpeedUnit,
+                );
             }
 
             color_changed(widget) {
@@ -256,6 +263,10 @@ function initWidget(dir) {
 
             refresh_interval_changed(widget) {
                 Configuration.REFRESH_INTERVAL.set(widget.get_value());
+            }
+
+            show_full_net_speed_unit_switch_changed(widget) {
+                Configuration.SHOW_FULL_NET_SPEED_UNIT.set(widget.get_active());
             }
 
             reset_settings_to_default_clicked(widget) {
