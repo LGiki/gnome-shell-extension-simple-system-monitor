@@ -1,3 +1,4 @@
 /node_modules
 ssm-gnome@lgiki.net.shell-extension.zip
 package-lock.json
+.DS_Store
