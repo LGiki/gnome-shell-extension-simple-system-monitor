@@ -30,6 +30,8 @@ const DEFAULT_SETTINGS = {
     textColor: '#DDDDDD',
     isSwapUsageEnable: false,
     swapUsageText: 'S',
+    isTemperatureEnable: true,
+    temperatureText: 'T',
     showFullNetSpeedUnit: true,
 };
 
@@ -110,6 +112,8 @@ function initWidget(dir) {
                 'text_color',
                 'swap_usage_enable_switch',
                 'swap_usage_text',
+                'temperature_enable_switch',
+                'temperature_text',
                 'show_full_net_speed_unit_switch',
             ],
         },
@@ -148,6 +152,10 @@ function initWidget(dir) {
                 );
                 this._swap_usage_enable_switch.set_active(Configuration.IS_SWAP_USAGE_ENABLE.get());
                 this._swap_usage_text.set_text(Configuration.SWAP_USAGE_TEXT.get());
+                this._temperature_enable_switch.set_active(
+                    Configuration.IS_TEMPERATURE_ENABLE.get(),
+                );
+                this._temperature_text.set_text(Configuration.TEMPERATURE_TEXT.get());
                 const color = new Gdk.RGBA();
                 color.parse(Configuration.TEXT_COLOR.get());
                 this._text_color.set_rgba(color);
@@ -177,6 +185,8 @@ function initWidget(dir) {
                 Configuration.TEXT_COLOR.set(DEFAULT_SETTINGS.textColor);
                 Configuration.IS_SWAP_USAGE_ENABLE.set(DEFAULT_SETTINGS.isSwapUsageEnable);
                 Configuration.SWAP_USAGE_TEXT.set(DEFAULT_SETTINGS.swapUsageText);
+                Configuration.IS_TEMPERATURE_ENABLE.set(DEFAULT_SETTINGS.isTemperatureEnable);
+                Configuration.TEMPERATURE_TEXT.set(DEFAULT_SETTINGS.temperatureText);
                 Configuration.SHOW_FULL_UNIT_OF_NET_SPEED.set(
                     DEFAULT_SETTINGS.showFullNetSpeedUnit,
                 );
@@ -255,6 +265,14 @@ function initWidget(dir) {
 
             upload_usage_text_changed(widget) {
                 Configuration.UPLOAD_SPEED_TEXT.set(widget.get_text());
+            }
+
+            temperature_enable_switch_changed(widget) {
+                Configuration.IS_TEMPERATURE_ENABLE.set(widget.get_active());
+            }
+
+            temperature_text_changed(widget) {
+                Configuration.TEMPERATURE_TEXT.set(widget.get_text());
             }
 
             item_separator_changed(widget) {

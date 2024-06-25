@@ -106,5 +106,15 @@
       <summary>Show full net speed unit</summary>
       <description>Show full net speed unit</description>
     </key>
+    <key type="b" name="is-temperature-enable">
+      <default>false</default>
+      <summary>Show Temperature</summary>
+      <description>Show Temperature</description>
+    </key>
+    <key type="s" name="temperature-text">
+      <default>'T'</default>
+      <summary>Temperature Text</summary>
+      <description>Temperature Text</description>
+    </key>
   </schema>
 </schemalist>
