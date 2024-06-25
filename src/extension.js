@@ -244,6 +244,22 @@ const getCurrentMemoryUsage = () => {
     return currentMemoryUsage;
 };
 
+const getCurrentTemperature = () => {
+    let currentTemperature = 0;
+
+    try {
+        const inputFile = Gio.File.new_for_path('/sys/class/thermal/thermal_zone0/temp');
+        const [, content] = inputFile.load_contents(null);
+        const contentStr = ByteArray.toString(content);
+        const contentLines = contentStr.split('\n');
+
+        currentTemperature = Number.parseInt(contentLines[0].trim()) / 1000;
+    } catch (e) {
+        logError(e);
+    }
+    return currentTemperature;
+};
+
 const formatNetSpeedWithUnit = (amount, showFullNetSpeedUnit) => {
     let unitIndex = 0;
     while (amount >= 1000 && unitIndex < netSpeedUnits.length - 1) {
@@ -289,6 +305,7 @@ const toDisplayString = (
     memoryUsage,
     netSpeed,
     swapUsage,
+    temperature,
 ) => {
     const displayItems = [];
     if (enable.isCpuUsageEnable && cpuUsage !== null) {
@@ -304,6 +321,9 @@ const toDisplayString = (
                 showPercentSign,
             )}`,
         );
+    }
+    if (enable.isTemperatureEnable && temperature !== null) {
+        displayItems.push(`${texts.temperatureText} ${temperature} °C`);
     }
     if (enable.isSwapUsageEnable && swapUsage !== null) {
         displayItems.push(
@@ -394,6 +414,7 @@ export default class SSMExtension extends Extension {
             downloadSpeedText: this._prefs.DOWNLOAD_SPEED_TEXT.get(),
             uploadSpeedText: this._prefs.UPLOAD_SPEED_TEXT.get(),
             swapUsageText: this._prefs.SWAP_USAGE_TEXT.get(),
+            temperatureText: this._prefs.TEMPERATURE_TEXT.get(),
             itemSeparator: this._prefs.ITEM_SEPARATOR.get(),
         };
 
@@ -403,6 +424,7 @@ export default class SSMExtension extends Extension {
             isDownloadSpeedEnable: this._prefs.IS_DOWNLOAD_SPEED_ENABLE.get(),
             isUploadSpeedEnable: this._prefs.IS_UPLOAD_SPEED_ENABLE.get(),
             isSwapUsageEnable: this._prefs.IS_SWAP_USAGE_ENABLE.get(),
+            isTemperatureEnable: this._prefs.IS_TEMPERATURE_ENABLE.get(),
         };
 
         this._showExtraSpaces = this._prefs.SHOW_EXTRA_SPACES.get();
@@ -457,6 +479,7 @@ export default class SSMExtension extends Extension {
         let currentMemoryUsage = null;
         let currentNetSpeed = null;
         let currentSwapUsage = null;
+        let currentTemperature = null;
         if (this._enable.isCpuUsageEnable) {
             currentCPUUsage = getCurrentCPUUsage();
         }
@@ -469,6 +492,9 @@ export default class SSMExtension extends Extension {
         if (this._enable.isSwapUsageEnable) {
             currentSwapUsage = getCurrentSwapUsage();
         }
+        if (this._enable.isTemperatureEnable) {
+            currentTemperature = getCurrentTemperature();
+        }
 
         const displayText = toDisplayString(
             this._showFullNetSpeedUnit,
@@ -480,6 +506,7 @@ export default class SSMExtension extends Extension {
             currentMemoryUsage,
             currentNetSpeed,
             currentSwapUsage,
+            currentTemperature,
         );
         this._indicator.setText(displayText);
         return GLib.SOURCE_CONTINUE;
@@ -514,6 +541,10 @@ export default class SSMExtension extends Extension {
             this._enable.isSwapUsageEnable = this._prefs.IS_SWAP_USAGE_ENABLE.get();
         });
 
+        this._prefs.IS_TEMPERATURE_ENABLE.changed(() => {
+            this._enable.isTemperatureEnable = this._prefs.IS_TEMPERATURE_ENABLE.get();
+        });
+
         this._prefs.CPU_USAGE_TEXT.changed(() => {
             this._texts.cpuUsageText = this._prefs.CPU_USAGE_TEXT.get();
         });
@@ -532,6 +563,10 @@ export default class SSMExtension extends Extension {
 
         this._prefs.SWAP_USAGE_TEXT.changed(() => {
             this._texts.swapUsageText = this._prefs.SWAP_USAGE_TEXT.get();
+        });
+
+        this._prefs.TEMPERATURE_TEXT.changed(() => {
+            this._texts.temperatureText = this._prefs.TEMPERATURE_TEXT.get();
         });
 
         this._prefs.ITEM_SEPARATOR.changed(() => {
@@ -579,6 +614,8 @@ export default class SSMExtension extends Extension {
         this._prefs.FONT_WEIGHT.disconnect();
         this._prefs.IS_SWAP_USAGE_ENABLE.disconnect();
         this._prefs.SWAP_USAGE_TEXT.disconnect();
+        this._prefs.IS_TEMPERATURE_ENABLE.disconnect();
+        this._prefs.TEMPERATURE_TEXT.disconnect();
         this._prefs.SHOW_FULL_NET_SPEED_UNIT.disconnect();
     }
 }
