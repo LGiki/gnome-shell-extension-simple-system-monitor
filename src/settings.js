@@ -26,6 +26,8 @@ export var Prefs = class Prefs {
         this.TEXT_COLOR = new PrefValue(settings, 'text-color', 'string');
         this.IS_SWAP_USAGE_ENABLE = new PrefValue(settings, 'is-swap-usage-enable', 'boolean');
         this.SWAP_USAGE_TEXT = new PrefValue(settings, 'swap-usage-text', 'string');
+        this.IS_TEMPERATURE_ENABLE = new PrefValue(settings, 'is-temperature-enable', 'boolean');
+        this.TEMPERATURE_TEXT = new PrefValue(settings, 'temperature-text', 'string');
         this.SHOW_FULL_NET_SPEED_UNIT = new PrefValue(
             settings,
             'show-full-net-speed-unit',

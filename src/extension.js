@@ -30,8 +30,7 @@ import Shell from 'gi://Shell';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
 
-// Attention: This module is not available as an ECMAScript Module
-const ByteArray = imports.byteArray;
+const textDecoder = new TextDecoder();
 
 import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
 import * as Settings from './settings.js';
@@ -53,7 +52,7 @@ const getCurrentNetSpeed = (refreshInterval) => {
     try {
         const inputFile = Gio.File.new_for_path('/proc/net/dev');
         const [, content] = inputFile.load_contents(null);
-        const contentStr = ByteArray.toString(content);
+        const contentStr = textDecoder.decode(content);
         const contentLines = contentStr.split('\n');
 
         // Caculate the sum of all interfaces' traffic line by line.
@@ -117,7 +116,7 @@ const getCurrentCPUUsage = () => {
     try {
         const inputFile = Gio.File.new_for_path('/proc/stat');
         const [, content] = inputFile.load_contents(null);
-        const contentStr = ByteArray.toString(content);
+        const contentStr = textDecoder.decode(content);
         const contentLines = contentStr.split('\n');
 
         let currentCPUUsed = 0;
@@ -160,7 +159,7 @@ const getCurrentSwapUsage = () => {
     try {
         const inputFile = Gio.File.new_for_path('/proc/meminfo');
         const [, content] = inputFile.load_contents(null);
-        const contentStr = ByteArray.toString(content);
+        const contentStr = textDecoder.decode(content);
         const contentLines = contentStr.split('\n');
 
         let swapTotal = -1;
@@ -205,7 +204,7 @@ const getCurrentMemoryUsage = () => {
     try {
         const inputFile = Gio.File.new_for_path('/proc/meminfo');
         const [, content] = inputFile.load_contents(null);
-        const contentStr = ByteArray.toString(content);
+        const contentStr = textDecoder.decode(content);
         const contentLines = contentStr.split('\n');
 
         let memTotal = -1;
@@ -244,6 +243,43 @@ const getCurrentMemoryUsage = () => {
     return currentMemoryUsage;
 };
 
+const getCurrentTemperature = () => {
+    let currentTemperature = 0;
+
+    try {
+        const thermalDir = Gio.File.new_for_path('/sys/class/thermal');
+        const enumerator = thermalDir.enumerate_children(
+            'standard::name',
+            Gio.FileQueryInfoFlags.NONE,
+            null,
+        );
+
+        let fileInfo;
+        while ((fileInfo = enumerator.next_file(null)) !== null) {
+            const fileName = fileInfo.get_name();
+
+            if (fileName.startsWith('thermal_zone')) {
+                const typeFile = Gio.File.new_for_path(`/sys/class/thermal/${fileName}/type`);
+                const [, typeContent] = typeFile.load_contents(null);
+                const typeStr = textDecoder.decode(typeContent).trim();
+
+                if (typeStr === 'x86_pkg_temp') {
+                    const tempFile = Gio.File.new_for_path(`/sys/class/thermal/${fileName}/temp`);
+                    const [, tempContent] = tempFile.load_contents(null);
+                    const rawTemp = Number.parseInt(textDecoder.decode(tempContent).trim());
+
+                    currentTemperature = rawTemp / 1000;
+                    break;
+                }
+            }
+        }
+    } catch (e) {
+        logError(e);
+    }
+
+    return currentTemperature;
+};
+
 const formatNetSpeedWithUnit = (amount, showFullNetSpeedUnit) => {
     let unitIndex = 0;
     while (amount >= 1000 && unitIndex < netSpeedUnits.length - 1) {
@@ -275,7 +311,7 @@ const formatUsageVal = (usage, showExtraSpaces, showPercentSign) => {
     return (
         Math.round(usage * 100)
             .toString()
-            .padStart(showExtraSpaces ? 3 : 2) + (showPercentSign ? '%' : '')
+            .padStart(showExtraSpaces ? 3 : 1) + (showPercentSign ? '%' : '')
     );
 };
 
@@ -289,8 +325,12 @@ const toDisplayString = (
     memoryUsage,
     netSpeed,
     swapUsage,
+    temperature,
 ) => {
     const displayItems = [];
+    if (enable.isTemperatureEnable && temperature !== null) {
+        displayItems.push(`${texts.temperatureText} ${temperature} °C`);
+    }
     if (enable.isCpuUsageEnable && cpuUsage !== null) {
         displayItems.push(
             `${texts.cpuUsageText} ${formatUsageVal(cpuUsage, showExtraSpaces, showPercentSign)}`,
@@ -331,9 +371,10 @@ const toDisplayString = (
 
 const Indicator = GObject.registerClass(
     class Indicator extends PanelMenu.Button {
-        constructor() {
+        constructor(extension) {
             super();
-            this.extension = Extension.lookupByUUID('ssm-gnome@lgiki.net');
+            this.extension =
+                extension ?? Extension.lookupByUUID('simple-system-monitor@m7md-gamal.github.io');
         }
 
         _init() {
@@ -394,6 +435,7 @@ export default class SSMExtension extends Extension {
             downloadSpeedText: this._prefs.DOWNLOAD_SPEED_TEXT.get(),
             uploadSpeedText: this._prefs.UPLOAD_SPEED_TEXT.get(),
             swapUsageText: this._prefs.SWAP_USAGE_TEXT.get(),
+            temperatureText: this._prefs.TEMPERATURE_TEXT.get(),
             itemSeparator: this._prefs.ITEM_SEPARATOR.get(),
         };
 
@@ -403,6 +445,7 @@ export default class SSMExtension extends Extension {
             isDownloadSpeedEnable: this._prefs.IS_DOWNLOAD_SPEED_ENABLE.get(),
             isUploadSpeedEnable: this._prefs.IS_UPLOAD_SPEED_ENABLE.get(),
             isSwapUsageEnable: this._prefs.IS_SWAP_USAGE_ENABLE.get(),
+            isTemperatureEnable: this._prefs.IS_TEMPERATURE_ENABLE.get(),
         };
 
         this._showExtraSpaces = this._prefs.SHOW_EXTRA_SPACES.get();
@@ -413,7 +456,7 @@ export default class SSMExtension extends Extension {
 
         this._showFullNetSpeedUnit = this._prefs.SHOW_FULL_NET_SPEED_UNIT.get();
 
-        this._indicator = new Indicator();
+        this._indicator = new Indicator(this);
 
         this._update_text_style();
 
@@ -457,6 +500,7 @@ export default class SSMExtension extends Extension {
         let currentMemoryUsage = null;
         let currentNetSpeed = null;
         let currentSwapUsage = null;
+        let currentTemperature = null;
         if (this._enable.isCpuUsageEnable) {
             currentCPUUsage = getCurrentCPUUsage();
         }
@@ -469,6 +513,9 @@ export default class SSMExtension extends Extension {
         if (this._enable.isSwapUsageEnable) {
             currentSwapUsage = getCurrentSwapUsage();
         }
+        if (this._enable.isTemperatureEnable) {
+            currentTemperature = getCurrentTemperature();
+        }
 
         const displayText = toDisplayString(
             this._showFullNetSpeedUnit,
@@ -480,6 +527,7 @@ export default class SSMExtension extends Extension {
             currentMemoryUsage,
             currentNetSpeed,
             currentSwapUsage,
+            currentTemperature,
         );
         this._indicator.setText(displayText);
         return GLib.SOURCE_CONTINUE;
@@ -514,6 +562,10 @@ export default class SSMExtension extends Extension {
             this._enable.isSwapUsageEnable = this._prefs.IS_SWAP_USAGE_ENABLE.get();
         });
 
+        this._prefs.IS_TEMPERATURE_ENABLE.changed(() => {
+            this._enable.isTemperatureEnable = this._prefs.IS_TEMPERATURE_ENABLE.get();
+        });
+
         this._prefs.CPU_USAGE_TEXT.changed(() => {
             this._texts.cpuUsageText = this._prefs.CPU_USAGE_TEXT.get();
         });
@@ -532,6 +584,10 @@ export default class SSMExtension extends Extension {
 
         this._prefs.SWAP_USAGE_TEXT.changed(() => {
             this._texts.swapUsageText = this._prefs.SWAP_USAGE_TEXT.get();
+        });
+
+        this._prefs.TEMPERATURE_TEXT.changed(() => {
+            this._texts.temperatureText = this._prefs.TEMPERATURE_TEXT.get();
         });
 
         this._prefs.ITEM_SEPARATOR.changed(() => {
@@ -579,6 +635,8 @@ export default class SSMExtension extends Extension {
         this._prefs.FONT_WEIGHT.disconnect();
         this._prefs.IS_SWAP_USAGE_ENABLE.disconnect();
         this._prefs.SWAP_USAGE_TEXT.disconnect();
+        this._prefs.IS_TEMPERATURE_ENABLE.disconnect();
+        this._prefs.TEMPERATURE_TEXT.disconnect();
         this._prefs.SHOW_FULL_NET_SPEED_UNIT.disconnect();
     }
 }

@@ -2,47 +2,52 @@
 
 <img src="./icon.svg" width="130" height="99" align="right" />
 
-[![GitHub](https://img.shields.io/github/license/LGiki/gnome-shell-extension-simple-system-monitor?style=flat-square)](https://github.com/LGiki/gnome-shell-extension-simple-system-monitor/blob/master/LICENSE)
+[![GitHub](https://img.shields.io/github/license/M7md-Gamal/gnome-shell-extension-simple-system-monitor?style=flat-square)](./LICENSE)
+[![GNOME Shell](https://img.shields.io/badge/gnome--shell-45--50-blue?style=flat-square)](https://gitlab.gnome.org/GNOME/gnome-shell)
 
-Simple system monitor extension for GNOME.
+A lightweight system monitor extension for GNOME Shell (supporting **GNOME 45 to GNOME 50**).
 
-Show current CPU usage, memory usage and net speed on panel.
+Shows real-time CPU usage, memory usage, swap usage, network speed, and CPU temperature directly in your panel.
 
-It only shows text like `U 1% M 23% ↓ 456 K/s ↑ 789 K/s` on the right part of panel.
+Displays clean text such as: `T 45 °C U 1% M 23% S 0% ↓ 456 K/s ↑ 789 K/s`.
 
-For best experience, please use [monospaced font](https://en.wikipedia.org/wiki/Monospaced_font), e.g. [JetBrains Mono](https://www.jetbrains.com/lp/mono/), [Source Code Pro](https://adobe-fonts.github.io/source-code-pro/), [FiraCode](https://github.com/tonsky/FiraCode), [Hack](https://github.com/source-foundry/Hack).
+For the best experience, please use a [monospaced font](https://en.wikipedia.org/wiki/Monospaced_font), e.g. [JetBrains Mono](https://www.jetbrains.com/lp/mono/), [Source Code Pro](https://adobe-fonts.github.io/source-code-pro/), [FiraCode](https://github.com/tonsky/FiraCode), or [Hack](https://github.com/source-foundry/Hack).
 
 # Screenshot
 
 ![](screenshot/screenshot.png)
 
-# Installation
+# Compatibility
 
-- from GNOME extensions: [Simple System Monitor](https://extensions.gnome.org/extension/4506/simple-system-monitor/)
+Supports **GNOME Shell 45, 46, 47, 48, 49, and 50**.
 
-- from AUR: [gnome-shell-extension-simple-system-monitor](https://aur.archlinux.org/packages/gnome-shell-extension-simple-system-monitor/)
+# Build & Installation
 
-# Build
-
-Use the following command to build this GNOME extension:
-
+### 1. Clone the repository
 ```bash
-git clone https://github.com/LGiki/gnome-shell-extension-simple-system-monitor.git
+git clone https://github.com/M7md-Gamal/gnome-shell-extension-simple-system-monitor.git
 cd gnome-shell-extension-simple-system-monitor
+```
+
+### 2. Build the extension bundle
+```bash
 ./build.sh
 ```
 
-After successful build, the `ssm-gnome@lgiki.net.shell-extension.zip` file will be generated. You can use the following command to install the built GNOME extension:
-
+### 3. Install and enable
 ```bash
-gnome-extensions install ssm-gnome\@lgiki.net.shell-extension.zip --force
+gnome-extensions install --force simple-system-monitor@m7md-gamal.github.io.shell-extension.zip
+gnome-extensions enable simple-system-monitor@m7md-gamal.github.io
 ```
+
+> **Note:** If installing on an active GNOME Shell session, you may need to log out and log back in (or toggle the extension in the **Extensions** app) for changes to take effect.
+
+# Upstream & References
+
+- Forked from [LGiki/gnome-shell-extension-simple-system-monitor](https://github.com/LGiki/gnome-shell-extension-simple-system-monitor)
+- Upstream on GNOME Extensions: [Simple System Monitor](https://extensions.gnome.org/extension/4506/simple-system-monitor/)
+- Net speed logic based on [gnome-shell-extension-net-speed](https://github.com/AlynxZhou/gnome-shell-extension-net-speed)
 
 # License
 
-[GPL-2.0](https://github.com/LGiki/gnome-shell-extension-simple-system-monitor/blob/master/LICENSE)
-
-# References
-
-- [https://github.com/AlynxZhou/gnome-shell-extension-net-speed](https://github.com/AlynxZhou/gnome-shell-extension-net-speed)
-
+[GPL-2.0](./LICENSE)

@@ -1,9 +1,9 @@
 {
     "name": "Simple System Monitor",
-    "description": "Show current CPU usage, memory usage and net speed on panel.",
-    "uuid": "ssm-gnome@lgiki.net",
-    "version": 16,
-    "shell-version": ["45", "46"],
+    "description": "Show current CPU usage, memory usage, CPU temperature, and net speed on panel.",
+    "uuid": "simple-system-monitor@m7md-gamal.github.io",
+    "version": 1,
+    "shell-version": ["45", "46", "47", "48", "49", "50"],
     "gettext-domain": "gnome-shell-extension-simple-system-monitor",
-    "url": "https://github.com/LGiki/gnome-shell-extension-simple-system-monitor"
+    "url": "https://github.com/M7md-Gamal/gnome-shell-extension-simple-system-monitor"
 }
