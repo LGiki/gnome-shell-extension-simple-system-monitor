@@ -19,6 +19,9 @@ const DEFAULT_SETTINGS = {
     cpuUsageText: 'U',
     isMemoryUsageEnable: true,
     memoryUsageText: 'M',
+    isDiskUsageEnable: true,
+    diskUsageText: 'D',
+    diskUsageDisplayMode: 'percentage',
     isDownloadSpeedEnable: true,
     downloadSpeedText: '↓',
     isUploadSpeedEnable: true,
@@ -30,6 +33,8 @@ const DEFAULT_SETTINGS = {
     textColor: '#DDDDDD',
     isSwapUsageEnable: false,
     swapUsageText: 'S',
+    isTemperatureEnable: true,
+    temperatureText: 'T',
     showFullNetSpeedUnit: true,
 };
 
@@ -67,6 +72,14 @@ const extensionPositionLabelToIndex = (selectedString) => {
     }
 };
 
+const diskUsageDisplayModeIndexToLabel = (selectedIndex) => {
+    return selectedIndex === 1 ? 'free-space' : 'percentage';
+};
+
+const diskUsageDisplayModeLabelToIndex = (selectedString) => {
+    return selectedString === 'free-space' ? 1 : 0;
+};
+
 let SimpleSystemMonitorPrefsWidget = undefined;
 let Configuration = undefined;
 export default class SSMPreferences extends ExtensionPreferences {
@@ -100,6 +113,9 @@ function initWidget(dir) {
                 'cpu_usage_text',
                 'memory_usage_enable_switch',
                 'memory_usage_text',
+                'disk_usage_enable_switch',
+                'disk_usage_text',
+                'disk_usage_display_mode_combo_box',
                 'download_speed_enable_switch',
                 'download_speed_text',
                 'upload_speed_enable_switch',
@@ -110,6 +126,8 @@ function initWidget(dir) {
                 'text_color',
                 'swap_usage_enable_switch',
                 'swap_usage_text',
+                'temperature_enable_switch',
+                'temperature_text',
                 'show_full_net_speed_unit_switch',
             ],
         },
@@ -133,6 +151,11 @@ function initWidget(dir) {
                     Configuration.IS_MEMORY_USAGE_ENABLE.get(),
                 );
                 this._memory_usage_text.set_text(Configuration.MEMORY_USAGE_TEXT.get());
+                this._disk_usage_enable_switch.set_active(Configuration.IS_DISK_USAGE_ENABLE.get());
+                this._disk_usage_text.set_text(Configuration.DISK_USAGE_TEXT.get());
+                this._disk_usage_display_mode_combo_box.set_active(
+                    diskUsageDisplayModeLabelToIndex(Configuration.DISK_USAGE_DISPLAY_MODE.get()),
+                );
                 this._download_speed_enable_switch.set_active(
                     Configuration.IS_DOWNLOAD_SPEED_ENABLE.get(),
                 );
@@ -148,6 +171,10 @@ function initWidget(dir) {
                 );
                 this._swap_usage_enable_switch.set_active(Configuration.IS_SWAP_USAGE_ENABLE.get());
                 this._swap_usage_text.set_text(Configuration.SWAP_USAGE_TEXT.get());
+                this._temperature_enable_switch.set_active(
+                    Configuration.IS_TEMPERATURE_ENABLE.get(),
+                );
+                this._temperature_text.set_text(Configuration.TEMPERATURE_TEXT.get());
                 const color = new Gdk.RGBA();
                 color.parse(Configuration.TEXT_COLOR.get());
                 this._text_color.set_rgba(color);
@@ -166,6 +193,9 @@ function initWidget(dir) {
                 Configuration.CPU_USAGE_TEXT.set(DEFAULT_SETTINGS.cpuUsageText);
                 Configuration.IS_MEMORY_USAGE_ENABLE.set(DEFAULT_SETTINGS.isMemoryUsageEnable);
                 Configuration.MEMORY_USAGE_TEXT.set(DEFAULT_SETTINGS.memoryUsageText);
+                Configuration.IS_DISK_USAGE_ENABLE.set(DEFAULT_SETTINGS.isDiskUsageEnable);
+                Configuration.DISK_USAGE_TEXT.set(DEFAULT_SETTINGS.diskUsageText);
+                Configuration.DISK_USAGE_DISPLAY_MODE.set(DEFAULT_SETTINGS.diskUsageDisplayMode);
                 Configuration.IS_DOWNLOAD_SPEED_ENABLE.set(DEFAULT_SETTINGS.isDownloadSpeedEnable);
                 Configuration.DOWNLOAD_SPEED_TEXT.set(DEFAULT_SETTINGS.downloadSpeedText);
                 Configuration.IS_UPLOAD_SPEED_ENABLE.set(DEFAULT_SETTINGS.isUploadSpeedEnable);
@@ -177,9 +207,9 @@ function initWidget(dir) {
                 Configuration.TEXT_COLOR.set(DEFAULT_SETTINGS.textColor);
                 Configuration.IS_SWAP_USAGE_ENABLE.set(DEFAULT_SETTINGS.isSwapUsageEnable);
                 Configuration.SWAP_USAGE_TEXT.set(DEFAULT_SETTINGS.swapUsageText);
-                Configuration.SHOW_FULL_UNIT_OF_NET_SPEED.set(
-                    DEFAULT_SETTINGS.showFullNetSpeedUnit,
-                );
+                Configuration.IS_TEMPERATURE_ENABLE.set(DEFAULT_SETTINGS.isTemperatureEnable);
+                Configuration.TEMPERATURE_TEXT.set(DEFAULT_SETTINGS.temperatureText);
+                Configuration.SHOW_FULL_NET_SPEED_UNIT.set(DEFAULT_SETTINGS.showFullNetSpeedUnit);
             }
 
             color_changed(widget) {
@@ -225,6 +255,16 @@ function initWidget(dir) {
                 Configuration.IS_MEMORY_USAGE_ENABLE.set(widget.get_active());
             }
 
+            disk_usage_enable_switch_changed(widget) {
+                Configuration.IS_DISK_USAGE_ENABLE.set(widget.get_active());
+            }
+
+            disk_usage_display_mode_combo_box_changed(widget) {
+                Configuration.DISK_USAGE_DISPLAY_MODE.set(
+                    diskUsageDisplayModeIndexToLabel(widget.get_active()),
+                );
+            }
+
             download_speed_enable_switch_changed(widget) {
                 Configuration.IS_DOWNLOAD_SPEED_ENABLE.set(widget.get_active());
             }
@@ -245,6 +285,10 @@ function initWidget(dir) {
                 Configuration.MEMORY_USAGE_TEXT.set(widget.get_text());
             }
 
+            disk_usage_text_changed(widget) {
+                Configuration.DISK_USAGE_TEXT.set(widget.get_text());
+            }
+
             swap_usage_text_changed(widget) {
                 Configuration.SWAP_USAGE_TEXT.set(widget.get_text());
             }
@@ -255,6 +299,14 @@ function initWidget(dir) {
 
             upload_usage_text_changed(widget) {
                 Configuration.UPLOAD_SPEED_TEXT.set(widget.get_text());
+            }
+
+            temperature_enable_switch_changed(widget) {
+                Configuration.IS_TEMPERATURE_ENABLE.set(widget.get_active());
+            }
+
+            temperature_text_changed(widget) {
+                Configuration.TEMPERATURE_TEXT.set(widget.get_text());
             }
 
             item_separator_changed(widget) {

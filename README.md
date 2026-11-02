@@ -6,9 +6,11 @@
 
 Simple system monitor extension for GNOME.
 
-Show current CPU usage, memory usage and net speed on panel.
+Show current CPU, memory, root filesystem and swap usage, temperature, and net speed on panel.
 
-It only shows text like `U 1% M 23% ↓ 456 K/s ↑ 789 K/s` on the right part of panel.
+It only shows text like `U 1% M 23% D 42% ↓ 456 K/s ↑ 789 K/s` on the right part of panel.
+
+Root filesystem usage can be displayed either as used space (`D 42%`) or as free space in decimal gigabytes (`D 113 GB`).
 
 For best experience, please use [monospaced font](https://en.wikipedia.org/wiki/Monospaced_font), e.g. [JetBrains Mono](https://www.jetbrains.com/lp/mono/), [Source Code Pro](https://adobe-fonts.github.io/source-code-pro/), [FiraCode](https://github.com/tonsky/FiraCode), [Hack](https://github.com/source-foundry/Hack).
 

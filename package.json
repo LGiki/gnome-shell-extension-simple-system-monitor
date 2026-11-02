@@ -1,7 +1,7 @@
 {
     "name": "gnome-shell-extension-simple-system-monitor",
     "version": "1.0.0",
-    "description": "Show current CPU usage, memory usage and net speed on panel.",
+    "description": "Show current CPU, memory and root filesystem usage, temperature and net speed on panel.",
     "main": "src/extension.js",
     "repository": "git@github.com:LGiki/gnome-shell-extension-simple-system-monitor.git",
     "author": "LGiki <qq547221432@gmail.com>",

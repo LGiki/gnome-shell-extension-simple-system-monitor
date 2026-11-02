@@ -49,6 +49,30 @@ msgstr ""
 msgid "Memory Usage Text"
 msgstr ""
 
+#: prefs.ui:53
+msgid "Root Filesystem Usage"
+msgstr ""
+
+#: prefs.ui:98
+msgid "Show Root Filesystem Usage"
+msgstr ""
+
+#: prefs.ui:142
+msgid "Root Filesystem Usage Text"
+msgstr ""
+
+#: prefs.ui:36
+msgid "Used Space (%)"
+msgstr ""
+
+#: prefs.ui:37
+msgid "Free Space (GB)"
+msgstr ""
+
+#: prefs.ui:196
+msgid "Displayed Disk Value"
+msgstr ""
+
 #: prefs.ui:315
 msgid "Swap Usage"
 msgstr ""

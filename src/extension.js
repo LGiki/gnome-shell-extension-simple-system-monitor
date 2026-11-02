@@ -244,6 +244,46 @@ const getCurrentMemoryUsage = () => {
     return currentMemoryUsage;
 };
 
+const getCurrentDiskStats = () => {
+    try {
+        const root = Gio.File.new_for_path('/');
+        const info = root.query_filesystem_info(
+            `${Gio.FILE_ATTRIBUTE_FILESYSTEM_USED},${Gio.FILE_ATTRIBUTE_FILESYSTEM_FREE}`,
+            null,
+        );
+        const used = info.get_attribute_uint64(Gio.FILE_ATTRIBUTE_FILESYSTEM_USED);
+        const free = info.get_attribute_uint64(Gio.FILE_ATTRIBUTE_FILESYSTEM_FREE);
+        const usable = used + free;
+
+        if (usable > 0) {
+            return {
+                usage: used / usable,
+                free,
+            };
+        }
+    } catch (e) {
+        logError(e);
+    }
+
+    return null;
+};
+
+const getCurrentTemperature = () => {
+    let currentTemperature = 0;
+
+    try {
+        const inputFile = Gio.File.new_for_path('/sys/class/thermal/thermal_zone0/temp');
+        const [, content] = inputFile.load_contents(null);
+        const contentStr = ByteArray.toString(content);
+        const contentLines = contentStr.split('\n');
+
+        currentTemperature = Number.parseInt(contentLines[0].trim()) / 1000;
+    } catch (e) {
+        logError(e);
+    }
+    return currentTemperature;
+};
+
 const formatNetSpeedWithUnit = (amount, showFullNetSpeedUnit) => {
     let unitIndex = 0;
     while (amount >= 1000 && unitIndex < netSpeedUnits.length - 1) {
@@ -279,16 +319,32 @@ const formatUsageVal = (usage, showExtraSpaces, showPercentSign) => {
     );
 };
 
+const formatDiskFreeSpace = (freeBytes) => {
+    const freeGB = freeBytes / 1000 ** 3;
+    let digits = 2;
+
+    if (freeGB >= 100) {
+        digits = 0;
+    } else if (freeGB >= 10) {
+        digits = 1;
+    }
+
+    return `${freeGB.toFixed(digits)} GB`;
+};
+
 const toDisplayString = (
     showFullNetSpeedUnit,
     showExtraSpaces,
     showPercentSign,
+    diskUsageDisplayMode,
     texts,
     enable,
     cpuUsage,
     memoryUsage,
+    diskStats,
     netSpeed,
     swapUsage,
+    temperature,
 ) => {
     const displayItems = [];
     if (enable.isCpuUsageEnable && cpuUsage !== null) {
@@ -304,6 +360,16 @@ const toDisplayString = (
                 showPercentSign,
             )}`,
         );
+    }
+    if (enable.isDiskUsageEnable && diskStats !== null) {
+        const diskValue =
+            diskUsageDisplayMode === 'free-space'
+                ? formatDiskFreeSpace(diskStats.free)
+                : formatUsageVal(diskStats.usage, showExtraSpaces, showPercentSign);
+        displayItems.push(`${texts.diskUsageText} ${diskValue}`);
+    }
+    if (enable.isTemperatureEnable && temperature !== null) {
+        displayItems.push(`${texts.temperatureText} ${temperature} °C`);
     }
     if (enable.isSwapUsageEnable && swapUsage !== null) {
         displayItems.push(
@@ -391,23 +457,29 @@ export default class SSMExtension extends Extension {
         this._texts = {
             cpuUsageText: this._prefs.CPU_USAGE_TEXT.get(),
             memoryUsageText: this._prefs.MEMORY_USAGE_TEXT.get(),
+            diskUsageText: this._prefs.DISK_USAGE_TEXT.get(),
             downloadSpeedText: this._prefs.DOWNLOAD_SPEED_TEXT.get(),
             uploadSpeedText: this._prefs.UPLOAD_SPEED_TEXT.get(),
             swapUsageText: this._prefs.SWAP_USAGE_TEXT.get(),
+            temperatureText: this._prefs.TEMPERATURE_TEXT.get(),
             itemSeparator: this._prefs.ITEM_SEPARATOR.get(),
         };
 
         this._enable = {
             isCpuUsageEnable: this._prefs.IS_CPU_USAGE_ENABLE.get(),
             isMemoryUsageEnable: this._prefs.IS_MEMORY_USAGE_ENABLE.get(),
+            isDiskUsageEnable: this._prefs.IS_DISK_USAGE_ENABLE.get(),
             isDownloadSpeedEnable: this._prefs.IS_DOWNLOAD_SPEED_ENABLE.get(),
             isUploadSpeedEnable: this._prefs.IS_UPLOAD_SPEED_ENABLE.get(),
             isSwapUsageEnable: this._prefs.IS_SWAP_USAGE_ENABLE.get(),
+            isTemperatureEnable: this._prefs.IS_TEMPERATURE_ENABLE.get(),
         };
 
         this._showExtraSpaces = this._prefs.SHOW_EXTRA_SPACES.get();
 
         this._showPercentSign = this._prefs.SHOW_PERCENT_SIGN.get();
+
+        this._diskUsageDisplayMode = this._prefs.DISK_USAGE_DISPLAY_MODE.get();
 
         this._refresh_interval = this._prefs.REFRESH_INTERVAL.get();
 
@@ -455,13 +527,18 @@ export default class SSMExtension extends Extension {
     _refresh_monitor() {
         let currentCPUUsage = null;
         let currentMemoryUsage = null;
+        let currentDiskStats = null;
         let currentNetSpeed = null;
         let currentSwapUsage = null;
+        let currentTemperature = null;
         if (this._enable.isCpuUsageEnable) {
             currentCPUUsage = getCurrentCPUUsage();
         }
         if (this._enable.isMemoryUsageEnable) {
             currentMemoryUsage = getCurrentMemoryUsage();
+        }
+        if (this._enable.isDiskUsageEnable) {
+            currentDiskStats = getCurrentDiskStats();
         }
         if (this._enable.isDownloadSpeedEnable || this._enable.isUploadSpeedEnable) {
             currentNetSpeed = getCurrentNetSpeed(this._refresh_interval);
@@ -469,17 +546,23 @@ export default class SSMExtension extends Extension {
         if (this._enable.isSwapUsageEnable) {
             currentSwapUsage = getCurrentSwapUsage();
         }
+        if (this._enable.isTemperatureEnable) {
+            currentTemperature = getCurrentTemperature();
+        }
 
         const displayText = toDisplayString(
             this._showFullNetSpeedUnit,
             this._showExtraSpaces,
             this._showPercentSign,
+            this._diskUsageDisplayMode,
             this._texts,
             this._enable,
             currentCPUUsage,
             currentMemoryUsage,
+            currentDiskStats,
             currentNetSpeed,
             currentSwapUsage,
+            currentTemperature,
         );
         this._indicator.setText(displayText);
         return GLib.SOURCE_CONTINUE;
@@ -494,12 +577,20 @@ export default class SSMExtension extends Extension {
             this._showPercentSign = this._prefs.SHOW_PERCENT_SIGN.get();
         });
 
+        this._prefs.DISK_USAGE_DISPLAY_MODE.changed(() => {
+            this._diskUsageDisplayMode = this._prefs.DISK_USAGE_DISPLAY_MODE.get();
+        });
+
         this._prefs.IS_CPU_USAGE_ENABLE.changed(() => {
             this._enable.isCpuUsageEnable = this._prefs.IS_CPU_USAGE_ENABLE.get();
         });
 
         this._prefs.IS_MEMORY_USAGE_ENABLE.changed(() => {
             this._enable.isMemoryUsageEnable = this._prefs.IS_MEMORY_USAGE_ENABLE.get();
+        });
+
+        this._prefs.IS_DISK_USAGE_ENABLE.changed(() => {
+            this._enable.isDiskUsageEnable = this._prefs.IS_DISK_USAGE_ENABLE.get();
         });
 
         this._prefs.IS_DOWNLOAD_SPEED_ENABLE.changed(() => {
@@ -514,12 +605,20 @@ export default class SSMExtension extends Extension {
             this._enable.isSwapUsageEnable = this._prefs.IS_SWAP_USAGE_ENABLE.get();
         });
 
+        this._prefs.IS_TEMPERATURE_ENABLE.changed(() => {
+            this._enable.isTemperatureEnable = this._prefs.IS_TEMPERATURE_ENABLE.get();
+        });
+
         this._prefs.CPU_USAGE_TEXT.changed(() => {
             this._texts.cpuUsageText = this._prefs.CPU_USAGE_TEXT.get();
         });
 
         this._prefs.MEMORY_USAGE_TEXT.changed(() => {
             this._texts.memoryUsageText = this._prefs.MEMORY_USAGE_TEXT.get();
+        });
+
+        this._prefs.DISK_USAGE_TEXT.changed(() => {
+            this._texts.diskUsageText = this._prefs.DISK_USAGE_TEXT.get();
         });
 
         this._prefs.DOWNLOAD_SPEED_TEXT.changed(() => {
@@ -532,6 +631,10 @@ export default class SSMExtension extends Extension {
 
         this._prefs.SWAP_USAGE_TEXT.changed(() => {
             this._texts.swapUsageText = this._prefs.SWAP_USAGE_TEXT.get();
+        });
+
+        this._prefs.TEMPERATURE_TEXT.changed(() => {
+            this._texts.temperatureText = this._prefs.TEMPERATURE_TEXT.get();
         });
 
         this._prefs.ITEM_SEPARATOR.changed(() => {
@@ -563,12 +666,15 @@ export default class SSMExtension extends Extension {
     _destory_setting_change_listener() {
         this._prefs.SHOW_EXTRA_SPACES.disconnect();
         this._prefs.SHOW_PERCENT_SIGN.disconnect();
+        this._prefs.DISK_USAGE_DISPLAY_MODE.disconnect();
         this._prefs.IS_CPU_USAGE_ENABLE.disconnect();
         this._prefs.IS_MEMORY_USAGE_ENABLE.disconnect();
+        this._prefs.IS_DISK_USAGE_ENABLE.disconnect();
         this._prefs.IS_DOWNLOAD_SPEED_ENABLE.disconnect();
         this._prefs.IS_UPLOAD_SPEED_ENABLE.disconnect();
         this._prefs.CPU_USAGE_TEXT.disconnect();
         this._prefs.MEMORY_USAGE_TEXT.disconnect();
+        this._prefs.DISK_USAGE_TEXT.disconnect();
         this._prefs.DOWNLOAD_SPEED_TEXT.disconnect();
         this._prefs.UPLOAD_SPEED_TEXT.disconnect();
         this._prefs.ITEM_SEPARATOR.disconnect();
@@ -579,6 +685,8 @@ export default class SSMExtension extends Extension {
         this._prefs.FONT_WEIGHT.disconnect();
         this._prefs.IS_SWAP_USAGE_ENABLE.disconnect();
         this._prefs.SWAP_USAGE_TEXT.disconnect();
+        this._prefs.IS_TEMPERATURE_ENABLE.disconnect();
+        this._prefs.TEMPERATURE_TEXT.disconnect();
         this._prefs.SHOW_FULL_NET_SPEED_UNIT.disconnect();
     }
 }

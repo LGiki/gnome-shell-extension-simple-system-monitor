@@ -11,6 +11,9 @@ export var Prefs = class Prefs {
         this.CPU_USAGE_TEXT = new PrefValue(settings, 'cpu-usage-text', 'string');
         this.IS_MEMORY_USAGE_ENABLE = new PrefValue(settings, 'is-memory-usage-enable', 'boolean');
         this.MEMORY_USAGE_TEXT = new PrefValue(settings, 'memory-usage-text', 'string');
+        this.IS_DISK_USAGE_ENABLE = new PrefValue(settings, 'is-disk-usage-enable', 'boolean');
+        this.DISK_USAGE_TEXT = new PrefValue(settings, 'disk-usage-text', 'string');
+        this.DISK_USAGE_DISPLAY_MODE = new PrefValue(settings, 'disk-usage-display-mode', 'string');
         this.IS_DOWNLOAD_SPEED_ENABLE = new PrefValue(
             settings,
             'is-download-speed-enable',
@@ -26,6 +29,8 @@ export var Prefs = class Prefs {
         this.TEXT_COLOR = new PrefValue(settings, 'text-color', 'string');
         this.IS_SWAP_USAGE_ENABLE = new PrefValue(settings, 'is-swap-usage-enable', 'boolean');
         this.SWAP_USAGE_TEXT = new PrefValue(settings, 'swap-usage-text', 'string');
+        this.IS_TEMPERATURE_ENABLE = new PrefValue(settings, 'is-temperature-enable', 'boolean');
+        this.TEMPERATURE_TEXT = new PrefValue(settings, 'temperature-text', 'string');
         this.SHOW_FULL_NET_SPEED_UNIT = new PrefValue(
             settings,
             'show-full-net-speed-unit',

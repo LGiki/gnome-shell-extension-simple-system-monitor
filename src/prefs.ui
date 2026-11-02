@@ -28,6 +28,15 @@
       <row><col id="0">Right</col></row>
     </data>
   </object>
+  <object class="GtkListStore" id="disk_usage_display_mode_list_store">
+    <columns>
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row><col id="0" translatable="yes">Used Space (%)</col></row>
+      <row><col id="0" translatable="yes">Free Space (GB)</col></row>
+    </data>
+  </object>
   <template class="SimpleSystemMonitorPrefsWidget" parent="AdwPreferencesPage">
     <child>
       <object class="GtkScrolledWindow">
@@ -40,6 +49,178 @@
             <property name="margin-top">30</property>
             <property name="margin-bottom">30</property>
             <property name="orientation">vertical</property>
+
+            <child>
+              <object class="GtkBox">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="margin-bottom">12</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">Root Filesystem Usage</property>
+                    <attributes>
+                      <attribute name="weight" value="bold" />
+                    </attributes>
+                  </object>
+                </child>
+              </object>
+            </child>
+
+            <child>
+              <object class="GtkFrame">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="label-xalign">0</property>
+                <property name="margin-bottom">36</property>
+                <child>
+                  <object class="GtkListBox">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="selection-mode">none</property>
+
+                    <!-- Root Filesystem Usage Enable -->
+                    <child>
+                      <object class="GtkListBoxRow">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="margin-start">12</property>
+                            <property name="margin-end">12</property>
+                            <property name="margin-top">12</property>
+                            <property name="margin-bottom">12</property>
+                            <property name="orientation">vertical</property>
+                            <child>
+                              <object class="GtkBox">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="spacing">32</property>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="valign">center</property>
+                                    <property name="label" translatable="yes">Show Root Filesystem Usage</property>
+                                    <property name="xalign">0</property>
+                                    <property name="hexpand">1</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkSwitch" id="disk_usage_enable_switch">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">True</property>
+                                    <property name="valign">center</property>
+                                    <signal name="state-set" handler="disk_usage_enable_switch_changed" swapped="no" />
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+
+                    <!-- Root Filesystem Usage Text -->
+                    <child>
+                      <object class="GtkListBoxRow">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="margin-start">12</property>
+                            <property name="margin-end">12</property>
+                            <property name="margin-top">12</property>
+                            <property name="margin-bottom">12</property>
+                            <property name="orientation">vertical</property>
+                            <child>
+                              <object class="GtkBox">
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="spacing">32</property>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="valign">center</property>
+                                    <property name="label" translatable="yes">Root Filesystem Usage Text</property>
+                                    <property name="xalign">0</property>
+                                    <property name="hexpand">1</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkEntry" id="disk_usage_text">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">True</property>
+                                    <property name="valign">center</property>
+                                    <property name="text">D</property>
+                                    <signal name="changed" handler="disk_usage_text_changed" swapped="no" />
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+
+                    <!-- Root Filesystem Usage Display Mode -->
+                    <child>
+                      <object class="GtkListBoxRow">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="margin-start">12</property>
+                            <property name="margin-end">12</property>
+                            <property name="margin-top">12</property>
+                            <property name="margin-bottom">12</property>
+                            <property name="orientation">vertical</property>
+                            <child>
+                              <object class="GtkBox">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="spacing">32</property>
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="valign">center</property>
+                                    <property name="label" translatable="yes">Displayed Disk Value</property>
+                                    <property name="xalign">0</property>
+                                    <property name="hexpand">1</property>
+                                  </object>
+                                </child>
+                                <child>
+                                  <object class="GtkComboBox" id="disk_usage_display_mode_combo_box">
+                                    <property name="model">disk_usage_display_mode_list_store</property>
+                                    <property name="valign">center</property>
+                                    <signal name="changed" handler="disk_usage_display_mode_combo_box_changed" swapped="no" />
+                                    <child>
+                                      <object class="GtkCellRendererText"/>
+                                      <attributes>
+                                        <attribute name="text">0</attribute>
+                                      </attributes>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
 
             <child>
               <object class="GtkBox">
@@ -420,6 +601,137 @@
                                     <property name="valign">center</property>
                                     <property name="text">S</property>
                                     <signal name="changed" handler="swap_usage_text_changed" swapped="no" />
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+
+                  </object>
+                </child>
+              </object>
+            </child>
+
+            <child>
+              <object class="GtkBox">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="margin-bottom">12</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="label" translatable="yes">Temperature</property>
+                    <attributes>
+                      <attribute name="weight" value="bold" />
+                    </attributes>
+                  </object>
+                </child>
+              </object>
+            </child>
+
+            <child>
+              <object class="GtkFrame">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="label-xalign">0</property>
+                <property name="margin-bottom">36</property>
+                <child>
+                  <object class="GtkListBox">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="selection-mode">none</property>
+                    <child>
+                      <object class="GtkListBoxRow">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+
+                        <!-- Temperature Enable -->
+                        <child>
+                          <object class="GtkBox">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <property name="margin-start">12</property>
+                            <property name="margin-end">12</property>
+                            <property name="margin-top">12</property>
+                            <property name="margin-bottom">12</property>
+                            <property name="orientation">vertical</property>
+
+                            <child>
+                              <object class="GtkBox">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <property name="spacing">32</property>
+
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="valign">center</property>
+                                    <property name="label" translatable="yes">Show Temperature</property>
+                                    <property name="xalign">0</property>
+                                    <property name="hexpand">1</property>
+                                  </object>
+                                </child>
+
+                                <child>
+                                  <object class="GtkSwitch" id="temperature_enable_switch">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">True</property>
+                                    <property name="valign">center</property>
+                                    <signal name="state-set" handler="temperature_enable_switch_changed" swapped="no" />
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+
+                    <!-- Temperature Text -->
+                    <child>
+                      <object class="GtkListBoxRow">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+
+                        <child>
+                          <object class="GtkBox">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="margin-start">12</property>
+                            <property name="margin-end">12</property>
+                            <property name="margin-top">12</property>
+                            <property name="margin-bottom">12</property>
+                            <property name="orientation">vertical</property>
+
+                            <child>
+                              <object class="GtkBox">
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="spacing">32</property>
+
+                                <child>
+                                  <object class="GtkLabel">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <property name="valign">center</property>
+                                    <property name="label" translatable="yes">Temperature Text</property>
+                                    <property name="xalign">0</property>
+                                    <property name="hexpand">1</property>
+                                  </object>
+                                </child>
+
+                                <child>
+                                  <object class="GtkEntry" id="temperature_text">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">True</property>
+                                    <property name="valign">center</property>
+                                    <property name="text">S</property>
+                                    <signal name="changed" handler="temperature_text_changed" swapped="no" />
                                   </object>
                                 </child>
                               </object>

@@ -46,6 +46,25 @@
       <summary>Memory Usage Text</summary>
       <description>Memory Usage Text</description>
     </key>
+    <key type="b" name="is-disk-usage-enable">
+      <default>true</default>
+      <summary>Show Root Filesystem Usage</summary>
+      <description>Show the disk usage of the filesystem mounted at /</description>
+    </key>
+    <key type="s" name="disk-usage-text">
+      <default>'D'</default>
+      <summary>Root Filesystem Usage Text</summary>
+      <description>Text shown before the disk usage of the filesystem mounted at /</description>
+    </key>
+    <key type="s" name="disk-usage-display-mode">
+      <choices>
+        <choice value="percentage"/>
+        <choice value="free-space"/>
+      </choices>
+      <default>'percentage'</default>
+      <summary>Root Filesystem Usage Display Mode</summary>
+      <description>Show the used percentage or the free space in GB</description>
+    </key>
     <key type="b" name="is-download-speed-enable">
       <default>true</default>
       <summary>Show Download Speed</summary>
@@ -105,6 +124,16 @@
       <default>true</default>
       <summary>Show full net speed unit</summary>
       <description>Show full net speed unit</description>
+    </key>
+    <key type="b" name="is-temperature-enable">
+      <default>false</default>
+      <summary>Show Temperature</summary>
+      <description>Show Temperature</description>
+    </key>
+    <key type="s" name="temperature-text">
+      <default>'T'</default>
+      <summary>Temperature Text</summary>
+      <description>Temperature Text</description>
     </key>
   </schema>
 </schemalist>
