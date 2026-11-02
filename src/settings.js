@@ -11,6 +11,9 @@ export var Prefs = class Prefs {
         this.CPU_USAGE_TEXT = new PrefValue(settings, 'cpu-usage-text', 'string');
         this.IS_MEMORY_USAGE_ENABLE = new PrefValue(settings, 'is-memory-usage-enable', 'boolean');
         this.MEMORY_USAGE_TEXT = new PrefValue(settings, 'memory-usage-text', 'string');
+        this.IS_DISK_USAGE_ENABLE = new PrefValue(settings, 'is-disk-usage-enable', 'boolean');
+        this.DISK_USAGE_TEXT = new PrefValue(settings, 'disk-usage-text', 'string');
+        this.DISK_USAGE_DISPLAY_MODE = new PrefValue(settings, 'disk-usage-display-mode', 'string');
         this.IS_DOWNLOAD_SPEED_ENABLE = new PrefValue(
             settings,
             'is-download-speed-enable',

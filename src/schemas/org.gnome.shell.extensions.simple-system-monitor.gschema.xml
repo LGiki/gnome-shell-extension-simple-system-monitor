@@ -46,6 +46,25 @@
       <summary>Memory Usage Text</summary>
       <description>Memory Usage Text</description>
     </key>
+    <key type="b" name="is-disk-usage-enable">
+      <default>true</default>
+      <summary>Show Root Filesystem Usage</summary>
+      <description>Show the disk usage of the filesystem mounted at /</description>
+    </key>
+    <key type="s" name="disk-usage-text">
+      <default>'D'</default>
+      <summary>Root Filesystem Usage Text</summary>
+      <description>Text shown before the disk usage of the filesystem mounted at /</description>
+    </key>
+    <key type="s" name="disk-usage-display-mode">
+      <choices>
+        <choice value="percentage"/>
+        <choice value="free-space"/>
+      </choices>
+      <default>'percentage'</default>
+      <summary>Root Filesystem Usage Display Mode</summary>
+      <description>Show the used percentage or the free space in GB</description>
+    </key>
     <key type="b" name="is-download-speed-enable">
       <default>true</default>
       <summary>Show Download Speed</summary>
